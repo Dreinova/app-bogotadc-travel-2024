@@ -59,7 +59,7 @@ export default function Page() {
             value={searchValue}
             onChangeText={setSearchValue}
             onSubmitEditing={searchBogota}
-            placeholder={`${wordsLanguage[actualLanguage][1]}...`}
+            placeholder={`${wordsLanguage[actualLanguage][14]}...`}
             style={{
               flex: 1,
               fontSize: 16,

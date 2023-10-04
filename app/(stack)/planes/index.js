@@ -29,7 +29,11 @@ import {
   selectPlanesFilterData,
   selectWordsLang,
 } from "../../../src/store/selectors";
-import { fetchBogotaDrplV2, number_format } from "../../../src/api/imperdibles";
+import {
+  fetchBogotaDrplV2,
+  number_format,
+  truncateString,
+} from "../../../src/api/imperdibles";
 import Slider from "@react-native-community/slider";
 
 const CustomModal = ({
@@ -467,7 +471,188 @@ const EventsList = () => {
             )}
           </Pressable>
         </View>
-        <HorizontalFlatListWithRows data={restaurantArrayData} />
+
+        <FlatList
+          numColumns={2}
+          data={restaurantArrayData}
+          renderItem={({ item }) => (
+            <Pressable
+              onPress={() => router.push(`(stack)/planes/${item.nid}`)}
+              style={[
+                {
+                  width: windowWidth / 2,
+                  padding: 2,
+                  shadowColor: "#000",
+                  shadowOffset: {
+                    width: 0,
+                    height: 2,
+                  },
+                  shadowOpacity: 0.25,
+                  shadowRadius: 3.84,
+                  elevation: 5,
+                },
+              ]}
+            >
+              <ImageBackground
+                style={{ flex: 1 }}
+                source={{
+                  uri: `https://bogotadc.travel${
+                    item.field_img ? item.field_img : "/img/noimg.png"
+                  }`,
+                }}
+              >
+                <View
+                  style={{
+                    backgroundColor: "rgba(0,0,0,.3)",
+                    flex: 1,
+                    justifyContent: "flex-end",
+                  }}
+                >
+                  <View
+                    style={{
+                      justifyContent: "flex-end",
+                      height: windowWidth / 2,
+                    }}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "#ff7c47",
+                        width: 40,
+                        height: 40,
+                        borderRadius: 50,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        alignSelf: "flex-end",
+                        marginRight: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: Colors.white,
+                          fontFamily: "MuseoSans_900",
+                          fontSize: 14,
+                          textAlign: "center",
+                        }}
+                      >
+                        {item.field_percent}%
+                      </Text>
+                      <Text
+                        style={{
+                          color: Colors.white,
+                          fontFamily: "MuseoSans_900",
+                          fontSize: 10,
+                          textAlign: "center",
+                        }}
+                      >
+                        DCTO
+                      </Text>
+                    </View>
+                    <View
+                      style={{
+                        position: "relative",
+                        alignItems: "flex-end",
+                        paddingVertical: 10,
+                        paddingLeft: 25,
+                        paddingRight: 10,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: Colors.white,
+                          fontFamily: "MuseoSans_900",
+                          fontSize: 15,
+                          textShadowColor: "rgba(0, 0, 0, .7)",
+                          textShadowOffset: { width: 1, height: 1 },
+                          textShadowRadius: 10,
+                          textAlign: "center",
+                        }}
+                      >
+                        ${number_format(item.field_pa, 0, ".", ".")}
+                      </Text>
+                      <View
+                        style={{
+                          position: "absolute",
+                          height: 2,
+                          width: "50%",
+                          backgroundColor: "#FFF",
+                          top: 15,
+                          transform: [
+                            {
+                              rotate: "-2deg",
+                            },
+                          ],
+                        }}
+                      />
+                    </View>
+                    <View
+                      style={{
+                        alignSelf: "flex-end",
+                        backgroundColor: "#5097ff",
+                        borderBottomLeftRadius: 25,
+                        borderTopLeftRadius: 25,
+                        marginBottom: 15,
+                        paddingLeft: 25,
+                        paddingRight: 5,
+                        paddingVertical: 5,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: Colors.white,
+                          fontFamily: "MuseoSans_900",
+                          fontSize: 18,
+                          textShadowColor: "rgba(0, 0, 0, .7)",
+                          textShadowOffset: { width: 1, height: 1 },
+                          textShadowRadius: 10,
+                          textAlign: "center",
+                        }}
+                      >
+                        ${number_format(item.field_pd, 0, ".", ".")}
+                      </Text>
+                    </View>
+                  </View>
+                  <View
+                    style={{
+                      backgroundColor: "#103b6f",
+                      paddingVertical: 30,
+                      paddingHorizontal: 15,
+                      flex: 1,
+                    }}
+                  >
+                    <Text
+                      style={{
+                        color: Colors.white,
+                        fontFamily: "MuseoSans_900",
+                        fontSize: 16,
+                        textShadowColor: "rgba(0, 0, 0, .7)",
+                        textShadowOffset: { width: 1, height: 1 },
+                        textShadowRadius: 10,
+                        textAlign: "center",
+                        marginBottom: 10,
+                      }}
+                    >
+                      {truncateString(item.title, 40)}
+                    </Text>
+                    <Text
+                      style={{
+                        color: Colors.white,
+                        fontFamily: "MuseoSans_500",
+                        fontSize: 14,
+                        textShadowColor: "rgba(0, 0, 0, .7)",
+                        textShadowOffset: { width: 1, height: 1 },
+                        textShadowRadius: 10,
+                        textAlign: "center",
+                      }}
+                    >
+                      {truncateString(item.field_pb_oferta_desc_corta, 50)}
+                    </Text>
+                  </View>
+                </View>
+              </ImageBackground>
+            </Pressable>
+          )}
+          keyExtractor={(item, index) => item.nid}
+        />
       </ScrollView>
     </ImageBackground>
   );

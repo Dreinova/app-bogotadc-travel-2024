@@ -62,12 +62,7 @@ const Accordion = ({ title, children, small, colorTitle }) => {
           <FontAwesome name="plus" size={20} color="#FFF" />
         </Animated.View>
       </TouchableOpacity>
-      <Animated.View
-        style={[
-          styles.content,
-          { maxHeight: contentHeight, overflow: "hidden" },
-        ]}
-      >
+      <Animated.View style={[styles.content, { maxHeight: contentHeight }]}>
         {children}
       </Animated.View>
     </View>

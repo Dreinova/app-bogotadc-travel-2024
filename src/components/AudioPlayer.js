@@ -4,178 +4,131 @@ import Slider from "@react-native-community/slider";
 import { Audio } from "expo-av";
 import { FontAwesome } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
-
-const waveImage = require("../../assets/images/waves_sound.png");
+import { formattedTime } from "../api/imperdibles";
+import { useFocusEffect } from "expo-router";
 
 const AudioPlayer = ({ image, audios }) => {
-  const [soundObjects, setSoundObjects] = useState([]);
-  const [currentlyPlayingIndex, setCurrentlyPlayingIndex] = useState(0);
-  const [isPlaying, setIsPlaying] = useState(false);
+  const [sound, setSound] = useState(null);
+  const [isPlaying, setIsPlaying] = useState(true);
   const [duration, setDuration] = useState(null);
-  const [position, setPosition] = useState(0);
-  const [lastKnownPositions, setLastKnownPositions] = useState({});
+  const [position, setPosition] = useState(null);
+  const [isSeeking, setIsSeeking] = useState(false);
 
-  const loadAudios = async () => {
-    const loadedSoundObjects = await Promise.all(
-      audios.map(async (item) => {
-        const soundObject = new Audio.Sound();
-        try {
-          await soundObject.loadAsync({ uri: item.audio });
-          const status = await soundObject.getStatusAsync();
-          const duration = status.durationMillis || 0;
-          return { soundObject, duration };
-        } catch (error) {
-          console.error(`Error loading audio ${item.audio}`, error);
-          return null;
-        }
-      })
-    );
+  const onPlaybackStatusUpdate = (status) => {
+    let { durationMillis, isPlaying, positionMillis } = status;
+    if (!isSeeking) {
+      // Update position only if not currently seeking
+      setPosition(positionMillis);
+    }
 
-    setSoundObjects(
-      loadedSoundObjects.filter((soundObject) => soundObject !== null)
-    );
+    setIsPlaying(isPlaying);
+    setDuration(durationMillis);
   };
 
-  const playAudio = async (index) => {
-    if (soundObjects[index] && soundObjects[index].soundObject) {
-      try {
-        await stopAudio();
-        const lastKnownPosition = lastKnownPositions[index] || 0;
-        await soundObjects[index].soundObject.setPositionAsync(
-          lastKnownPosition
-        );
-        await soundObjects[index].soundObject.playAsync();
-        setIsPlaying(true);
-        setCurrentlyPlayingIndex(index);
-        const status = await soundObjects[index].soundObject.getStatusAsync();
-        setDuration(status.durationMillis || 0);
-      } catch (error) {
-        console.error("Error playing audio", error);
-      }
+  const playCurrentSong = async (initialPosition = 0) => {
+    if (sound) {
+      await sound.unloadAsync();
+    }
+
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      { uri: audios[0].audio },
+      {
+        shouldPlay: isPlaying,
+        positionMillis: initialPosition, // Set the initial position here
+      },
+      onPlaybackStatusUpdate
+    );
+    setSound(newSound);
+  };
+
+  const onPlayPausePress = async () => {
+    if (!sound) {
+      return;
+    }
+    if (isPlaying) {
+      await sound.pauseAsync();
     } else {
-      console.error(`Audio at index ${index} is not loaded.`);
+      await sound.playAsync();
     }
   };
 
-  const pauseAudio = async () => {
-    if (currentlyPlayingIndex !== null && soundObjects[currentlyPlayingIndex]) {
-      try {
-        await soundObjects[currentlyPlayingIndex].soundObject.pauseAsync();
-        // No detenemos la reproducción aquí para evitar reiniciar al reanudar
-        setIsPlaying(false);
-      } catch (error) {
-        console.error("Error pausing audio", error);
+  const handleSliderValueChange = (value) => {
+    setPosition(value);
+    setIsSeeking(true);
+  };
+
+  const handleSliderSlidingComplete = async (value) => {
+    const newPositionInMilliseconds = value;
+    if (newPositionInMilliseconds < duration) {
+      await sound.pauseAsync(); // Pause the audio
+      await sound.setPositionAsync(newPositionInMilliseconds); // Set the new position in milliseconds
+      await sound.playAsync(); // Resume playback
+    }
+    setIsSeeking(false);
+  };
+
+  const playAudio = async (audioUri) => {
+    if (sound) {
+      await sound.unloadAsync();
+    }
+
+    const { sound: newSound } = await Audio.Sound.createAsync(
+      { uri: audioUri },
+      {
+        shouldPlay: isPlaying,
+        positionMillis: 0, // Comienza desde el principio
+      },
+      onPlaybackStatusUpdate
+    );
+    setSound(newSound);
+  };
+
+  React.useEffect(() => {
+    playCurrentSong(); // Play the song from the beginning
+
+    // Limpiar al desmontar
+    return async () => {
+      console.log(sound);
+      if (sound) {
+        await sound.stopAsync();
+        await sound.unloadAsync();
       }
-    }
-  };
-
-  const stopAudio = async () => {
-    if (soundObjects[currentlyPlayingIndex] && isPlaying) {
-      try {
-        await soundObjects[currentlyPlayingIndex].soundObject.stopAsync();
-        setIsPlaying(false);
-        setCurrentlyPlayingIndex(null);
-        const position = await soundObjects[
-          currentlyPlayingIndex
-        ].soundObject.getStatusAsync();
-        setLastKnownPositions((prevPositions) => ({
-          ...prevPositions,
-          [currentlyPlayingIndex]: position.positionMillis || 0,
-        }));
-      } catch (error) {
-        console.error("Error stopping audio", error);
-      }
-    }
-  };
-
-  useEffect(() => {
-    loadAudios();
+    };
   }, []);
 
-  useEffect(() => {
-    const updatePosition = async () => {
-      while (isPlaying) {
-        if (
-          soundObjects[currentlyPlayingIndex] &&
-          soundObjects[currentlyPlayingIndex].soundObject
-        ) {
-          const status = await soundObjects[
-            currentlyPlayingIndex
-          ].soundObject.getStatusAsync();
-          if (status.isLoaded) {
-            setPosition(status.positionMillis);
-          }
+  React.useEffect(() => {
+    return sound
+      ? () => {
+          console.log("Unloading Sound");
+          sound.unloadAsync();
         }
-        await new Promise((resolve) => setTimeout(resolve, 1000));
-      }
-    };
-
-    updatePosition();
-  }, [isPlaying, soundObjects, currentlyPlayingIndex]);
-
-  const handleAudioPress = async (index) => {
-    // Si se está reproduciendo un audio y se presiona otro audio
-    if (isPlaying && currentlyPlayingIndex !== null) {
-      await stopAudio(); // Detener el audio actual
-    }
-
-    // Iniciar la reproducción del audio seleccionado
-    await playAudio(index);
-  };
-
-  const handleSliderChange = async (value) => {
-    if (soundObjects[currentlyPlayingIndex] && isPlaying) {
-      try {
-        // Calcula la nueva posición del control deslizante
-        const newPosition = (value * duration) / 1000; // Calcula en segundos
-
-        await soundObjects[currentlyPlayingIndex].soundObject.setPositionAsync(
-          newPosition
-        );
-        setPosition(newPosition);
-      } catch (error) {
-        console.error("Error setting audio position", error);
-      }
-    }
-  };
-
-  const formattedTime = (timeInMilliseconds) => {
-    const seconds = Math.floor(timeInMilliseconds / 1000);
-    const minutes = Math.floor(seconds / 60);
-    const formattedSeconds = seconds % 60;
-    return `${minutes}:${formattedSeconds < 10 ? "0" : ""}${formattedSeconds}`;
-  };
-
-  // Agrega un efecto de limpieza para detener y liberar los objetos de audio al desmontar el componente
-  useEffect(() => {
-    return () => {
-      // Detener y liberar todos los objetos de audio
-      soundObjects.forEach(async (soundObject, index) => {
-        try {
-          await soundObject.soundObject.stopAsync();
-          await soundObject.soundObject.unloadAsync();
-        } catch (error) {
-          console.error(
-            `Error stopping/unloading audio at index ${index}`,
-            error
-          );
-        }
-      });
-    };
-  }, [soundObjects]);
+      : undefined;
+  }, [sound]);
 
   return (
-    <View style={{ padding: 20 }}>
+    <View style={{ padding: 20, width: "100%" }}>
       <Image
         source={{ uri: image }}
         style={{
-          width: 220,
-          height: 220,
+          width: 180,
+          height: 180,
           marginBottom: 30,
           borderRadius: 25,
           overflow: "hidden",
           alignSelf: "center",
         }}
+      />
+      <Slider
+        style={{ marginVertical: 10 }}
+        minimumValue={0}
+        step={1}
+        maximumValue={duration}
+        value={position}
+        thumbTintColor="#e1582f"
+        onValueChange={handleSliderValueChange}
+        onSlidingComplete={handleSliderSlidingComplete}
+        minimumTrackTintColor="#e1582f"
+        maximumTrackTintColor="#e1582f"
       />
       <View
         style={{
@@ -185,50 +138,35 @@ const AudioPlayer = ({ image, audios }) => {
           marginBottom: 30,
         }}
       >
-        <TouchableOpacity onPress={() => playAudio(currentlyPlayingIndex - 1)}>
+        <TouchableOpacity onPress={() => {}}>
           <FontAwesome name="fast-backward" size={24} color="#FFF" />
         </TouchableOpacity>
-        <TouchableOpacity
-          onPress={() =>
-            isPlaying ? stopAudio() : playAudio(currentlyPlayingIndex)
-          }
-        >
+        <TouchableOpacity onPress={onPlayPausePress}>
           <FontAwesome
             name={isPlaying ? "pause" : "play"}
             size={24}
             color="#FFF"
           />
         </TouchableOpacity>
-        <TouchableOpacity onPress={() => playAudio(currentlyPlayingIndex + 1)}>
+        <TouchableOpacity onPress={() => {}}>
           <FontAwesome name="fast-forward" size={24} color="#FFF" />
         </TouchableOpacity>
       </View>
-      <Slider
-        style={{ marginTop: 10 }}
-        minimumValue={0}
-        maximumValue={duration}
-        value={position}
-        onValueChange={handleSliderChange}
-        thumbTintColor="#e1582f"
-        disabled={!isPlaying}
-        trackImage={waveImage}
-        minimumTrackTintColor="#e1582f"
-        maximumTrackTintColor="#e1582f"
-        onSlidingComplete={async () => {
-          setPosition(0);
+      <View
+        style={{
+          flexDirection: "row",
+          justifyContent: "space-between",
         }}
-      />
-      {/* Muestra el tiempo transcurrido y el tiempo total */}
-      <View style={{ flexDirection: "row", justifyContent: "space-between" }}>
+      >
         <Text
           style={{ color: "#FFF", fontFamily: "MuseoSans_700", fontSize: 18 }}
         >
-          {formattedTime(position)}
+          {position ? formattedTime(position) : "0:00"}
         </Text>
         <Text
           style={{ color: "#FFF", fontFamily: "MuseoSans_700", fontSize: 18 }}
         >
-          {formattedTime(duration)}
+          {duration ? formattedTime(duration) : "0:00"}
         </Text>
       </View>
       <FlatList
@@ -246,11 +184,9 @@ const AudioPlayer = ({ image, audios }) => {
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",
+              width: "100%",
             }}
-            onPress={() => {
-              handleAudioPress(index);
-              setIsPlaying(true); // Automatically play when changing audio
-            }}
+            onPress={() => playAudio(item.audio)} // Llama a playAudio con la URL del audio
           >
             <Text
               style={{
@@ -260,15 +196,6 @@ const AudioPlayer = ({ image, audios }) => {
               }}
             >
               {item.title}
-            </Text>
-            <Text
-              style={{
-                color: "#FFF",
-                fontFamily: "MuseoSans_700",
-                fontSize: 18,
-              }}
-            >
-              {item.field_totaltime}
             </Text>
           </Pressable>
         )}

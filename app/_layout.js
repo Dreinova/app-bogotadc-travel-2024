@@ -95,7 +95,10 @@ export default function RootLayout() {
 function RootLayoutNav() {
   return (
     <SafeAreaProvider>
-      <Stack screenOptions={{ headerShown: false }}></Stack>
+      <Stack
+        screenOptions={{ headerShown: false }}
+        initialRouteName="index"
+      ></Stack>
       <StatusBar hidden />
     </SafeAreaProvider>
   );

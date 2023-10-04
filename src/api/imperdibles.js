@@ -90,3 +90,10 @@ export const convertTime = (minutes) => {
     return `${minute}:${sec}`;
   }
 };
+
+export const formattedTime = (timeInMilliseconds) => {
+  const seconds = Math.floor(timeInMilliseconds / 1000);
+  const minutes = Math.floor(seconds / 60);
+  const formattedSeconds = seconds % 60;
+  return `${minutes}:${formattedSeconds < 10 ? "0" : ""}${formattedSeconds}`;
+};

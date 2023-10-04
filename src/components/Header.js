@@ -10,11 +10,13 @@ import {
   ScrollView,
   FlatList,
 } from "react-native";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Ionicons } from "@expo/vector-icons";
 import { windowWidth } from "../constants/ScreenWidth";
 import { useDispatch, useSelector } from "react-redux";
 import { selectActualLanguage, selectWordsLang } from "../store/selectors";
 import { setLanguage } from "../store/actions";
+import { Colors } from "../constants";
 
 const Header = (props) => {
   let arrayAvailableLanguages = [
@@ -40,7 +42,6 @@ const Header = (props) => {
     },
   ];
   const dispatch = useDispatch();
-
   const setActualLanguage = (lang) => {
     dispatch(setLanguage(lang));
     closeModal();
@@ -55,6 +56,43 @@ const Header = (props) => {
   const closeModal = () => {
     setModalVisible(false);
   };
+  const menuLinks = [
+    {
+      title: wordsLanguage[actualLanguage][1],
+      image: "/drpl/sites/default/files/2021-12/Recurso%2033.jpg",
+      link: "descubre",
+    },
+    {
+      title: wordsLanguage[actualLanguage][2],
+      image: "/drpl/sites/default/files/2021-12/Recurso%2034.jpg",
+      link: "(stack)/events",
+    },
+    {
+      title: wordsLanguage[actualLanguage][3],
+      image: "/drpl/sites/default/files/2021-12/Recurso%2031.jpg",
+      link: "(stack)/restaurantes",
+    },
+    {
+      title: wordsLanguage[actualLanguage][4],
+      image: "/drpl/sites/default/files/2021-12/Recurso%2036.jpg",
+      link: "(stack)/hoteles",
+    },
+    {
+      title: wordsLanguage[actualLanguage][5],
+      image: "/drpl/sites/default/files/2021-12/Recurso%2035.jpg",
+      link: "(stack)/audioguias",
+    },
+    {
+      title: wordsLanguage[actualLanguage][6],
+      image: "/drpl/sites/default/files/2021-12/Recurso%2030.jpg",
+      link: "(stack)/planes",
+    },
+    {
+      title: wordsLanguage[actualLanguage][7],
+      image: "/drpl/sites/default/files/2021-12/Recurso%2037.jpg",
+      link: "(stack)/info",
+    },
+  ];
   const menuModal = () => {
     return (
       <Modal
@@ -126,11 +164,24 @@ const Header = (props) => {
             )}
           />
           <View style={{ flex: 1, alignItems: "center", gap: 30 }}>
-            <Pressable onPress={() => {}}>
+            {menuLinks.map((item, i) => (
+              <Pressable
+                key={i}
+                onPress={() => router.push(item.link)}
+                style={({ pressed }) => [
+                  {
+                    opacity: pressed ? 0.5 : 1,
+                  },
+                ]}
+              >
+                <Text style={styles.textMenu}>{item.title}</Text>
+              </Pressable>
+            ))}
+            {/* <Pressable onPress={() => router.push("/login")}>
               <Text style={styles.textMenu}>
                 {wordsLanguage[actualLanguage][16]}
               </Text>
-            </Pressable>
+            </Pressable> */}
             <Pressable onPress={() => router.push("/(stack)/politics")}>
               <Text style={styles.textMenu}>
                 {wordsLanguage[actualLanguage][17]}

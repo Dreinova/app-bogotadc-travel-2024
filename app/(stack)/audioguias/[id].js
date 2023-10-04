@@ -75,8 +75,8 @@ const SingleAudio = () => {
       <View
         style={{
           backgroundColor: "rgba(0,0,0,.5)",
+          width: "100%",
           flex: 1,
-          padding: 20,
           alignItems: "center",
         }}
       >
