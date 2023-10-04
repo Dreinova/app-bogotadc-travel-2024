@@ -1,20 +1,73 @@
-import { StatusBar } from 'expo-status-bar';
-import { StyleSheet, Text, View } from 'react-native';
+import * as Location from "expo-location";
+import * as SplashScreen from "expo-splash-screen";
+import FontAwesome from "@expo/vector-icons/FontAwesome";
+import React from "react";
+import { SafeAreaProvider } from "react-native-safe-area-context";
+import { StatusBar } from "expo-status-bar";
+import { ImageBackground, StyleSheet, Text, View } from "react-native";
+import { useFonts } from "expo-font";
+
+SplashScreen.preventAutoHideAsync();
 
 export default function App() {
+  const [location, setLocation] = React.useState(null);
+
+  const [fontsLoaded] = useFonts({
+    MuseoSans_100: require("./assets/fonts/MuseoSans-100.ttf"),
+    MuseoSans_500: require("./assets/fonts/MuseoSans-500.ttf"),
+    MuseoSans_700: require("./assets/fonts/MuseoSans-700.ttf"),
+    MuseoSans_900: require("./assets/fonts/MuseoSans-900.ttf"),
+    SpaceMono: require("./assets/fonts/SpaceMono-Regular.ttf"),
+    ...FontAwesome.font,
+  });
+
+  const onLayoutRootView = React.useCallback(async () => {
+    if (fontsLoaded) {
+      await SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  React.useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+      let location = await Location.getCurrentPositionAsync({});
+      setLocation(location);
+    })();
+    if (fontsLoaded) {
+      SplashScreen.hideAsync();
+    }
+  }, [fontsLoaded]);
+
+  if (!fontsLoaded) {
+    return (
+      <ImageBackground
+        source={require("./assets/images/atardecer.png")}
+        style={{ flex: 1, alignItems: "center", justifyContent: "flex-end" }}
+      >
+        <Text>Te damos la bienvenida a BOGOTÁ </Text>
+        <Text>¡Empieza a vivirla!</Text>
+      </ImageBackground>
+    );
+  }
+
   return (
-    <View style={styles.container}>
-      <Text>Open up App.js to start working on your app!</Text>
-      <StatusBar style="auto" />
-    </View>
+    <SafeAreaProvider>
+      <View style={styles.container} onLayout={onLayoutRootView}>
+        <Text>My App</Text>
+      </View>
+    </SafeAreaProvider>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#fff',
-    alignItems: 'center',
-    justifyContent: 'center',
+    backgroundColor: "#fff",
+    alignItems: "center",
+    justifyContent: "center",
   },
 });
