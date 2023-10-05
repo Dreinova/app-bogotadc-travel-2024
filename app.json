@@ -2,7 +2,7 @@
   "expo": {
     "name": "bogota_app",
     "slug": "bogota_app",
-    "version": "3.1.0",
+    "version": "3.3.0",
     "orientation": "portrait",
     "scheme": "com.idt.bogota-app",
     "userInterfaceStyle": "automatic",
@@ -15,15 +15,12 @@
     "assetBundlePatterns": ["**/*"],
     "ios": {
       "supportsTablet": true,
-      "bundleIdentifier": "com.IDT.bogotaApp",
-      "buildNumber": "6.1",
-      "infoPlist": {
-        "UIBackgroundModes": ["audio"]
-      }
+      "bundleIdentifier": "com.servinf.idtturismo",
+      "buildNumber": "1.0.1"
     },
     "android": {
       "package": "com.servinf.test.bogotadctravel",
-      "versionCode": 44,
+      "versionCode": 50,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",

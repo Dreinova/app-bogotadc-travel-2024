@@ -26,6 +26,7 @@ const AudioPlayer = ({ image, audios }) => {
   };
 
   const playCurrentSong = async (initialPosition = 0) => {
+    await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
     if (sound) {
       await sound.unloadAsync();
     }
@@ -106,7 +107,15 @@ const AudioPlayer = ({ image, audios }) => {
   }, [sound]);
 
   return (
-    <View style={{ padding: 20, width: "100%" }}>
+    <View
+      style={[
+        audios.length == 1 && {
+          justifyContent: "center",
+          flex: 1,
+        },
+        { padding: 20, width: "100%" },
+      ]}
+    >
       <Image
         source={{ uri: image }}
         style={{
@@ -169,37 +178,40 @@ const AudioPlayer = ({ image, audios }) => {
           {duration ? formattedTime(duration) : "0:00"}
         </Text>
       </View>
-      <FlatList
-        data={audios}
-        contentContainerStyle={{ paddingVertical: 25 }}
-        showsVerticalScrollIndicator={false}
-        renderItem={({ item, index }) => (
-          <Pressable
-            key={index}
-            style={{
-              padding: 20,
-              backgroundColor: "rgba(0,0,0,.5)",
-              marginBottom: 15,
-              borderRadius: 25,
-              flexDirection: "row",
-              alignItems: "center",
-              justifyContent: "space-between",
-              width: "100%",
-            }}
-            onPress={() => playAudio(item.audio)} // Llama a playAudio con la URL del audio
-          >
-            <Text
+      {audios.length > 1 && (
+        <FlatList
+          data={audios}
+          style={{ height: 320 }}
+          contentContainerStyle={{ paddingVertical: 25 }}
+          showsVerticalScrollIndicator={false}
+          renderItem={({ item, index }) => (
+            <Pressable
+              key={index}
               style={{
-                color: "#FFF",
-                fontFamily: "MuseoSans_700",
-                fontSize: 18,
+                padding: 20,
+                backgroundColor: "rgba(0,0,0,.5)",
+                marginBottom: 15,
+                borderRadius: 25,
+                flexDirection: "row",
+                alignItems: "center",
+                justifyContent: "space-between",
+                width: "100%",
               }}
+              onPress={() => playAudio(item.audio)} // Llama a playAudio con la URL del audio
             >
-              {item.title}
-            </Text>
-          </Pressable>
-        )}
-      />
+              <Text
+                style={{
+                  color: "#FFF",
+                  fontFamily: "MuseoSans_700",
+                  fontSize: 18,
+                }}
+              >
+                {item.title ? item.title : `Audio ${index + 1}`}
+              </Text>
+            </Pressable>
+          )}
+        />
+      )}
     </View>
   );
 };

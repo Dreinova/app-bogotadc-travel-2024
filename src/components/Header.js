@@ -169,8 +169,13 @@ const Header = (props) => {
             )}
           />
           <View style={{ flex: 1, alignItems: "center", gap: 30 }}>
-            {!ActualUser ? (
-              <Pressable onPress={() => router.push("/login")}>
+            {/* {!ActualUser ? (
+              <Pressable
+                onPress={() => {
+                  router.push("/login");
+                  closeModal();
+                }}
+              >
                 <Text style={styles.textMenu}>
                   {wordsLanguage[actualLanguage][16]}
                 </Text>
@@ -220,11 +225,14 @@ const Header = (props) => {
                   <Text style={styles.textMenu}>Cerrar Sesión</Text>
                 </Pressable>
               </>
-            )}
+            )} */}
             {menuLinks.map((item, i) => (
               <Pressable
                 key={i}
-                onPress={() => router.push(item.link)}
+                onPress={() => {
+                  router.push(item.link);
+                  closeModal();
+                }}
                 style={({ pressed }) => [
                   {
                     opacity: pressed ? 0.5 : 1,
