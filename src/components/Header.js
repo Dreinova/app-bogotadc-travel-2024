@@ -14,8 +14,12 @@ import FontAwesome from "@expo/vector-icons/FontAwesome";
 import { Ionicons } from "@expo/vector-icons";
 import { windowWidth } from "../constants/ScreenWidth";
 import { useDispatch, useSelector } from "react-redux";
-import { selectActualLanguage, selectWordsLang } from "../store/selectors";
-import { setLanguage } from "../store/actions";
+import {
+  selectActualLanguage,
+  selectActualUser,
+  selectWordsLang,
+} from "../store/selectors";
+import { logOutUser, setLanguage } from "../store/actions";
 import { Colors } from "../constants";
 
 const Header = (props) => {
@@ -46,13 +50,14 @@ const Header = (props) => {
     dispatch(setLanguage(lang));
     closeModal();
   };
+  const ActualUser = useSelector(selectActualUser);
+
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
   const [modalVisible, setModalVisible] = React.useState(false);
   const openModal = () => {
     setModalVisible(true);
   };
-
   const closeModal = () => {
     setModalVisible(false);
   };
@@ -164,6 +169,58 @@ const Header = (props) => {
             )}
           />
           <View style={{ flex: 1, alignItems: "center", gap: 30 }}>
+            {!ActualUser ? (
+              <Pressable onPress={() => router.push("/login")}>
+                <Text style={styles.textMenu}>
+                  {wordsLanguage[actualLanguage][16]}
+                </Text>
+              </Pressable>
+            ) : (
+              <>
+                <Pressable
+                  style={{
+                    width: 100,
+                    height: 100,
+                    borderRadius: 100 / 2,
+                    backgroundColor: "#5098ff",
+                    alignItems: "center",
+                    justifyContent: "center",
+                  }}
+                >
+                  <Ionicons
+                    name="settings"
+                    size={20}
+                    color="#FFF"
+                    style={{
+                      position: "absolute",
+                      top: 0,
+                      padding: 5,
+                      borderRadius: 25,
+                      right: 0,
+                      backgroundColor: "#ff7c47",
+                    }}
+                  />
+                  <Text
+                    style={{
+                      fontSize: 30,
+                      fontFamily: "MuseoSans_900",
+                      color: "#FFF",
+                      textTransform: "uppercase",
+                    }}
+                  >
+                    {ActualUser.name.charAt(0)}
+                  </Text>
+                </Pressable>
+                <Pressable
+                  onPress={async () => {
+                    await dispatch(logOutUser());
+                    closeModal();
+                  }}
+                >
+                  <Text style={styles.textMenu}>Cerrar Sesión</Text>
+                </Pressable>
+              </>
+            )}
             {menuLinks.map((item, i) => (
               <Pressable
                 key={i}
@@ -177,11 +234,7 @@ const Header = (props) => {
                 <Text style={styles.textMenu}>{item.title}</Text>
               </Pressable>
             ))}
-            {/* <Pressable onPress={() => router.push("/login")}>
-              <Text style={styles.textMenu}>
-                {wordsLanguage[actualLanguage][16]}
-              </Text>
-            </Pressable> */}
+
             <Pressable onPress={() => router.push("/(stack)/politics")}>
               <Text style={styles.textMenu}>
                 {wordsLanguage[actualLanguage][17]}

@@ -23,7 +23,7 @@
     },
     "android": {
       "package": "com.servinf.test.bogotadctravel",
-      "versionCode": 43,
+      "versionCode": 44,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",

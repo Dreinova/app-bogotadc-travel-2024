@@ -333,3 +333,14 @@ export const setAllWords = (words) => ({
   type: "GET_ALL_WORDS_LANGUAGE",
   payload: words,
 });
+export const setLocation = (location) => ({
+  type: "SET_LOCATION",
+  payload: location,
+});
+export const setUser = (user) => ({
+  type: "SET_USER",
+  payload: user,
+});
+export const logOutUser = () => ({
+  type: "LOGOUT_USER",
+});

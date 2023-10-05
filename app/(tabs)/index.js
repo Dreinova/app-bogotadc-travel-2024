@@ -9,7 +9,6 @@ import {
   VirtualizedList,
   FlatList,
 } from "react-native";
-
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import { windowWidth } from "../../src/constants/ScreenWidth";
@@ -26,6 +25,7 @@ import {
   selectWordsLang,
 } from "../../src/store/selectors";
 import { useSelector } from "react-redux";
+
 const ITEM_WIDTH = windowWidth + 40;
 export default function Page() {
   const wordsLanguage = useSelector(selectWordsLang);
@@ -93,6 +93,7 @@ export default function Page() {
     image,
     link,
   }));
+  const [isActive, setIsActive] = React.useState(false);
   if (!queriesCompleted) {
     return <PreloaderComponent />;
   }

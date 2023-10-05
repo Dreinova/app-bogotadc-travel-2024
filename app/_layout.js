@@ -9,12 +9,11 @@ import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "../src/store";
+import { setLocation } from "../src/store/actions";
 
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  const [location, setLocation] = React.useState(null);
-
   const [fontsLoaded] = useFonts({
     MuseoSans_100: require("../assets/fonts/MuseoSans-100.ttf"),
     MuseoSans_500: require("../assets/fonts/MuseoSans-500.ttf"),
@@ -31,15 +30,6 @@ export default function RootLayout() {
   }, [fontsLoaded]);
 
   React.useEffect(() => {
-    (async () => {
-      let { status } = await Location.requestForegroundPermissionsAsync();
-      if (status !== "granted") {
-        setErrorMsg("Permission to access location was denied");
-        return;
-      }
-      let location = await Location.getCurrentPositionAsync({});
-      setLocation(location);
-    })();
     if (fontsLoaded) {
       SplashScreen.hideAsync();
     }
@@ -93,6 +83,19 @@ export default function RootLayout() {
 }
 
 function RootLayoutNav() {
+  const dispatch = useDispatch();
+  React.useEffect(() => {
+    (async () => {
+      let { status } = await Location.requestForegroundPermissionsAsync();
+      if (status !== "granted") {
+        setErrorMsg("Permission to access location was denied");
+        return;
+      }
+
+      let location = await Location.getCurrentPositionAsync({});
+      dispatch(setLocation(location));
+    })();
+  }, []);
   return (
     <SafeAreaProvider>
       <Stack

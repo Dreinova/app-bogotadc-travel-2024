@@ -8,6 +8,8 @@ const selectHotels = (state) => state.hoteles;
 const selectRestaurants = (state) => state.restaurantes;
 const selectPlanes = (state) => state.planes;
 const selectLanguage = (state) => state.language;
+const selectLocation = (state) => state.location;
+const selectUser = (state) => state.user;
 
 export const selectPlacesData = createSelector(
   [selectFilters],
@@ -68,4 +70,12 @@ export const selectActualLanguage = createSelector(
 export const selectWordsLang = createSelector(
   [selectLanguage],
   (lang) => lang.words
+);
+export const selectActualLocation = createSelector(
+  [selectLocation],
+  (location) => location.location
+);
+export const selectActualUser = createSelector(
+  [selectUser],
+  (user) => user.user
 );

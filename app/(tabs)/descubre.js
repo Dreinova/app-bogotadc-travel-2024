@@ -14,6 +14,7 @@ import { windowWidth } from "../../src/constants/ScreenWidth";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectActualLanguage,
+  selectActualLocation,
   selectLocalidadesData,
   selectParaData,
   selectPlacesData,

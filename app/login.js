@@ -9,22 +9,32 @@ import {
 } from "react-native";
 import { AntDesign } from "@expo/vector-icons";
 import React from "react";
-import { selectActualLanguage, selectWordsLang } from "../src/store/selectors";
-import { useSelector } from "react-redux";
+import {
+  selectActualLanguage,
+  selectActualUser,
+  selectWordsLang,
+} from "../src/store/selectors";
+import { useDispatch, useSelector } from "react-redux";
+import { postData } from "../src/api/imperdibles";
+import { setUser } from "../src/store/actions";
 
 const login = () => {
+  const dispatch = useDispatch();
+
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
+
   const [formValues, setFormValues] = React.useState({
-    email: "",
-    pass: "",
+    email: "dreinovcorp@gmail.com",
+    password: "btravel.ceci",
   });
   const [setsendedLoginInfo, setSetsendedLoginInfo] = React.useState(false);
   const sendLoginForm = async () => {
     setSetsendedLoginInfo(true);
-    setTimeout(() => {
-      setSetsendedLoginInfo(false);
-    }, 1500);
+    const loginUser = await postData("login/", formValues);
+    console.log(loginUser);
+    await dispatch(setUser(loginUser));
+    setSetsendedLoginInfo(false);
   };
   return (
     <ImageBackground
@@ -82,7 +92,7 @@ const login = () => {
           placeholderTextColor="#FFF"
         />
         <TextInput
-          value={formValues.pass}
+          value={formValues.password}
           secureTextEntry
           placeholder={wordsLanguage[actualLanguage][47]}
           style={{
@@ -99,7 +109,7 @@ const login = () => {
           onChangeText={(text) => {
             setFormValues((prevState) => ({
               ...prevState,
-              pass: text,
+              password: text,
             }));
           }}
           placeholderTextColor="#FFF"

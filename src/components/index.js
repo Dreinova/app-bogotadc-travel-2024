@@ -8,6 +8,7 @@ import ReadMoreText from "./ReadMoreText";
 import HorizontalFlatListWithRows from "./HorizontalFlatListWithRows";
 import CardAudioguide from "./CardAudioguide";
 import ComoLlegar from "./ComoLlegar";
+import Switch from "./Switch";
 
 export {
   Header,
@@ -20,4 +21,5 @@ export {
   HorizontalFlatListWithRows,
   CardAudioguide,
   ComoLlegar,
+  Switch,
 };
