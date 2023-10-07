@@ -16,7 +16,7 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.servinf.idtturismo",
-      "buildNumber": "1.0.1"
+      "buildNumber": "1.0.3"
     },
     "android": {
       "package": "com.servinf.test.bogotadctravel",
@@ -42,7 +42,9 @@
       [
         "expo-location",
         {
-          "locationAlwaysAndWhenInUsePermission": "Allow $(PRODUCT_NAME) to use your location."
+          "locationAlwaysAndWhenInUsePermission": "Permite a a $(PRODUCT_NAME) usar tu ubicación. Lo usará para mostrarte atractivos turísticos cercanos y mejorar la experiencia del turismo en Bogotá.",
+          "locationAlwaysPermission": "Permite a a $(PRODUCT_NAME) usar tu ubicación. Lo usará para mostrarte atractivos turísticos cercanos y mejorar la experiencia del turismo en Bogotá.",
+          "locationWhenInUsePermission": "Permite a a $(PRODUCT_NAME) usar tu ubicación. Lo usará para mostrarte atractivos turísticos cercanos y mejorar la experiencia del turismo en Bogotá."
         }
       ],
       [
