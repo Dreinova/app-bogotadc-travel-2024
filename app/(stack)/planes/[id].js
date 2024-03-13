@@ -127,7 +127,7 @@ const ModalReserva = (
           >
             <Text
               style={{
-                color: "#266dc7",
+                color: "#E50728",
                 fontFamily: "MuseoSans_900",
                 textAlign: "center",
                 fontSize: 35,
@@ -138,7 +138,7 @@ const ModalReserva = (
             </Text>
             <Text
               style={{
-                color: "#266dc7",
+                color: "#E50728",
                 fontFamily: "MuseoSans_500",
                 textAlign: "center",
                 fontSize: 25,
@@ -149,7 +149,7 @@ const ModalReserva = (
             </Text>
             <Text
               style={{
-                color: "#266dc7",
+                color: "#E50728",
                 fontFamily: "MuseoSans_900",
                 textAlign: "center",
                 fontSize: 30,
@@ -256,7 +256,7 @@ const ModalReserva = (
             >
               <Text
                 style={{
-                  color: "#266dc7",
+                  color: "#E50728",
                   fontFamily: "MuseoSans_900",
                   fontSize: 18,
                   textDecorationLine: "underline",
@@ -350,7 +350,7 @@ const ModalReserva = (
               </Text>
               <View
                 style={{
-                  backgroundColor: "#ff7c47",
+                  backgroundColor: "#E50728",
                   width: 80,
                   height: 80,
                   borderRadius: 80,
@@ -459,7 +459,7 @@ const ModalReserva = (
                     opacity: pressed ? 0.5 : 1,
                   },
                   {
-                    backgroundColor: "#ff7c47",
+                    backgroundColor: "#E50728",
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: 25,
@@ -636,7 +636,7 @@ const SinglePlan = () => {
           <View style={{ flex: 1, justifyContent: "flex-end" }}>
             <View
               style={{
-                backgroundColor: "#ff7c47",
+                backgroundColor: "#E50728",
                 width: 50,
                 height: 50,
                 borderRadius: 50,
@@ -706,7 +706,7 @@ const SinglePlan = () => {
             </View>
             <View
               style={{
-                backgroundColor: "#5097ff",
+                backgroundColor: "#E50728",
                 marginBottom: 15,
                 paddingVertical: 10,
                 paddingLeft: 25,
@@ -772,7 +772,7 @@ const SinglePlan = () => {
               justifyContent: "center",
             }}
           >
-            <FontAwesome name="map-marker" size={22} color="#ff7c47" />
+            <FontAwesome name="map-marker" size={22} color="#E50728" />
             <Text
               style={[
                 { color: "#777", fontFamily: "MuseoSans_700", fontSize: 16 },
@@ -785,7 +785,7 @@ const SinglePlan = () => {
         {plan.body && <ReadMoreText text={plan.body} maxLines={3} />}
         <Text
           style={[
-            { color: "#ff7c47", fontFamily: "MuseoSans_900", fontSize: 16 },
+            { color: "#E50728", fontFamily: "MuseoSans_900", fontSize: 16 },
           ]}
         >
           {wordsLanguage[actualLanguage][37]}
@@ -795,7 +795,7 @@ const SinglePlan = () => {
             setFormModal(true);
           }}
           style={{
-            backgroundColor: "#ff7c47",
+            backgroundColor: "#E50728",
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 25,

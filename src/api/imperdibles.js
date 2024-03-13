@@ -1,7 +1,17 @@
 const BASE_URL = `https://bogotadc.travel/ce`;
+const BASE_URL_VISITBOG = `https://visitbogota.co`;
 const BASE_URL_DRPL = `https://bogotadc.travel/drpl/es/api/v1/es`;
 const BASE_URL_DRPLV2 = `https://bogotadc.travel/drpl/es/api/v2`;
 
+export const fetchBogotaGetFolder = async (endpoint) => {
+  try {
+    const res = await fetch(`${BASE_URL_VISITBOG}${endpoint}`);
+    return await res.json();
+  } catch (e) {
+    console.log("Error fetching", e.message);
+    return [];
+  }
+};
 export const fetchBogota = async (endpoint) => {
   try {
     const res = await fetch(`${BASE_URL}${endpoint}`);
@@ -20,12 +30,10 @@ export const fetchBogotaDrpl = async (endpoint) => {
     return [];
   }
 };
-export const fetchBogotaDrplV2 = async (endpoint, actualLanguage = null) => {
+export const fetchBogotaDrplV2 = async (endpoint, actualLanguage = "es") => {
   try {
     const res = await fetch(
-      `${BASE_URL_DRPLV2}${endpoint}${
-        actualLanguage ? `?langcode=${actualLanguage}` : ""
-      }`
+      `${BASE_URL_DRPLV2}${endpoint}?langcode=${actualLanguage}`
     );
     return await res.json();
   } catch (e) {

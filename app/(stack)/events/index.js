@@ -16,6 +16,7 @@ import {
   fetchBogotaDrpl,
   fetchBogotaDrplV2,
 } from "../../../src/api/imperdibles";
+import { windowHeight } from "../../../src/constants/ScreenWidth";
 
 // Ejemplo implementando el metodo POST:
 async function postData(url = "", data = {}) {
@@ -78,13 +79,14 @@ const EventsList = () => {
           fontSize: 30,
           textAlign: "center",
           paddingVertical: 20,
-          color: "#5097ff",
+          color: "#E50728",
         }}
       >
         {wordsLanguage[actualLanguage][2]}
       </Text>
       <FlatList
         contentContainerStyle={{ paddingBottom: 50 }}
+        style={{ height: windowHeight - 130 }}
         ItemSeparatorComponent={() => <View style={{ marginVertical: 5 }} />}
         data={eventsData}
         renderItem={({ item }) => (

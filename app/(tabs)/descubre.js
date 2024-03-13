@@ -9,12 +9,9 @@ import {
   View,
   Modal,
 } from "react-native";
-import { Colors } from "../../src/constants";
-import { windowWidth } from "../../src/constants/ScreenWidth";
 import { useSelector, useDispatch } from "react-redux";
 import {
   selectActualLanguage,
-  selectActualLocation,
   selectLocalidadesData,
   selectParaData,
   selectPlacesData,
@@ -23,7 +20,7 @@ import {
 } from "../../src/store/selectors";
 import { fetchData, fetchPlacesWithFilters } from "../../src/store/actions";
 import { CardAtractivo, PreloaderComponent } from "../../src/components";
-import { router } from "expo-router";
+import { router, useLocalSearchParams } from "expo-router";
 
 const CustomModal = ({
   visible,
@@ -76,7 +73,7 @@ const CustomModal = ({
           style={{ marginBottom: 30 }}
           onPress={() => closeModal(false)}
         >
-          <FontAwesome name="close" size={30} color="#ff7c47" />
+          <FontAwesome name="close" size={30} color="#E50728" />
         </Pressable>
         <FlatList
           data={data}
@@ -104,10 +101,12 @@ const CustomModal = ({
 };
 
 export default function TabTwoScreen() {
+  const params = useLocalSearchParams();
+  const [filterID, setFilterID] = React.useState(null);
+  const [queriesCompleted, setQueriesCompleted] = React.useState(false);
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
   const dispatch = useDispatch();
-  const [queriesCompleted, setQueriesCompleted] = React.useState(false);
   const placesData = useSelector(selectPlacesData);
   const paraData = useSelector(selectParaData);
   const subproductsData = useSelector(selectSubprodData);
@@ -117,6 +116,22 @@ export default function TabTwoScreen() {
     dispatch(fetchData());
     setQueriesCompleted(true);
   }, [dispatch]);
+  React.useEffect(() => {
+    async function getInfoQueryParam() {
+      setQueriesCompleted(false);
+      await dispatch(fetchPlacesWithFilters("all", "all", filterID, "all"));
+      setQueriesCompleted(true);
+    }
+
+    if (filterID !== null) {
+      getInfoQueryParam();
+    }
+  }, [filterID]); // Agregar filterID como dependencia
+
+  // Actualizar filterID cuando llegue un nuevo parámetro
+  React.useEffect(() => {
+    setFilterID(params.filterID);
+  }, [params.filterID]);
 
   const [modalType, setModalType] = React.useState(null);
 

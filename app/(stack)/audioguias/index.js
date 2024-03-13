@@ -13,6 +13,7 @@ import {
   selectActualLanguage,
   selectWordsLang,
 } from "../../../src/store/selectors";
+import { windowHeight } from "../../../src/constants/ScreenWidth";
 
 const list = () => {
   const actualLanguage = useSelector(selectActualLanguage);
@@ -38,14 +39,15 @@ const list = () => {
           fontSize: 30,
           textAlign: "center",
           paddingVertical: 20,
-          color: "#5097ff",
+          color: "#E50728",
         }}
       >
         {wordsLanguage[actualLanguage][5]}
       </Text>
       <FlatList
         numColumns={2}
-        contentContainerStyle={{ padding: 5 }}
+        style={{ height: windowHeight - 150 }}
+        contentContainerStyle={{ padding: 5, paddingBottom: 25 }}
         data={audioGuides}
         renderItem={({ item }) => (
           <CardAudioguide

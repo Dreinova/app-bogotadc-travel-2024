@@ -84,7 +84,7 @@ export default function Page() {
         >
           <Text
             style={{
-              color: "#ff7c47",
+              color: "#E50728",
               fontSize: 18,
               fontFamily: "MuseoSans_700",
             }}
@@ -192,6 +192,6 @@ const styles = StyleSheet.create({
     flex: 1,
     alignItems: "center",
     justifyContent: "center",
-    backgroundColor: "#ff7c47",
+    backgroundColor: "#E50728",
   },
 });

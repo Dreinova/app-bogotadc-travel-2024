@@ -108,7 +108,7 @@ const CustomModal = ({
           style={{ marginBottom: 30 }}
           onPress={() => closeModal(false)}
         >
-          <FontAwesome name="close" size={30} color="#ff7c47" />
+          <FontAwesome name="close" size={30} color="#E50728" />
         </Pressable>
         <ScrollView>
           <View style={{ paddingHorizontal: 20, flex: 1 }}>
@@ -217,8 +217,8 @@ const CustomModal = ({
                   setPrecioSelected(v);
                 }}
                 maximumTrackTintColor="#ddd"
-                minimumTrackTintColor="#e1582f"
-                thumbTintColor="#e1582f"
+                minimumTrackTintColor="#E50728"
+                thumbTintColor="#E50728"
               />
               <View
                 style={{
@@ -368,11 +368,7 @@ const EventsList = () => {
     return <PreloaderComponent planBogota />;
   }
   return (
-    <ImageBackground
-      source={require("../../../assets/images/bgpattern.png")}
-      imageStyle={{ resizeMode: "repeat", opacity: 0.1 }}
-      style={{ backgroundColor: "#0f2c52", flex: 1 }}
-    >
+    <ImageBackground style={{ backgroundColor: "#0f2c52", flex: 1 }}>
       <ScrollView
         style={{ height: windowHeight }}
         contentContainerStyle={{ paddingBottom: 50 }}
@@ -443,7 +439,7 @@ const EventsList = () => {
           <Pressable
             style={{
               alignItems: "center",
-              backgroundColor: "#ff7c47",
+              backgroundColor: "#E50728",
               flexDirection: "row",
               justifyContent: "center",
               gap: 15,
@@ -516,7 +512,7 @@ const EventsList = () => {
                   >
                     <View
                       style={{
-                        backgroundColor: "#ff7c47",
+                        backgroundColor: "#E50728",
                         width: 40,
                         height: 40,
                         borderRadius: 50,
@@ -587,7 +583,7 @@ const EventsList = () => {
                     <View
                       style={{
                         alignSelf: "flex-end",
-                        backgroundColor: "#5097ff",
+                        backgroundColor: "#E50728",
                         borderBottomLeftRadius: 25,
                         borderTopLeftRadius: 25,
                         marginBottom: 15,

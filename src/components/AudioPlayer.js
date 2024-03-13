@@ -89,7 +89,6 @@ const AudioPlayer = ({ image, audios }) => {
 
     // Limpiar al desmontar
     return async () => {
-      console.log(sound);
       if (sound) {
         await sound.stopAsync();
         await sound.unloadAsync();
@@ -100,7 +99,6 @@ const AudioPlayer = ({ image, audios }) => {
   React.useEffect(() => {
     return sound
       ? () => {
-          console.log("Unloading Sound");
           sound.unloadAsync();
         }
       : undefined;
@@ -133,11 +131,11 @@ const AudioPlayer = ({ image, audios }) => {
         step={1}
         maximumValue={duration}
         value={position}
-        thumbTintColor="#e1582f"
+        thumbTintColor="#E50728"
         onValueChange={handleSliderValueChange}
         onSlidingComplete={handleSliderSlidingComplete}
-        minimumTrackTintColor="#e1582f"
-        maximumTrackTintColor="#e1582f"
+        minimumTrackTintColor="#E50728"
+        maximumTrackTintColor="#E50728"
       />
       <View
         style={{

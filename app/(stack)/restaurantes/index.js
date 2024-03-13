@@ -78,7 +78,7 @@ const CustomModal = ({
           style={{ marginBottom: 30 }}
           onPress={() => closeModal(false)}
         >
-          <FontAwesome name="close" size={30} color="#ff7c47" />
+          <FontAwesome name="close" size={30} color="#E50728" />
         </Pressable>
         <ScrollView>
           <View style={{ paddingHorizontal: 20, flex: 1 }}>
@@ -368,7 +368,7 @@ const EventsList = () => {
           fontSize: 30,
           textAlign: "center",
           paddingVertical: 20,
-          color: "#5097ff",
+          color: "#E50728",
         }}
       >
         {wordsLanguage[actualLanguage][20]}
@@ -378,7 +378,7 @@ const EventsList = () => {
           { opacity: pressed ? 0.5 : 1 },
           {
             alignItems: "center",
-            backgroundColor: "#ff7c47",
+            backgroundColor: "#E50728",
             flexDirection: "row",
             padding: 10,
             justifyContent: "center",
@@ -422,7 +422,7 @@ const EventsList = () => {
                   opacity: pressed ? 0.5 : 1,
                 },
                 {
-                  backgroundColor: "#5098ff",
+                  backgroundColor: "#E50728",
                   alignItems: "center",
                   justifyContent: "center",
                   padding: 15,

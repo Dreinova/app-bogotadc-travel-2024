@@ -70,19 +70,10 @@ const EventCard = ({
         },
       ]}
     >
-      <ImageBackground
-        style={[
-          {
-            height: windowHeight / 4,
-          },
-        ]}
-        source={{ uri: image }}
-        onLoad={handleImageLoad}
-      >
+      <ImageBackground source={{ uri: image }} onLoad={handleImageLoad}>
         <View
           style={{
             backgroundColor: "rgba(0,0,0,.6)",
-            flex: 1,
             padding: 10,
             alignItems: "center",
             justifyContent: "center",
@@ -92,15 +83,16 @@ const EventCard = ({
             style={{
               color: Colors.white,
               fontFamily: "MuseoSans_900",
-              fontSize: 30,
+              fontSize: 25,
               textShadowColor: "rgba(0, 0, 0, .7)",
               textShadowOffset: { width: 1, height: 1 },
               textShadowRadius: 10,
               textAlign: "center",
               marginBottom: 15,
+              textTransform: "uppercase",
             }}
           >
-            {title}
+            {title.replace(/&quot;/g, '"')}
           </Text>
           <Text
             style={{
@@ -126,7 +118,7 @@ const EventCard = ({
           >
             <View
               style={{
-                backgroundColor: "#ff7c47",
+                backgroundColor: "#E50728",
                 padding: 15,
                 borderRadius: 25,
                 gap: 5,
@@ -166,7 +158,7 @@ const EventCard = ({
             {end && (
               <View
                 style={{
-                  backgroundColor: "#ff7c47",
+                  backgroundColor: "#E50728",
                   padding: 15,
                   gap: 5,
                   borderRadius: 25,

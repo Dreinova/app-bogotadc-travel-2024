@@ -1,5 +1,6 @@
 import React from "react";
 import {
+  Image,
   ImageBackground,
   Pressable,
   StyleSheet,
@@ -17,12 +18,48 @@ const CardAtractivo = ({
   onPress,
   subtitle,
   isAudioGuide,
+  isEvent,
+  start,
+  end,
 }) => {
   const [imagesLoaded, setImagesLoaded] = React.useState(false);
 
   const handleImageLoad = () => {
     setImagesLoaded(true);
   };
+  let monthStart, dayStart, yearStart;
+  let monthEnd, dayEnd, yearEnd;
+  if (start) {
+    const dateStart = new Date(start);
+    const optionsdateStart = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+    const dateFormatteddateStart = dateStart.toLocaleDateString(
+      "en-US",
+      optionsdateStart
+    );
+    monthStart = dateFormatteddateStart.substring(0, 3);
+    dayStart = dateFormatteddateStart.substring(4, 6);
+    yearStart = dateFormatteddateStart.substring(7);
+  }
+  if (end) {
+    const dateEnd = new Date(end);
+    const optionsdateEnd = {
+      month: "short",
+      day: "numeric",
+      year: "numeric",
+    };
+    const dateFormatteddateEnd = dateEnd.toLocaleDateString(
+      "en-US",
+      optionsdateEnd
+    );
+
+    monthEnd = dateFormatteddateEnd.substring(0, 3);
+    dayEnd = dateFormatteddateEnd.substring(4, 6);
+    yearEnd = dateFormatteddateEnd.substring(7);
+  }
   return (
     <Pressable
       onPress={onPress}
@@ -62,6 +99,43 @@ const CardAtractivo = ({
         >
           {title}
         </Text>
+        {isEvent && (
+          <View
+            style={{
+              flexDirection: "column",
+              alignItems: "center",
+              gap: 5,
+            }}
+          >
+            <View
+              style={{
+                backgroundColor: "#E50728",
+                padding: 10,
+                marginTop: 5,
+                borderRadius: 8,
+                gap: 5,
+                flexDirection: "row",
+              }}
+            >
+              <Image
+                source={{
+                  uri: "https://visitbogota.co/vacacional/images/eventosIcono.png",
+                }}
+                style={{ width: 15, height: 15 }}
+              />
+              <Text
+                style={{
+                  color: Colors.white,
+                  fontFamily: "MuseoSans_700",
+                  fontSize: 16,
+                  textAlign: "center",
+                }}
+              >
+                {monthStart} {dayStart} {yearStart}
+              </Text>
+            </View>
+          </View>
+        )}
         {subtitle && (
           <Text
             style={{

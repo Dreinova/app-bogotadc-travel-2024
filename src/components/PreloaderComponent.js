@@ -17,7 +17,7 @@ const PreloaderComponent = ({ planBogota }) => {
     </ImageBackground>
   ) : (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#ff7c47" />
+      <ActivityIndicator size="large" color="#E50728" />
     </View>
   );
 };

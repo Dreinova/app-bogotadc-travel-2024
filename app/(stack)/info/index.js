@@ -149,7 +149,7 @@ const info = (props) => {
                 onPress={() => setModalInfoVisible(false)}
                 style={{ position: "absolute", right: 15, top: 15 }}
               >
-                <Ionicons name="ios-close-sharp" size={35} color="#ff7c47" />
+                <Ionicons name="ios-close-sharp" size={35} color="#E50728" />
               </Pressable>
               <Text
                 style={{
@@ -199,13 +199,13 @@ const info = (props) => {
                 >
                   <Text
                     style={{
-                      color: "#469bd3",
+                      color: "#E50728",
                       fontFamily: "MuseoSans_700",
                       fontSize: 16,
                       textAlign: "center",
                     }}
                   >
-                    Descragar Adjunto
+                    Descargar Adjunto
                   </Text>
                 </Pressable>
               )}
@@ -215,7 +215,7 @@ const info = (props) => {
       </Modal>
       <View
         style={{
-          backgroundColor: "#ff7c47",
+          backgroundColor: "#E50728",
           alignItems: "center",
           justifyContent: "center",
           padding: 10,
@@ -352,11 +352,11 @@ const info = (props) => {
           const colorTitle = (type) => {
             switch (type) {
               case "4":
-                return "#6dc184";
+                return "#E50728";
               case "5":
-                return "#ff7c47";
+                return "#E50728";
               case "6":
-                return "#5098ff";
+                return "#E50728";
             }
           };
 

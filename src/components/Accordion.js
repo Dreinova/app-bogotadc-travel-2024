@@ -41,7 +41,7 @@ const Accordion = ({ title, children, small, colorTitle }) => {
           style={[
             styles.title,
             {
-              color: colorTitle ? colorTitle : "#266DC4",
+              color: colorTitle ? colorTitle : "#e50728",
               fontSize: small ? 16 : 20,
             },
           ]}
@@ -51,7 +51,7 @@ const Accordion = ({ title, children, small, colorTitle }) => {
         <Animated.View
           style={{
             transform: [{ rotate }],
-            backgroundColor: colorTitle ? colorTitle : "#6dc184",
+            backgroundColor: colorTitle ? colorTitle : "#E50728",
             borderRadius: 30 * 2,
             width: 30,
             height: 30,

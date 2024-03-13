@@ -33,13 +33,13 @@ const ComoLlegar = ({ onPress }) => {
             width: 120,
             height: 120,
             borderRadius: 120 / 2,
-            borderColor: "#46a6de",
+            borderColor: "#E50728",
             borderWidth: 2,
             gap: 5,
           }}
         >
-          <FontAwesome name="search" size={25} color="#46a6de" />
-          <Text style={{ color: "#46a6de", fontFamily: "MuseoSans_700" }}>
+          <FontAwesome name="search" size={25} color="#E50728" />
+          <Text style={{ color: "#E50728", fontFamily: "MuseoSans_700" }}>
             {wordsLanguage[actualLanguage][45]}
           </Text>
         </View>

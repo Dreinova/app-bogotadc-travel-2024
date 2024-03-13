@@ -143,7 +143,7 @@ const Header = (props) => {
                   {
                     borderWidth: 3,
                     borderColor:
-                      actualLanguage == item.slug ? "#ff7c47" : "transparent",
+                      actualLanguage == item.slug ? "#E50728" : "transparent",
                     overflow: "hidden",
                     width: 40,
                     height: 40,
@@ -187,7 +187,7 @@ const Header = (props) => {
                     width: 100,
                     height: 100,
                     borderRadius: 100 / 2,
-                    backgroundColor: "#5098ff",
+                    backgroundColor: "#E50728",
                     alignItems: "center",
                     justifyContent: "center",
                   }}
@@ -202,7 +202,7 @@ const Header = (props) => {
                       padding: 5,
                       borderRadius: 25,
                       right: 0,
-                      backgroundColor: "#ff7c47",
+                      backgroundColor: "#E50728",
                     }}
                   />
                   <Text

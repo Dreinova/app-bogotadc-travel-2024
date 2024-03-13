@@ -32,7 +32,6 @@ const login = () => {
   const sendLoginForm = async () => {
     setSetsendedLoginInfo(true);
     const loginUser = await postData("login/", formValues);
-    console.log(loginUser);
     await dispatch(setUser(loginUser));
     setSetsendedLoginInfo(false);
   };
@@ -120,7 +119,7 @@ const login = () => {
             padding: 10,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#ff7c47",
+            backgroundColor: "#E50728",
             width: "100%",
             borderRadius: 25,
             marginVertical: 10,

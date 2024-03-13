@@ -17,7 +17,12 @@ import {
   CardAtractivo,
   PreloaderComponent,
 } from "../../src/components";
-import { fetchBogota, fetchBogotaDrpl } from "../../src/api/imperdibles";
+import {
+  fetchBogota,
+  fetchBogotaDrpl,
+  fetchBogotaDrplV2,
+  fetchBogotaGetFolder,
+} from "../../src/api/imperdibles";
 import { Colors } from "../../src/constants";
 import { router } from "expo-router";
 import {
@@ -30,70 +35,37 @@ const ITEM_WIDTH = windowWidth + 40;
 export default function Page() {
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
-  const menuLinks = [
-    {
-      title: wordsLanguage[actualLanguage][1],
-      image: "/drpl/sites/default/files/2021-12/Recurso%2033.jpg",
-      link: "descubre",
-    },
-    {
-      title: wordsLanguage[actualLanguage][2],
-      image: "/drpl/sites/default/files/2021-12/Recurso%2034.jpg",
-      link: "(stack)/events",
-    },
-    {
-      title: wordsLanguage[actualLanguage][3],
-      image: "/drpl/sites/default/files/2021-12/Recurso%2031.jpg",
-      link: "(stack)/restaurantes",
-    },
-    {
-      title: wordsLanguage[actualLanguage][4],
-      image: "/drpl/sites/default/files/2021-12/Recurso%2036.jpg",
-      link: "(stack)/hoteles",
-    },
-    {
-      title: wordsLanguage[actualLanguage][5],
-      image: "/drpl/sites/default/files/2021-12/Recurso%2035.jpg",
-      link: "(stack)/audioguias",
-    },
-    {
-      title: wordsLanguage[actualLanguage][6],
-      image: "/drpl/sites/default/files/2021-12/Recurso%2030.jpg",
-      link: "(stack)/planes",
-    },
-    {
-      title: wordsLanguage[actualLanguage][7],
-      image: "/drpl/sites/default/files/2021-12/Recurso%2037.jpg",
-      link: "(stack)/info",
-    },
-  ];
-  const [bestPlaces, setbestPlaces] = React.useState([]);
-  const [savedplaces, setSavedplaces] = React.useState([]);
-  const [impplaces, setImpplaces] = React.useState([]);
+  const [BogNatural, setBogNatural] = React.useState([]);
+  const [BogCultural, setBogCultural] = React.useState([]);
+  const [Blog, setBlog] = React.useState([]);
+  const [eventsProx, setEventsProx] = React.useState([]);
   // Variable de estado para controlar si las consultas han finalizado
   const [queriesCompleted, setQueriesCompleted] = React.useState(false);
   React.useEffect(() => {
     Promise.all([
-      fetchBogota("/bestplaces/"),
-      fetchBogota("/savedplaces/?user=443"),
-      fetchBogotaDrpl("/impplaces"),
+      fetchBogotaDrplV2("/eventsDestacados"),
+      fetchBogotaDrpl("/products/all/8"),
+      fetchBogotaDrpl("/products/all/7"),
+      fetchBogotaGetFolder(`/vacacional/g/lastBlogs/?lang=${actualLanguage}`),
     ])
-      .then(([bestPlacesData, savedPlacesData, impPlacesData]) => {
-        setbestPlaces(bestPlacesData);
-        setSavedplaces(savedPlacesData);
-        setImpplaces(impPlacesData);
+      .then(([eventsData, naturalData, culturalData, blogData]) => {
+        setBogNatural(naturalData);
+        setBogCultural(culturalData);
+        setBlog(blogData);
+        function compareDates(a, b) {
+          const dateA = new Date(a.field_date);
+          const dateB = new Date(b.field_date);
+          return dateA - dateB;
+        }
+
+        // Ordenar el arreglo por la fecha inicial
+        eventsData.sort(compareDates);
+        setEventsProx(eventsData);
         // Marcar que las consultas han finalizado
         setQueriesCompleted(true);
       })
       .catch((error) => console.error(error));
   }, []);
-
-  const HomeMenuArray = menuLinks.map(({ title, image, link }) => ({
-    title: title.trim(),
-    image,
-    link,
-  }));
-  const [isActive, setIsActive] = React.useState(false);
   if (!queriesCompleted) {
     return <PreloaderComponent />;
   }
@@ -104,89 +76,107 @@ export default function Page() {
         minHeight: Dimensions.get("window").height,
       }}
     >
-      {HomeMenuArray.map((item, i) => (
-        <Pressable
-          key={i}
-          onPress={() => router.push(item.link)}
-          style={({ pressed }) => [
-            {
-              paddingVertical: 20,
-              paddingHorizontal: 10,
-              opacity: pressed ? 0.5 : 1,
-            },
-          ]}
+      <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
         >
           <Image
             source={{
-              uri: `https://bogotadc.travel${item.image}`,
+              uri: "https://visitbogota.co/vacacional/images/eventos.png",
             }}
-            style={StyleSheet.absoluteFillObject}
-            resizeMode="cover"
+            style={{
+              width: 45,
+              height: 45,
+              resizeMode: "contain",
+              marginRight: 10,
+            }}
           />
-          <View style={styles.overlay} />
-          <View
+          <Text
             style={{
-              flex: 1,
-              flexDirection: "row",
-              justifyContent: "space-between",
-              alignItems: "center",
+              fontSize: 20,
+              textAlign: "center",
+              textTransform: "uppercase",
+              color: "#e50728",
+              fontFamily: "MuseoSans_900",
             }}
           >
-            <Text
-              style={{
-                fontSize: 16,
-                textTransform: "uppercase",
-                letterSpacing: 1.5,
-                fontFamily: "MuseoSans_900",
-                color: Colors.white,
-                textShadowColor: "rgba(0, 0, 0, 1)",
-                textShadowOffset: { width: 2, height: 2 },
-                textShadowRadius: 10,
-              }}
-            >
-              {item.title}
-            </Text>
-            <FontAwesome name="chevron-right" size={20} color="#FFF" />
-          </View>
-        </Pressable>
-      ))}
-      {/* <Accordion title={wordsLanguage[actualLanguage][8]}>
-        {savedplaces.length == 0 && (
-          <Pressable
+            {wordsLanguage[actualLanguage][2]}
+          </Text>
+        </View>
+        <FlatList
+          fadingEdgeLength={15}
+          ItemSeparatorComponent={() => (
+            <View style={{ paddingHorizontal: 2 }} />
+          )}
+          horizontal
+          data={eventsProx}
+          keyExtractor={(item) => item.nid}
+          renderItem={({ item }) => (
+            <CardAtractivo
+              end={item.field_end_date}
+              image={`https://bogotadc.travel${item.field_cover_image}`}
+              isEvent
+              isHorizontal
+              onPress={() => router.push(`(stack)/events/${item.nid}`)}
+              start={item.field_date}
+              title={item.title}
+            />
+          )}
+        />
+      </View>
+      <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://visitbogota.co/vacacional/images/descubre_icon.png",
+            }}
             style={{
-              backgroundColor: "#F0f0f0",
-              borderRadius: 10,
-              height: 80,
-              marginBottom: 20,
-              alignItems: "center",
-              justifyContent: "center",
+              width: 45,
+              height: 45,
+              resizeMode: "contain",
+              marginRight: 10,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              textTransform: "uppercase",
+              color: "#e50728",
+              fontFamily: "MuseoSans_900",
             }}
           >
-            <Text
-              style={{
-                color: "#666",
-                fontFamily: "MuseoSans_700",
-                fontSize: 50,
-              }}
-            >
-              +
-            </Text>
-          </Pressable>
-        )}
-        <View style={{ borderRadius: 10, overflow: "hidden" }}>
-          <VirtualizedList
+            {wordsLanguage[actualLanguage][1]}
+          </Text>
+        </View>
+        <View style={{ marginVertical: 15 }}>
+          <Text style={styles.title}>{wordsLanguage[actualLanguage][62]}</Text>
+          <FlatList
             fadingEdgeLength={15}
             ItemSeparatorComponent={() => (
               <View style={{ paddingHorizontal: 2 }} />
             )}
             horizontal
-            data={savedplaces}
-            getItem={(data, index) => data[index]}
-            getItemCount={() => savedplaces.length}
+            data={BogNatural}
             keyExtractor={(item) => item.nid}
             renderItem={({ item }) => (
               <CardAtractivo
-                onPress={() => router.push(`(stack)/atractivos/${item.nid}`)}
+                onPress={() =>
+                  router.push({
+                    pathname: "descubre",
+                    params: { filterID: item.nid },
+                  })
+                }
                 isHorizontal
                 title={item.title}
                 image={`https://bogotadc.travel${item.field_cover_image}`}
@@ -194,29 +184,63 @@ export default function Page() {
             )}
           />
         </View>
-      </Accordion> */}
-      <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
-        <Text style={styles.title}>{wordsLanguage[actualLanguage][9]}</Text>
-        <FlatList
-          fadingEdgeLength={15}
-          ItemSeparatorComponent={() => (
-            <View style={{ paddingHorizontal: 2 }} />
-          )}
-          horizontal
-          data={impplaces}
-          keyExtractor={(item) => item.nid}
-          renderItem={({ item }) => (
-            <CardAtractivo
-              onPress={() => router.push(`(stack)/atractivos/${item.nid}`)}
-              isHorizontal
-              title={item.title}
-              image={`https://bogotadc.travel${item.field_cover_image}`}
-            />
-          )}
-        />
+        <View style={{ marginVertical: 15 }}>
+          <Text style={styles.title}>{wordsLanguage[actualLanguage][63]}</Text>
+          <FlatList
+            fadingEdgeLength={15}
+            ItemSeparatorComponent={() => (
+              <View style={{ paddingHorizontal: 2 }} />
+            )}
+            horizontal
+            data={BogCultural}
+            keyExtractor={(item) => item.nid}
+            renderItem={({ item }) => (
+              <CardAtractivo
+                onPress={() =>
+                  router.push({
+                    pathname: "descubre",
+                    params: { filterID: item.nid },
+                  })
+                }
+                isHorizontal
+                title={item.title}
+                image={`https://bogotadc.travel${item.field_cover_image}`}
+              />
+            )}
+          />
+        </View>
       </View>
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
-        <Text style={styles.title}>{wordsLanguage[actualLanguage][10]}</Text>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://visitbogota.co/vacacional/images/descubre_icon.png",
+            }}
+            style={{
+              width: 45,
+              height: 45,
+              resizeMode: "contain",
+              marginRight: 10,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              textTransform: "uppercase",
+              color: "#e50728",
+              fontFamily: "MuseoSans_900",
+            }}
+          >
+            {wordsLanguage[actualLanguage][65]}
+          </Text>
+        </View>
         <View style={{ borderRadius: 10, overflow: "hidden" }}>
           <VirtualizedList
             fadingEdgeLength={15}
@@ -224,16 +248,16 @@ export default function Page() {
               <View style={{ paddingHorizontal: 2 }} />
             )}
             horizontal
-            data={bestPlaces}
+            data={Blog}
             getItem={(data, index) => data[index]}
-            getItemCount={() => bestPlaces.length}
+            getItemCount={() => Blog.length}
             keyExtractor={(item) => item.nid}
             renderItem={({ item }) => (
               <CardAtractivo
-                onPress={() => router.push(`(stack)/atractivos/${item.nid}`)}
+                onPress={() => router.push(`(stack)/blog/${item.nid}`)}
                 isHorizontal
                 title={item.title}
-                image={`https://bogotadc.travel${item.field_cover_image}`}
+                image={`https://bogotadc.travel${item.field_image}`}
               />
             )}
           />
@@ -256,7 +280,7 @@ const styles = StyleSheet.create({
     flex: 1,
     textAlign: "center",
     textTransform: "uppercase",
-    color: "#266DC4",
+    color: "#e50728",
     fontFamily: "MuseoSans_900",
     marginBottom: 15,
   },

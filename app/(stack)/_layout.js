@@ -10,7 +10,7 @@ function _layout() {
           <View
             style={{
               padding: 8,
-              backgroundColor: "#6dc184",
+              backgroundColor: "#E50728",
               flexDirection: "row",
               alignItems: "center",
               justifyContent: "space-between",

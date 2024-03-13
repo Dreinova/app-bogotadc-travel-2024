@@ -73,6 +73,7 @@ export const fetchPlacesWithFilters =
           uniqueData.push(item);
         }
       }
+      console.log(placesResponse, "fetchPlacesWithFilters");
       dispatch(setPlacesData(uniqueData));
     } catch (error) {
       console.error("Error fetching places data:", error);
@@ -172,6 +173,7 @@ export const fetchAllPLanes = () => async (dispatch, getState) => {
 export const fetchAllFilters =
   (filters, filterType) => async (dispatch, getState) => {
     const state = getState();
+    const actualLanguage = state.language.language;
     if (filterType == "hoteles") {
       try {
         const arrayFilters = await Promise.all(
@@ -231,7 +233,8 @@ export const fetchAllWords = () => async (dispatch) => {
     const wordsByLang = await Promise.all(
       langs.map(async (lang) => {
         const response = await fetchBogotaDrplV2(
-          `/palabras_interfaz/3273?langcode=${lang}`
+          `/palabras_interfaz/3273`,
+          lang
         );
         const palabrasArray = response[0].field_palabras.split("|");
         const palabrasDecodificadas =

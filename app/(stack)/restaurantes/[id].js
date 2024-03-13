@@ -106,7 +106,7 @@ const SingleRestaurant = () => {
               justifyContent: "center",
             }}
           >
-            <FontAwesome name="map-marker" size={22} color="#ff7c47" />
+            <FontAwesome name="map-marker" size={22} color="#E50728" />
             <Text
               style={[
                 { color: "#777", fontFamily: "MuseoSans_500", fontSize: 16 },
@@ -127,7 +127,7 @@ const SingleRestaurant = () => {
               justifyContent: "center",
             }}
           >
-            <FontAwesome name="phone" size={24} color="#47a8d9" />
+            <FontAwesome name="phone" size={24} color="#E50728" />
             <Text
               style={[
                 { color: "#777", fontFamily: "MuseoSans_500", fontSize: 16 },
