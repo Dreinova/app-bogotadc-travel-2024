@@ -368,7 +368,7 @@ const EventsList = () => {
     return <PreloaderComponent planBogota />;
   }
   return (
-    <ImageBackground style={{ backgroundColor: "#0f2c52", flex: 1 }}>
+    <ImageBackground>
       <ScrollView
         style={{ height: windowHeight }}
         contentContainerStyle={{ paddingBottom: 50 }}
@@ -388,23 +388,13 @@ const EventsList = () => {
           rangos_de_precio={rangos_de_precio}
           setRangos_de_precio={setRangos_de_precio}
         />
-        <Image
-          source={require("../../../assets/images/logo_pb.png")}
-          style={{
-            width: 150,
-            height: 80,
-            resizeMode: "contain",
-            alignSelf: "center",
-            marginTop: 20,
-          }}
-        />
         <Text
           style={{
             fontFamily: "MuseoSans_900",
             fontSize: 30,
             textAlign: "center",
             paddingVertical: 20,
-            color: "#FFF",
+            color: "#e50728",
           }}
         >
           {wordsLanguage[actualLanguage][31]}
@@ -609,7 +599,7 @@ const EventsList = () => {
                   </View>
                   <View
                     style={{
-                      backgroundColor: "#103b6f",
+                      backgroundColor: "#e50728",
                       paddingVertical: 30,
                       paddingHorizontal: 15,
                       flex: 1,
