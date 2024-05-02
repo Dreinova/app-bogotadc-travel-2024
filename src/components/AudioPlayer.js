@@ -6,8 +6,10 @@ import { FontAwesome } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 import { formattedTime } from "../api/imperdibles";
 import { useFocusEffect } from "expo-router";
+import { Colors } from "../constants";
 
 const AudioPlayer = ({ image, audios }) => {
+  const [activeIndex, setActiveIndex] = useState(0);
   const [sound, setSound] = useState(null);
   const [isPlaying, setIsPlaying] = useState(true);
   const [duration, setDuration] = useState(null);
@@ -187,7 +189,7 @@ const AudioPlayer = ({ image, audios }) => {
               key={index}
               style={{
                 padding: 20,
-                backgroundColor: "rgba(0,0,0,.5)",
+                backgroundColor: activeIndex == index ? Colors.orange:"rgba(0,0,0,.5)",
                 marginBottom: 15,
                 borderRadius: 25,
                 flexDirection: "row",
@@ -195,7 +197,10 @@ const AudioPlayer = ({ image, audios }) => {
                 justifyContent: "space-between",
                 width: "100%",
               }}
-              onPress={() => playAudio(item.audio)} // Llama a playAudio con la URL del audio
+              onPress={() =>{
+                 playAudio(item.audio)
+                 setActiveIndex(index);
+                }} // Llama a playAudio con la URL del audio
             >
               <Text
                 style={{

@@ -73,35 +73,38 @@ const SingleAtractivo = () => {
 
   return (
     <ScrollView>
-      <ImageBackground
+      <View
         style={{
-          width: windowWidth,
-          height: windowWidth - 120,
-        }}
-        source={{
-          uri: `https://bogotadc.travel${
-            atractivo.field_cover_image
-              ? atractivo.field_cover_image
-              : "/img/noimg.png"
-          }`,
+          flex: 1,
+          padding: 20,
+          flexDirection: "row",
+          alignItems: "center",
+          gap: 20,
         }}
       >
-        <View
-          style={{
-            backgroundColor: "rgba(0,0,0,.5)",
-            flex: 1,
-            padding: 20,
-            justifyContent: "flex-end",
+        <Image
+          source={{
+            uri: `https://visitbogota.co/vacacional/images/exp_tur.png`,
           }}
+          width={50}
+          height={60}
+        />
+        <Text style={styles.text}>{atractivo.title}</Text>
+      </View>
+      {atractivo.field_galery && (
+        <Swiper
+          style={{ height: (windowWidth / 16) * 9 }}
+          dotColor="rgba(255,255,255,.8)"
+          activeDotStyle={{backgroundColor: Colors.orange}}
+          
+          
         >
-          <Text style={styles.text}>{atractivo.title}</Text>
-          {atractivo.field_horarios && (
-            <Text style={styles.text}>{atractivo.field_horarios}</Text>
-          )}
-        </View>
-      </ImageBackground>
+          {renderImages()}
+        </Swiper>
+      )}
       <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
         {atractivo.field_address && (
+          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
           <Pressable
             onPress={() =>
               WebBrowser.openBrowserAsync(
@@ -125,8 +128,10 @@ const SingleAtractivo = () => {
               {atractivo.field_address}
             </Text>
           </Pressable>
+          </View>
         )}
         {atractivo.field_link_info && (
+          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
           <Pressable
             onPress={() =>
               WebBrowser.openBrowserAsync(`${atractivo.field_link_info}`)
@@ -153,8 +158,10 @@ const SingleAtractivo = () => {
               {atractivo.field_link_info}
             </Text>
           </Pressable>
+          </View>
         )}
         {atractivo.field_email && (
+          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
           <Pressable
             onPress={() => Linking.openURL(`mailto:${atractivo.field_email}`)}
             style={{
@@ -179,8 +186,11 @@ const SingleAtractivo = () => {
               {atractivo.field_email}
             </Text>
           </Pressable>
+          </View>
         )}
         {atractivo.field_phone && (
+          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
+
           <Pressable
             onPress={() => Linking.openURL(`tel:${atractivo.field_phone}`)}
             style={{
@@ -205,26 +215,66 @@ const SingleAtractivo = () => {
               {atractivo.field_phone}
             </Text>
           </Pressable>
+          </View>
+        )} 
+        {atractivo.field_horarios && (
+        <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:30, maxWidth: 300,}}>
+          <Image source={{uri: `https://visitbogota.co/vacacional/images/horarios.png`}} width={20} height={20} />
+
+          <Text  style={[
+            {
+              color: "#777",
+              fontFamily: "MuseoSans_500",
+              fontSize: 16,
+              lineHeight: 20,
+            },
+          ]}>{atractivo.field_horarios}</Text>
+        </View>
         )}
-        <ReadMoreText text={atractivo.body} maxLines={3} />
+        <Text
+            style={{
+              fontSize: 14,
+              lineHeight: 22,
+              textAlign: "justify",
+              marginBottom: 15,
+              fontSize: 22,
+              color: Colors.orange,
+              fontFamily: "MuseoSans_900",
+            }}
+          >
+            Acerca de
+          </Text>
+        <Text style={{ fontSize: 14, lineHeight: 22, textAlign: "justify" }}>
+          {atractivo.body}
+        </Text>
+        <View style={{ marginVertical: 30 }}>
+          
+          <Text
+            style={{
+              fontSize: 14,
+              lineHeight: 22,
+              textAlign: "justify",
+              marginBottom: 15,
+              fontSize: 22,
+              color: Colors.orange,
+              fontFamily: "MuseoSans_900",
+            }}
+          >
+            Cómo llegar:
+          </Text>
+          <Text style={{ fontSize: 14, lineHeight: 22, textAlign: "justify" }}>
+            {atractivo.field_howtogetthere}
+          </Text>
+        </View>
       </View>
       {atractivo.field_location && (
         <ComoLlegar
           onPress={() =>
             WebBrowser.openBrowserAsync(
-              `https://www.google.com/maps/search/?api=1&query=${atractivo.field_location.trim()}`
+              atractivo.field_mapslink ? atractivo.field_mapslink : `http://maps.google.com/maps?q=${atractivo.field_location.trim()}`
             )
           }
         />
-      )}
-      {atractivo.field_galery && (
-        <Swiper
-          showsButtons
-          style={{ height: (windowWidth / 16) * 9 }}
-          dotColor="rgba(255,255,255,.8)"
-        >
-          {renderImages()}
-        </Swiper>
       )}
     </ScrollView>
   );
@@ -232,13 +282,9 @@ const SingleAtractivo = () => {
 
 const styles = StyleSheet.create({
   text: {
-    color: Colors.white,
+    color: "#626262",
     fontFamily: "MuseoSans_900",
-    fontSize: 20,
-    textShadowColor: "rgba(0, 0, 0, .7)",
-    textShadowOffset: { width: 1, height: 1 },
-    textShadowRadius: 10,
-    marginBottom: 15,
+    fontSize: 28,
   },
   container: {
     flexDirection: "row", // Para que los Text se muestren en línea

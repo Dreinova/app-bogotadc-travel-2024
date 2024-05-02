@@ -2,6 +2,7 @@ import { View, Text } from "react-native";
 import React from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllEvents } from "../../../src/store/actions";
+import { GestureHandlerRootView } from 'react-native-gesture-handler';
 import { FlatList } from "react-native-gesture-handler";
 import {
   selectActualLanguage,
@@ -57,7 +58,7 @@ const EventsList = () => {
   }
 
   return (
-    <View>
+    <GestureHandlerRootView style={{ flex: 1 }}>
       {/* <Switch
         size={50}
         onPress={async () => {
@@ -104,7 +105,7 @@ const EventsList = () => {
           />
         )}
       />
-    </View>
+    </GestureHandlerRootView>
   );
 };
 

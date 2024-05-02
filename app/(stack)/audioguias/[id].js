@@ -27,6 +27,7 @@ import {
   selectWordsLang,
 } from "../../../src/store/selectors";
 import { useSelector } from "react-redux";
+import { GestureHandlerRootView } from "react-native-gesture-handler";
 
 const SingleAudio = () => {
   const { id } = useLocalSearchParams();
@@ -61,6 +62,7 @@ const SingleAudio = () => {
   }));
 
   return (
+     <GestureHandlerRootView style={{flex:1}}>
     <ImageBackground
       blurRadius={3}
       style={{
@@ -91,6 +93,8 @@ const SingleAudio = () => {
         />
       </View>
     </ImageBackground>
+
+     </GestureHandlerRootView>
   );
 };
 

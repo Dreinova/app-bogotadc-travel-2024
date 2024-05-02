@@ -1,249 +1,109 @@
 import React from "react";
-import FontAwesome from "@expo/vector-icons/FontAwesome";
-import {
-  Pressable,
-  StyleSheet,
-  FlatList,
-  ImageBackground,
-  Text,
-  View,
-  Modal,
-} from "react-native";
-import { useSelector, useDispatch } from "react-redux";
-import {
-  selectActualLanguage,
-  selectLocalidadesData,
-  selectParaData,
-  selectPlacesData,
-  selectSubprodData,
-  selectWordsLang,
-} from "../../src/store/selectors";
+import { Pressable, StyleSheet, FlatList, Text, View } from "react-native";
+import { useDispatch } from "react-redux";
 import { fetchData, fetchPlacesWithFilters } from "../../src/store/actions";
 import { CardAtractivo, PreloaderComponent } from "../../src/components";
 import { router, useLocalSearchParams } from "expo-router";
-
-const CustomModal = ({
-  visible,
-  closeModal,
-  data,
-  modalType,
-  setQueriesCompleted,
-}) => {
-  const dispatch = useDispatch();
-  const filterPlaces = async (itemId) => {
-    setQueriesCompleted(false);
-
-    switch (modalType) {
-      case "para":
-        await dispatch(fetchPlacesWithFilters("all", itemId, "all", "all"));
-        setQueriesCompleted(true);
-
-        break;
-      case "subProductos":
-        await dispatch(fetchPlacesWithFilters("all", "all", itemId, "all"));
-        setQueriesCompleted(true);
-
-        break;
-      case "localidades":
-        await dispatch(fetchPlacesWithFilters("all", "all", "all", itemId));
-        setQueriesCompleted(true);
-
-        break;
-    }
-
-    closeModal(false);
-  };
-
-  return (
-    <Modal
-      visible={visible}
-      onRequestClose={closeModal}
-      animationType="slide"
-      transparent
-    >
-      <View
-        style={{
-          alignItems: "center",
-          paddingVertical: 50,
-          flex: 1,
-          backgroundColor: "rgba(255,255,255,.9)",
-        }}
-      >
-        <Pressable
-          style={{ marginBottom: 30 }}
-          onPress={() => closeModal(false)}
-        >
-          <FontAwesome name="close" size={30} color="#E50728" />
-        </Pressable>
-        <FlatList
-          data={data}
-          numColumns={2}
-          renderItem={({ item }) => (
-            <Pressable
-              onPress={() => filterPlaces(item.nid)}
-              style={{ padding: 20, width: "50%" }}
-            >
-              <Text
-                style={{
-                  fontSize: 18,
-                  fontFamily: "MuseoSans_700",
-                  textAlign: "center",
-                }}
-              >
-                {item.title}
-              </Text>
-            </Pressable>
-          )}
-        />
-      </View>
-    </Modal>
-  );
-};
+import { fetchBogotaDrplV2 } from "../../src/api/imperdibles";
+import { Colors } from "../../src/constants";
 
 export default function TabTwoScreen() {
   const params = useLocalSearchParams();
   const [filterID, setFilterID] = React.useState(null);
   const [queriesCompleted, setQueriesCompleted] = React.useState(false);
-  const wordsLanguage = useSelector(selectWordsLang);
-  const actualLanguage = useSelector(selectActualLanguage);
+  const [activeIndex, setactiveIndex] = React.useState(0);
+  const [categories, setCategories] = React.useState([]);
+  const [atractivos, setAtractivos] = React.useState([]);
   const dispatch = useDispatch();
-  const placesData = useSelector(selectPlacesData);
-  const paraData = useSelector(selectParaData);
-  const subproductsData = useSelector(selectSubprodData);
-  const localidadesData = useSelector(selectLocalidadesData);
-
-  React.useEffect(() => {
-    dispatch(fetchData());
-    setQueriesCompleted(true);
-  }, [dispatch]);
-  React.useEffect(() => {
-    async function getInfoQueryParam() {
-      setQueriesCompleted(false);
-      await dispatch(fetchPlacesWithFilters("all", "all", filterID, "all"));
-      setQueriesCompleted(true);
-    }
-
-    if (filterID !== null) {
-      getInfoQueryParam();
-    }
-  }, [filterID]); // Agregar filterID como dependencia
-
-  // Actualizar filterID cuando llegue un nuevo parámetro
   React.useEffect(() => {
     setFilterID(params.filterID);
   }, [params.filterID]);
+  // Variable de estado para controlar si las consultas han finalizado
+  React.useEffect(() => {
+    const requestAtractivosInit = async (tid) => {
+      const atractivos = await fetchBogotaDrplV2(`/atractivos/all/${tid}`);
+      const filterAtractivos = atractivos.map((atractivo) => ({
+        title: atractivo.title,
+        nid: atractivo.nid,
+        field_cover_image: atractivo.field_cover_image,
+      }));
+      setAtractivos(filterAtractivos);
+    };
 
-  const [modalType, setModalType] = React.useState(null);
-
-  const openModal = (type) => {
-    setModalType(type);
-  };
-
-  const closeModal = () => {
-    setModalType(null);
-  };
-
-  if (!queriesCompleted) {
-    return <PreloaderComponent />;
-  }
+    Promise.all([fetchBogotaDrplV2("/tax/categorias_atractivos_2024")])
+      .then(([categorias_atractivos_2024]) => {
+        dispatch(fetchData());
+        setCategories(
+          categorias_atractivos_2024.map((cat) => ({
+            name: cat.name,
+            tid: cat.tid,
+          }))
+        );
+        if (filterID !== null && filterID != undefined) {
+          let index = categorias_atractivos_2024.findIndex(
+            (cat) => cat.tid === filterID
+          );
+          setactiveIndex(index);
+          requestAtractivosInit(categorias_atractivos_2024[index == -1 ? 0 : index].tid);
+        } else {
+          requestAtractivosInit(categorias_atractivos_2024[0].tid);
+        }
+        setQueriesCompleted(true);
+      })
+      .catch((error) => console.error(error));
+  }, [filterID, dispatch, params.filterID]);
 
   return (
     <>
-      {/* Render the selected modal */}
-      <CustomModal
-        visible={modalType === "para"}
-        closeModal={closeModal}
-        data={paraData}
-        modalType={modalType}
-        queriesCompleted={queriesCompleted}
-        setQueriesCompleted={(val) => setQueriesCompleted(val)}
-      />
-
-      <CustomModal
-        visible={modalType === "subProductos"}
-        closeModal={closeModal}
-        data={subproductsData}
-        modalType={modalType}
-        queriesCompleted={queriesCompleted}
-        setQueriesCompleted={(val) => setQueriesCompleted(val)}
-      />
-
-      <CustomModal
-        visible={modalType === "localidades"}
-        closeModal={closeModal}
-        data={localidadesData}
-        modalType={modalType}
-        queriesCompleted={queriesCompleted}
-        setQueriesCompleted={(val) => setQueriesCompleted(val)}
-      />
-      {/* Main View */}
       <View style={styles.container}>
-        <Text
-          style={{
-            fontSize: 22,
-            fontFamily: "MuseoSans_700",
-            textAlign: "center",
-          }}
-        >
-          {wordsLanguage[actualLanguage][1]}
-        </Text>
-        <View
-          style={{
-            width: "100%",
-            height: 1,
-            backgroundColor: "#333",
-            marginVertical: 15,
-          }}
-        />
-        <View
-          style={{
-            flexDirection: "row",
-            justifyContent: "space-between",
-            marginBottom: 30,
-            paddingHorizontal: 20,
-          }}
-        >
-          <Pressable
-            onPress={() => openModal("para")}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.5 : 1,
-              },
-              styles.filterButton,
-            ]}
-          >
-            <Text style={styles.title}>
-              {wordsLanguage[actualLanguage][11]}
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => openModal("subProductos")}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.5 : 1,
-              },
-              styles.filterButton,
-            ]}
-          >
-            <Text style={styles.title}>
-              {wordsLanguage[actualLanguage][12]}
-            </Text>
-          </Pressable>
-          <Pressable
-            onPress={() => openModal("localidades")}
-            style={({ pressed }) => [
-              {
-                opacity: pressed ? 0.5 : 1,
-              },
-              styles.filterButton,
-            ]}
-          >
-            <Text style={styles.title}>
-              {wordsLanguage[actualLanguage][13]}
-            </Text>
-          </Pressable>
-        </View>
         <FlatList
+          showsHorizontalScrollIndicator={false}
+          contentContainerStyle={{ paddingVertical: 20 }}
+          horizontal
+          data={categories}
+          renderItem={({ item, index }) => (
+            <Pressable
+              onPress={async () => {
+                setQueriesCompleted(false);
+                setactiveIndex(index);
+                const atractivos = await fetchBogotaDrplV2(
+                  `/atractivos/all/${item.tid}`
+                );
+                const filterAtractivos = atractivos.map((atractivo) => ({
+                  title: atractivo.title,
+                  nid: atractivo.nid,
+                  field_cover_image: atractivo.field_cover_image,
+                }));
+                setAtractivos(filterAtractivos);
+                setQueriesCompleted(true);
+              }}
+              style={{
+                borderRadius: 18,
+                backgroundColor:
+                  activeIndex == index ? Colors.orange : "transparent",
+                marginLeft: 20,
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 10,
+                height: 40,
+              }}
+            >
+              <Text
+                style={{
+                  fontSize: 14,
+                  lineHeight: 14,
+                  color: activeIndex == index ? "#FFF" : Colors.orange,
+                  fontFamily: "MuseoSans_700",
+                  textAlignVertical: "center",
+                }}
+              >
+                {item.name}
+              </Text>
+            </Pressable>
+          )}
+        />
+        <FlatList
+          ListEmptyComponent={PreloaderComponent}
           numColumns={2}
           contentContainerStyle={{
             borderRadius: 25,
@@ -252,7 +112,7 @@ export default function TabTwoScreen() {
           ItemSeparatorComponent={() => (
             <View style={{ paddingHorizontal: 2 }} />
           )}
-          data={placesData}
+          data={atractivos}
           keyExtractor={(item) => item.nid}
           renderItem={({ item }) => (
             <CardAtractivo

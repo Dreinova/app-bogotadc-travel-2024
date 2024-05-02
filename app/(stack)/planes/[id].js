@@ -119,7 +119,7 @@ const ModalReserva = (
           onPress={resetAll}
           style={{ alignSelf: "flex-end", padding: 10 }}
         >
-          <Ionicons name="ios-close-sharp" size={35} color="#FFF" />
+          <Ionicons name="close" size={35} color="#FFF" />
         </Pressable>
         {complete ? (
           <View
@@ -633,104 +633,6 @@ const SinglePlan = () => {
             justifyContent: "flex-end",
           }}
         >
-          <View style={{ flex: 1, justifyContent: "flex-end" }}>
-            <View
-              style={{
-                backgroundColor: "#E50728",
-                width: 50,
-                height: 50,
-                borderRadius: 50,
-                alignItems: "center",
-                justifyContent: "center",
-                alignSelf: "flex-end",
-                marginRight: 10,
-              }}
-            >
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: "MuseoSans_900",
-                  fontSize: 14,
-                  textAlign: "center",
-                }}
-              >
-                {plan.field_percent}%
-              </Text>
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: "MuseoSans_900",
-                  fontSize: 12,
-                  textAlign: "center",
-                }}
-              >
-                DCTO
-              </Text>
-            </View>
-            <View
-              style={{
-                position: "relative",
-                alignItems: "flex-end",
-                paddingVertical: 10,
-                paddingLeft: 25,
-                paddingRight: 10,
-              }}
-            >
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: "MuseoSans_900",
-                  fontSize: 18,
-                  textShadowColor: "rgba(0, 0, 0, .7)",
-                  textShadowOffset: { width: 1, height: 1 },
-                  textShadowRadius: 10,
-                  textAlign: "center",
-                }}
-              >
-                ${number_format(plan.field_pa, 0, ".", ".")}
-              </Text>
-              <View
-                style={{
-                  position: "absolute",
-                  height: 2,
-                  width: 100,
-                  backgroundColor: "#FFF",
-                  top: 19,
-                  transform: [
-                    {
-                      rotate: "-2deg",
-                    },
-                  ],
-                }}
-              />
-            </View>
-            <View
-              style={{
-                backgroundColor: "#E50728",
-                marginBottom: 15,
-                paddingVertical: 10,
-                paddingLeft: 25,
-                paddingRight: 10,
-                borderTopLeftRadius: 25,
-                borderBottomLeftRadius: 25,
-                alignSelf: "flex-end",
-              }}
-            >
-              <Text
-                style={{
-                  color: Colors.white,
-                  fontFamily: "MuseoSans_900",
-                  fontSize: 22,
-                  textShadowColor: "rgba(0, 0, 0, .7)",
-                  textShadowOffset: { width: 1, height: 1 },
-                  textShadowRadius: 10,
-                  textAlign: "center",
-                }}
-              >
-                ${number_format(plan.field_pd, 0, ".", ".")}
-              </Text>
-            </View>
-          </View>
           <Text
             style={{
               color: Colors.white,
@@ -782,17 +684,11 @@ const SinglePlan = () => {
             </Text>
           </View>
         )}
-        {plan.body && <ReadMoreText text={plan.body} maxLines={3} />}
-        <Text
-          style={[
-            { color: "#E50728", fontFamily: "MuseoSans_900", fontSize: 16 },
-          ]}
-        >
-          {wordsLanguage[actualLanguage][37]}
-        </Text>
+        <Text style={{fontSize:14}}>{plan.body}</Text>
+        
         <Pressable
           onPress={() => {
-            setFormModal(true);
+            Linking.openURL(`https://visitbogota.co/g/booklink/?url=${company.field_pb_empresa_direccion}&id=${id}&price=${plan.field_pd}`)
           }}
           style={{
             backgroundColor: "#E50728",
@@ -818,9 +714,9 @@ const SinglePlan = () => {
       </View>
 
       <Swiper
-        showsButtons
-        style={{ height: (windowWidth / 16) * 9 }}
-        dotColor="rgba(255,255,255,.8)"
+ style={{ height: (windowWidth / 16) * 9 }}
+ dotColor="rgba(255,255,255,.8)"
+ activeDotStyle={{backgroundColor: Colors.orange}}
       >
         {renderImages()}
       </Swiper>

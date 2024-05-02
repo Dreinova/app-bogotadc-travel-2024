@@ -8,13 +8,7 @@ import {
 
 const PreloaderComponent = ({ planBogota }) => {
   return planBogota ? (
-    <ImageBackground
-      source={require("../../assets/images/bgpattern.png")}
-      imageStyle={{ resizeMode: "repeat", opacity: 0.03 }}
-      style={[styles.container, { backgroundColor: "#0f2c52" }]}
-    >
-      <ActivityIndicator size="large" color="#FFF" />
-    </ImageBackground>
+    < PreloaderComponent/>
   ) : (
     <View style={styles.container}>
       <ActivityIndicator size="large" color="#E50728" />

@@ -13,7 +13,7 @@ import {
 } from "react-native";
 import { useDispatch, useSelector } from "react-redux";
 import { fetchAllFilters, fetchAllPLanes } from "../../../src/store/actions";
-import { FlatList } from "react-native-gesture-handler";
+import { FlatList, GestureHandlerRootView } from "react-native-gesture-handler";
 import { FontAwesome } from "@expo/vector-icons";
 import {
   CustomCheckbox,
@@ -368,6 +368,7 @@ const EventsList = () => {
     return <PreloaderComponent planBogota />;
   }
   return (
+    <GestureHandlerRootView style={{flex:1}}>
     <ImageBackground>
       <ScrollView
         style={{ height: windowHeight }}
@@ -500,102 +501,9 @@ const EventsList = () => {
                       height: windowWidth / 2,
                     }}
                   >
-                    <View
-                      style={{
-                        backgroundColor: "#E50728",
-                        width: 40,
-                        height: 40,
-                        borderRadius: 50,
-                        alignItems: "center",
-                        justifyContent: "center",
-                        alignSelf: "flex-end",
-                        marginRight: 10,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: Colors.white,
-                          fontFamily: "MuseoSans_900",
-                          fontSize: 14,
-                          textAlign: "center",
-                        }}
-                      >
-                        {item.field_percent}%
-                      </Text>
-                      <Text
-                        style={{
-                          color: Colors.white,
-                          fontFamily: "MuseoSans_900",
-                          fontSize: 10,
-                          textAlign: "center",
-                        }}
-                      >
-                        DCTO
-                      </Text>
-                    </View>
-                    <View
-                      style={{
-                        position: "relative",
-                        alignItems: "flex-end",
-                        paddingVertical: 10,
-                        paddingLeft: 25,
-                        paddingRight: 10,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: Colors.white,
-                          fontFamily: "MuseoSans_900",
-                          fontSize: 15,
-                          textShadowColor: "rgba(0, 0, 0, .7)",
-                          textShadowOffset: { width: 1, height: 1 },
-                          textShadowRadius: 10,
-                          textAlign: "center",
-                        }}
-                      >
-                        ${number_format(item.field_pa, 0, ".", ".")}
-                      </Text>
-                      <View
-                        style={{
-                          position: "absolute",
-                          height: 2,
-                          width: "50%",
-                          backgroundColor: "#FFF",
-                          top: 15,
-                          transform: [
-                            {
-                              rotate: "-2deg",
-                            },
-                          ],
-                        }}
-                      />
-                    </View>
-                    <View
-                      style={{
-                        alignSelf: "flex-end",
-                        backgroundColor: "#E50728",
-                        borderBottomLeftRadius: 25,
-                        borderTopLeftRadius: 25,
-                        marginBottom: 15,
-                        paddingLeft: 25,
-                        paddingRight: 5,
-                        paddingVertical: 5,
-                      }}
-                    >
-                      <Text
-                        style={{
-                          color: Colors.white,
-                          fontFamily: "MuseoSans_900",
-                          fontSize: 18,
-                          textShadowColor: "rgba(0, 0, 0, .7)",
-                          textShadowOffset: { width: 1, height: 1 },
-                          textShadowRadius: 10,
-                          textAlign: "center",
-                        }}
-                      >
-                        ${number_format(item.field_pd, 0, ".", ".")}
-                      </Text>
-                    </View>
+                   
+                    
+                 
                   </View>
                   <View
                     style={{
@@ -641,6 +549,7 @@ const EventsList = () => {
         />
       </ScrollView>
     </ImageBackground>
+  </GestureHandlerRootView>
   );
 };
 

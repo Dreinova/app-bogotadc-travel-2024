@@ -64,7 +64,7 @@ const CardAtractivo = ({
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
-        isHorizontal ? { width: windowWidth / 2 - 20 } : { width: windowWidth },
+        isHorizontal ? { width: windowWidth / 2 - 20 } : { width: windowWidth - 20 },
         {
           justifyContent: "flex-end",
           opacity: pressed ? 0.5 : 1,

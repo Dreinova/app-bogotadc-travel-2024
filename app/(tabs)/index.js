@@ -43,14 +43,16 @@ export default function Page() {
   const [queriesCompleted, setQueriesCompleted] = React.useState(false);
   React.useEffect(() => {
     Promise.all([
-      fetchBogotaDrplV2("/eventsDestacados"),
-      fetchBogotaDrpl("/products/all/8"),
-      fetchBogotaDrpl("/products/all/7"),
+      fetchBogotaDrplV2("/eventos-destacados-app"),
       fetchBogotaGetFolder(`/vacacional/g/lastBlogs/?lang=${actualLanguage}`),
+      fetchBogotaDrplV2("/tax/categorias_atractivos_2024")
     ])
-      .then(([eventsData, naturalData, culturalData, blogData]) => {
-        setBogNatural(naturalData);
-        setBogCultural(culturalData);
+      .then(([eventsData, blogData, categories]) => {
+        setBogNatural(categories.map((cat) => ({
+          name: cat.name,
+          tid: cat.tid,
+          field_cover_image: cat.field_banner_prod
+        })));
         setBlog(blogData);
         function compareDates(a, b) {
           const dateA = new Date(a.field_date);
@@ -69,6 +71,12 @@ export default function Page() {
   if (!queriesCompleted) {
     return <PreloaderComponent />;
   }
+
+  const eventsProxWithCustomElement = [
+    ...eventsProx,
+    { isCustomElement: true },
+  ];
+  const blogProxWithCustomElement = [...Blog, { isCustomElement: true }];
   return (
     <ScrollView
       contentContainerStyle={{
@@ -112,20 +120,54 @@ export default function Page() {
           ItemSeparatorComponent={() => (
             <View style={{ paddingHorizontal: 2 }} />
           )}
-          horizontal
-          data={eventsProx}
+          numColumns={2}
+          data={eventsProxWithCustomElement}
           keyExtractor={(item) => item.nid}
-          renderItem={({ item }) => (
-            <CardAtractivo
-              end={item.field_end_date}
-              image={`https://bogotadc.travel${item.field_cover_image}`}
-              isEvent
-              isHorizontal
-              onPress={() => router.push(`(stack)/events/${item.nid}`)}
-              start={item.field_date}
-              title={item.title}
-            />
-          )}
+          renderItem={({ item }) => {
+            if (item.isCustomElement) {
+              // Render your custom element
+              return (
+                <Pressable
+                  onPress={() => {router.push(`(stack)/events`)}}
+                  style={({ pressed }) => [
+                    {
+                      width: windowWidth / 2 - 20,
+                      backgroundColor: Colors.orange,
+                      alignItems: "center",
+                      justifyContent: "center",
+                    },
+                    {
+                      opacity: pressed ? 0.5 : 1,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={{
+                      color: "#FFF",
+                      fontSize: 16,
+                      textAlign: "center",
+                      textTransform: "uppercase",
+                      fontFamily: "MuseoSans_900",
+                    }}
+                  >
+                    Ver eventos
+                  </Text>
+                </Pressable>
+              );
+            } else {
+              return (
+                <CardAtractivo
+                  end={item.field_end_date}
+                  image={`https://bogotadc.travel${item.field_cover_image}`}
+                  isEvent
+                  isHorizontal
+                  onPress={() => router.push(`(stack)/events/${item.nid}`)}
+                  start={item.field_date}
+                  title={item.title}
+                />
+              );
+            }
+          }}
         />
       </View>
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
@@ -160,7 +202,6 @@ export default function Page() {
           </Text>
         </View>
         <View style={{ marginVertical: 15 }}>
-          <Text style={styles.title}>{wordsLanguage[actualLanguage][62]}</Text>
           <FlatList
             fadingEdgeLength={15}
             ItemSeparatorComponent={() => (
@@ -168,47 +209,23 @@ export default function Page() {
             )}
             horizontal
             data={BogNatural}
-            keyExtractor={(item) => item.nid}
+            keyExtractor={(item) => item.tid}
             renderItem={({ item }) => (
               <CardAtractivo
                 onPress={() =>
                   router.push({
                     pathname: "descubre",
-                    params: { filterID: item.nid },
+                    params: { filterID: item.tid },
                   })
                 }
                 isHorizontal
-                title={item.title}
+                title={item.name}
                 image={`https://bogotadc.travel${item.field_cover_image}`}
               />
             )}
           />
         </View>
-        <View style={{ marginVertical: 15 }}>
-          <Text style={styles.title}>{wordsLanguage[actualLanguage][63]}</Text>
-          <FlatList
-            fadingEdgeLength={15}
-            ItemSeparatorComponent={() => (
-              <View style={{ paddingHorizontal: 2 }} />
-            )}
-            horizontal
-            data={BogCultural}
-            keyExtractor={(item) => item.nid}
-            renderItem={({ item }) => (
-              <CardAtractivo
-                onPress={() =>
-                  router.push({
-                    pathname: "descubre",
-                    params: { filterID: item.nid },
-                  })
-                }
-                isHorizontal
-                title={item.title}
-                image={`https://bogotadc.travel${item.field_cover_image}`}
-              />
-            )}
-          />
-        </View>
+   
       </View>
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
         <View
@@ -242,24 +259,31 @@ export default function Page() {
           </Text>
         </View>
         <View style={{ borderRadius: 10, overflow: "hidden" }}>
-          <VirtualizedList
+          <FlatList
             fadingEdgeLength={15}
             ItemSeparatorComponent={() => (
               <View style={{ paddingHorizontal: 2 }} />
             )}
-            horizontal
-            data={Blog}
-            getItem={(data, index) => data[index]}
-            getItemCount={() => Blog.length}
+            data={blogProxWithCustomElement}
+            numColumns={2}
             keyExtractor={(item) => item.nid}
-            renderItem={({ item }) => (
-              <CardAtractivo
-                onPress={() => router.push(`(stack)/blog/${item.nid}`)}
-                isHorizontal
-                title={item.title}
-                image={`https://bogotadc.travel${item.field_image}`}
-              />
-            )}
+            renderItem={({ item }) => {
+              if (item.isCustomElement) {
+                // Render your custom element
+                return (
+                 <></>
+                );
+              } else {
+                return (
+                  <CardAtractivo
+                    onPress={() => router.push(`(stack)/blog/${item.nid}`)}
+                    isHorizontal
+                    title={item.title}
+                    image={`https://bogotadc.travel${item.field_image}`}
+                  />
+                );
+              }
+            }}
           />
         </View>
       </View>

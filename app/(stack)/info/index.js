@@ -149,7 +149,7 @@ const info = (props) => {
                 onPress={() => setModalInfoVisible(false)}
                 style={{ position: "absolute", right: 15, top: 15 }}
               >
-                <Ionicons name="ios-close-sharp" size={35} color="#E50728" />
+                <Ionicons name="close" size={35} color="#E50728" />
               </Pressable>
               <Text
                 style={{

@@ -10,6 +10,7 @@ import { Stack } from "expo-router";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "../src/store";
 import { setLocation } from "../src/store/actions";
+const splash = require("../assets/splash.png");
 
 SplashScreen.preventAutoHideAsync();
 
@@ -39,7 +40,7 @@ export default function RootLayout() {
     return (
       <ImageBackground
         onLayout={onLayoutRootView}
-        source={require("../assets/images/atardecer.png")}
+        source={splash}
         style={{
           flex: 1,
           alignItems: "center",
@@ -48,28 +49,6 @@ export default function RootLayout() {
           paddingHorizontal: 20,
         }}
       >
-        <Text
-          style={{
-            textAlign: "center",
-            marginVertical: 5,
-            fontSize: 18,
-            fontWeight: "bold",
-            color: "#FFF",
-          }}
-        >
-          Te damos la bienvenida a BOGOTÁ
-        </Text>
-        <Text
-          style={{
-            textAlign: "center",
-            marginVertical: 5,
-            fontSize: 18,
-            fontWeight: "bold",
-            color: "#FFF",
-          }}
-        >
-          ¡Empieza a vivirla!
-        </Text>
       </ImageBackground>
     );
   }
@@ -100,7 +79,7 @@ function RootLayoutNav() {
     <SafeAreaProvider>
       <Stack
         screenOptions={{ headerShown: false }}
-        initialRouteName="index"
+        initialRouteName="(tabs)"
       ></Stack>
       <StatusBar hidden />
     </SafeAreaProvider>

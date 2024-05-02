@@ -176,9 +176,9 @@ const SingleRestaurant = () => {
       )}
       {restaurant.field_galery && (
         <Swiper
-          showsButtons
-          style={{ height: (windowWidth / 16) * 9 }}
-          dotColor="rgba(255,255,255,.8)"
+        style={{ height: (windowWidth / 16) * 9 }}
+        dotColor="rgba(255,255,255,.8)"
+        activeDotStyle={{backgroundColor: Colors.orange}}
         >
           {renderImages()}
         </Swiper>

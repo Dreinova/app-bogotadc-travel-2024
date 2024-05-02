@@ -57,7 +57,6 @@ export default function App() {
   return (
     <SafeAreaProvider>
       <View style={styles.container} onLayout={onLayoutRootView}>
-        <Text>My App</Text>
       </View>
     </SafeAreaProvider>
   );

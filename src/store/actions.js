@@ -328,7 +328,7 @@ export const setLocalidadesData = (data) => {
     payload: data,
   };
 };
-export const setLanguage = (language) => ({
+export const setLanguage = (language = "es") => ({
   type: "SET_LANGUAGE",
   payload: language,
 });
