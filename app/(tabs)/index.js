@@ -30,6 +30,7 @@ import {
   selectWordsLang,
 } from "../../src/store/selectors";
 import { useSelector } from "react-redux";
+import CardRuta from "../../src/components/CardRuta";
 
 const ITEM_WIDTH = windowWidth + 40;
 export default function Page() {
@@ -38,6 +39,7 @@ export default function Page() {
   const [BogNatural, setBogNatural] = React.useState([]);
   const [BogCultural, setBogCultural] = React.useState([]);
   const [Blog, setBlog] = React.useState([]);
+  const [rutas, setRutas] = React.useState([]);
   const [eventsProx, setEventsProx] = React.useState([]);
   // Variable de estado para controlar si las consultas han finalizado
   const [queriesCompleted, setQueriesCompleted] = React.useState(false);
@@ -45,15 +47,19 @@ export default function Page() {
     Promise.all([
       fetchBogotaDrplV2("/eventos-destacados-app"),
       fetchBogotaGetFolder(`/vacacional/g/lastBlogs/?lang=${actualLanguage}`),
-      fetchBogotaDrplV2("/tax/categorias_atractivos_2024")
+      fetchBogotaDrplV2("/tax/categorias_atractivos_2024"),
+      fetchBogotaDrplV2("/rt/all"),
     ])
-      .then(([eventsData, blogData, categories]) => {
-        setBogNatural(categories.map((cat) => ({
-          name: cat.name,
-          tid: cat.tid,
-          field_cover_image: cat.field_banner_prod
-        })));
+      .then(([eventsData, blogData, categories, rutas]) => {
+        setBogNatural(
+          categories.map((cat) => ({
+            name: cat.name,
+            tid: cat.tid,
+            field_cover_image: cat.field_banner_prod,
+          }))
+        );
         setBlog(blogData);
+        setRutas(rutas);
         function compareDates(a, b) {
           const dateA = new Date(a.field_date);
           const dateB = new Date(b.field_date);
@@ -84,92 +90,7 @@ export default function Page() {
         minHeight: Dimensions.get("window").height,
       }}
     >
-      <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
-        <View
-          style={{
-            flexDirection: "row",
-            alignItems: "center",
-            marginBottom: 15,
-          }}
-        >
-          <Image
-            source={{
-              uri: "https://visitbogota.co/vacacional/images/eventos.png",
-            }}
-            style={{
-              width: 45,
-              height: 45,
-              resizeMode: "contain",
-              marginRight: 10,
-            }}
-          />
-          <Text
-            style={{
-              fontSize: 20,
-              textAlign: "center",
-              textTransform: "uppercase",
-              color: "#e50728",
-              fontFamily: "MuseoSans_900",
-            }}
-          >
-            {wordsLanguage[actualLanguage][2]}
-          </Text>
-        </View>
-        <FlatList
-          fadingEdgeLength={15}
-          ItemSeparatorComponent={() => (
-            <View style={{ paddingHorizontal: 2 }} />
-          )}
-          numColumns={2}
-          data={eventsProxWithCustomElement}
-          keyExtractor={(item) => item.nid}
-          renderItem={({ item }) => {
-            if (item.isCustomElement) {
-              // Render your custom element
-              return (
-                <Pressable
-                  onPress={() => {router.push(`(stack)/events`)}}
-                  style={({ pressed }) => [
-                    {
-                      width: windowWidth / 2 - 20,
-                      backgroundColor: Colors.orange,
-                      alignItems: "center",
-                      justifyContent: "center",
-                    },
-                    {
-                      opacity: pressed ? 0.5 : 1,
-                    },
-                  ]}
-                >
-                  <Text
-                    style={{
-                      color: "#FFF",
-                      fontSize: 16,
-                      textAlign: "center",
-                      textTransform: "uppercase",
-                      fontFamily: "MuseoSans_900",
-                    }}
-                  >
-                    Ver eventos
-                  </Text>
-                </Pressable>
-              );
-            } else {
-              return (
-                <CardAtractivo
-                  end={item.field_end_date}
-                  image={`https://bogotadc.travel${item.field_cover_image}`}
-                  isEvent
-                  isHorizontal
-                  onPress={() => router.push(`(stack)/events/${item.nid}`)}
-                  start={item.field_date}
-                  title={item.title}
-                />
-              );
-            }
-          }}
-        />
-      </View>
+      
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
         <View
           style={{
@@ -225,7 +146,145 @@ export default function Page() {
             )}
           />
         </View>
-   
+      </View>
+      <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://visitbogota.co/vacacional/images/rutaicon_.png",
+            }}
+            style={{
+              width: 45,
+              height: 45,
+              resizeMode: "contain",
+              marginRight: 10,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              textTransform: "uppercase",
+              color: "#e50728",
+              fontFamily: "MuseoSans_900",
+            }}
+          >
+            {wordsLanguage[actualLanguage][66]}
+          </Text>
+        </View>
+        <View style={{ marginVertical: 15 }}>
+          <FlatList
+            fadingEdgeLength={15}
+            contentContainerStyle={{paddingVertical:20, paddingRight:20}}
+            ItemSeparatorComponent={() => (
+              <View style={{ paddingHorizontal: 5 }} />
+            )}
+            horizontal
+            data={rutas}
+            keyExtractor={(item) => item.tid}
+            renderItem={({ item }) => (
+              <CardRuta
+                onPress={() => {}}
+                title={item.title}
+                desc={item.field_descripcion_corta}
+                image={`https://bogotadc.travel${item.field_thumbnail}`}
+              />
+            )}
+          />
+        </View>
+      </View>
+      <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
+        <View
+          style={{
+            flexDirection: "row",
+            alignItems: "center",
+            marginBottom: 15,
+          }}
+        >
+          <Image
+            source={{
+              uri: "https://visitbogota.co/vacacional/images/eventos.png",
+            }}
+            style={{
+              width: 45,
+              height: 45,
+              resizeMode: "contain",
+              marginRight: 10,
+            }}
+          />
+          <Text
+            style={{
+              fontSize: 20,
+              textAlign: "center",
+              textTransform: "uppercase",
+              color: "#e50728",
+              fontFamily: "MuseoSans_900",
+            }}
+          >
+            {wordsLanguage[actualLanguage][2]}
+          </Text>
+        </View>
+        <FlatList
+          fadingEdgeLength={15}
+          ItemSeparatorComponent={() => (
+            <View style={{ paddingHorizontal: 2 }} />
+          )}
+          data={eventsProxWithCustomElement}
+          keyExtractor={(item) => item.nid}
+          renderItem={({ item }) => {
+            if (item.isCustomElement) {
+              // Render your custom element
+              return (
+                <Pressable
+                  onPress={() => {
+                    router.push(`(stack)/events`);
+                  }}
+                  style={({ pressed }) => [
+                    {
+                      width: windowWidth - 40,
+                      backgroundColor: Colors.orange,
+                      alignItems: "center",
+                      justifyContent: "center",
+                      padding: 20,
+                    },
+                    {
+                      opacity: pressed ? 0.5 : 1,
+                    },
+                  ]}
+                >
+                  <Text
+                    style={{
+                      color: "#FFF",
+                      fontSize: 14,
+                      textAlign: "center",
+                      textTransform: "uppercase",
+                      fontFamily: "MuseoSans_900",
+                    }}
+                  >
+                    Ver eventos
+                  </Text>
+                </Pressable>
+              );
+            } else {
+              return (
+                <CardAtractivo
+                  end={item.field_end_date}
+                  image={`https://bogotadc.travel${item.field_cover_image}`}
+                  isEvent
+                  onPress={() => router.push(`(stack)/events/${item.nid}`)}
+                  start={item.field_date}
+                  title={item.title}
+                />
+              );
+            }
+          }}
+        />
       </View>
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
         <View
@@ -271,7 +330,35 @@ export default function Page() {
               if (item.isCustomElement) {
                 // Render your custom element
                 return (
-                 <></>
+                  <Pressable
+                    onPress={() => {
+                      router.push(`(stack)/blog`);
+                    }}
+                    style={({ pressed }) => [
+                      {
+                        width: windowWidth - 40,
+                        backgroundColor: Colors.orange,
+                        alignItems: "center",
+                        justifyContent: "center",
+                        padding: 20,
+                      },
+                      {
+                        opacity: pressed ? 0.5 : 1,
+                      },
+                    ]}
+                  >
+                    <Text
+                      style={{
+                        color: "#FFF",
+                        fontSize: 14,
+                        textAlign: "center",
+                        textTransform: "uppercase",
+                        fontFamily: "MuseoSans_900",
+                      }}
+                    >
+                      Ver blogs
+                    </Text>
+                  </Pressable>
                 );
               } else {
                 return (

@@ -14,6 +14,7 @@ import { Colors } from "../../../src/constants";
 import { PreloaderComponent } from "../../../src/components";
 import { selectActualLanguage } from "../../../src/store/selectors";
 import { useSelector } from "react-redux";
+import RenderHTML from "react-native-render-html";
 
 const SingleBlog = () => {
   const { id } = useLocalSearchParams();
@@ -32,6 +33,30 @@ const SingleBlog = () => {
   if (!blog) {
     return <PreloaderComponent />;
   }
+
+  const source = {
+    html: blog.body,
+  };
+
+  const tagsStyles = {
+    p: {
+      textAlign: "left",
+      color: "#777",
+    },
+    ul: { paddingLeft: 0, margin: 0 },
+    li: {
+      paddingLeft: 0,
+      margin: 0,
+      textAlign: "left",
+      color: "#777",
+    },
+  };
+
+  const renderersProps = {
+    img: {
+      enableExperimentalPercentWidth: true,
+    },
+  };
 
   const StyledFirstLetterText = ({ text }) => {
     // Obtén la primera letra del texto
@@ -90,7 +115,13 @@ const SingleBlog = () => {
           {blog.field_intro_blog}
         </Text>
       </View>
-      <StyledFirstLetterText text={blog.body} />
+      <RenderHTML
+        baseStyle={{ paddingHorizontal: 20 }}
+        renderersProps={renderersProps}
+        contentWidth={windowWidth}
+        source={source}
+        tagsStyles={tagsStyles}
+      />
     </ScrollView>
   );
 };

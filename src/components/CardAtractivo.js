@@ -64,7 +64,7 @@ const CardAtractivo = ({
     <Pressable
       onPress={onPress}
       style={({ pressed }) => [
-        isHorizontal ? { width: windowWidth / 2 - 20 } : { width: windowWidth - 20 },
+        isHorizontal ? { width: windowWidth / 2 - 20 } : { width: windowWidth - 40 },
         {
           justifyContent: "flex-end",
           opacity: pressed ? 0.5 : 1,
@@ -74,7 +74,7 @@ const CardAtractivo = ({
       <ImageBackground
         style={[
           {
-            height: windowWidth / 2,
+            height: 150,
             alignItems: "center",
             justifyContent: isAudioGuide ? "center" : "flex-end",
             padding: 10,
@@ -90,7 +90,7 @@ const CardAtractivo = ({
           style={{
             color: Colors.white,
             fontFamily: "MuseoSans_900",
-            fontSize: 14,
+            fontSize: 16,
             textShadowColor: "rgba(0, 0, 0, .7)",
             textShadowOffset: { width: 1, height: 1 },
             textShadowRadius: 10,
@@ -127,15 +127,33 @@ const CardAtractivo = ({
                 style={{
                   color: Colors.white,
                   fontFamily: "MuseoSans_700",
-                  fontSize: 16,
+                  fontSize: 12,
                   textAlign: "center",
                 }}
               >
                 {monthStart} {dayStart} {yearStart}
               </Text>
+              {end && (<>
+              <Text  style={{
+                  color: Colors.white,
+                  fontFamily: "MuseoSans_700",
+                  fontSize: 12,
+                  textAlign: "center",
+                }}>-</Text>
+              <Text
+                style={{
+                  color: Colors.white,
+                  fontFamily: "MuseoSans_700",
+                  fontSize: 12,
+                  textAlign: "center",
+                }}
+              >
+                {monthEnd} {dayEnd} {yearEnd}
+              </Text>
+              </>)}
             </View>
           </View>
-        )}
+        )} 
         {subtitle && (
           <Text
             style={{

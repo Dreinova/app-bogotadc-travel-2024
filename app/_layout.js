@@ -1,5 +1,6 @@
 import * as Location from "expo-location";
 import * as SplashScreen from "expo-splash-screen";
+import * as Updates from 'expo-updates';
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
@@ -15,6 +16,21 @@ const splash = require("../assets/splash.png");
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
+  
+  async function onFetchUpdateAsync() {
+    try {
+      const update = await Updates.checkForUpdateAsync();
+
+      if (update.isAvailable) {
+        await Updates.fetchUpdateAsync();
+        await Updates.reloadAsync();
+      }
+    } catch (error) {
+      // You can also add an alert() to see the error message in case of an error when fetching updates.
+      // alert(`Error fetching latest Expo update: ${error}`);
+    }
+  }
+
   const [fontsLoaded] = useFonts({
     MuseoSans_100: require("../assets/fonts/MuseoSans-100.ttf"),
     MuseoSans_500: require("../assets/fonts/MuseoSans-500.ttf"),
@@ -29,6 +45,10 @@ export default function RootLayout() {
       await SplashScreen.hideAsync();
     }
   }, [fontsLoaded]);
+
+  React.useEffect(() => {
+    onFetchUpdateAsync();
+  }, []);
 
   React.useEffect(() => {
     if (fontsLoaded) {

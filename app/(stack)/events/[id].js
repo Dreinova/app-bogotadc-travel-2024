@@ -7,6 +7,7 @@ import {
   ScrollView,
   Pressable,
   Linking,
+  useWindowDimensions,
 } from "react-native";
 import { Feather } from "@expo/vector-icons";
 import * as WebBrowser from "expo-web-browser";
@@ -22,6 +23,7 @@ import {
   selectActualLanguage,
   selectWordsLang,
 } from "../../../src/store/selectors";
+import RenderHTML from "react-native-render-html";
 
 const SingleEvent = () => {
   const { id } = useLocalSearchParams();
@@ -32,7 +34,7 @@ const SingleEvent = () => {
   React.useEffect(() => {
     const getSingleEvents = async () => {
       const data = await fetchBogotaDrplV2(
-        `/events/${id}/all/all/all`,
+        `/eventsweb/${id}/all/all/all`,
         actualLanguage
       );
       setEvents(data[0]);
@@ -74,6 +76,16 @@ const SingleEvent = () => {
 
     DateEnd = dateFormatteddateEnd;
   }
+
+  const source = {
+    html: events.body,
+  };
+
+  const tagsStyles = {
+    p: {
+      textAlign: "left",
+    },
+  };
 
   return (
     <ScrollView>
@@ -130,16 +142,12 @@ const SingleEvent = () => {
             {events.field_place}
           </Text>
         </View>
-        <Text
-          style={{
-            fontSize: 16,
-            color: "#333",
-            lineHeight: 22,
-            marginBottom: 30,
-          }}
-        >
-          {events.body}
-        </Text>
+
+        <RenderHTML
+          contentWidth={windowWidth}
+          source={source}
+          tagsStyles={tagsStyles}
+        />
         <Pressable
           style={({ pressed }) => [
             {

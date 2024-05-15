@@ -9,6 +9,7 @@ import {
   Linking,
   ActivityIndicator,
 } from "react-native";
+import { Ionicons } from "@expo/vector-icons";
 import Swiper from "react-native-swiper";
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect } from "react";
@@ -54,6 +55,7 @@ const SingleAtractivo = () => {
   }
 
   const renderImages = () => {
+    let alttexts = atractivo.field_galery_1.split(",");
     return atractivo.field_galery.split(",").map((item, index) => {
       return (
         <ImageBackground
@@ -66,6 +68,19 @@ const SingleAtractivo = () => {
             source={{ uri: `https://bogotadc.travel${item.trim()}` }}
             style={styles.image}
           />
+          <View
+            style={{
+              position: "absolute",
+              bottom: 0,
+              left: 0,
+              backgroundColor: "rgba(0,0,0,.5)",
+              padding:10
+            }}
+          >
+            <Text style={{ color: "#FFF", fontFamily: "MuseoSans_700" }}>
+              {alttexts[index]}
+            </Text>
+          </View>
         </ImageBackground>
       );
     });
@@ -95,113 +110,175 @@ const SingleAtractivo = () => {
         <Swiper
           style={{ height: (windowWidth / 16) * 9 }}
           dotColor="rgba(255,255,255,.8)"
-          activeDotStyle={{backgroundColor: Colors.orange}}
-          
-          
+          activeDotStyle={{ backgroundColor: Colors.orange }}
         >
           {renderImages()}
         </Swiper>
       )}
       <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
         {atractivo.field_address && (
-          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
-          <Pressable
-            onPress={() =>
-              WebBrowser.openBrowserAsync(
-                `https://www.google.com/maps/search/?api=1&query=${atractivo.field_location.trim()}`
-              )
-            }
+          <View
             style={{
               flexDirection: "row",
-              gap: 10,
-              marginBottom: 15,
               alignItems: "center",
-              justifyContent: "center",
+              gap: 10,
+              marginBottom: 8,
+              maxWidth: 300,
             }}
           >
-            <FontAwesome name="map-marker" size={22} color="#E50728" />
-            <Text
-              style={[
-                { color: "#777", fontFamily: "MuseoSans_500", fontSize: 16 },
-              ]}
+            <Pressable
+              onPress={() =>
+                WebBrowser.openBrowserAsync(
+                  `https://www.google.com/maps/search/?api=1&query=${atractivo.field_location.trim()}`
+                )
+              }
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                marginBottom: 15,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              {atractivo.field_address}
-            </Text>
-          </Pressable>
+              <FontAwesome name="map-marker" size={22} color="#E50728" />
+              <Text
+                style={[
+                  { color: "#777", fontFamily: "MuseoSans_500", fontSize: 16 },
+                ]}
+              >
+                {atractivo.field_address}
+              </Text>
+            </Pressable>
           </View>
         )}
         {atractivo.field_link_info && (
-          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
-          <Pressable
-            onPress={() =>
-              WebBrowser.openBrowserAsync(`${atractivo.field_link_info}`)
-            }
+          <View
             style={{
               flexDirection: "row",
-              gap: 10,
-              marginBottom: 15,
               alignItems: "center",
-              justifyContent: "center",
+              gap: 10,
+              marginBottom: 8,
+              maxWidth: 300,
             }}
           >
-            <FontAwesome name="envelope-o" size={22} color="#58bf9c" />
-            <Text
-              style={[
-                {
-                  color: "#777",
-                  fontFamily: "MuseoSans_500",
-                  fontSize: 16,
-                  lineHeight: 20,
-                },
-              ]}
+            <Pressable
+              onPress={() =>
+                WebBrowser.openBrowserAsync(`${atractivo.field_link_info}`)
+              }
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                marginBottom: 15,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              {atractivo.field_link_info}
-            </Text>
-          </Pressable>
+              <Ionicons name="globe-outline" size={22} color="#E50728" />
+              <Text
+                style={[
+                  {
+                    color: "#777",
+                    fontFamily: "MuseoSans_500",
+                    fontSize: 16,
+                    lineHeight: 20,
+                  },
+                ]}
+              >
+                {atractivo.field_link_info}
+              </Text>
+            </Pressable>
           </View>
         )}
         {atractivo.field_email && (
-          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
-          <Pressable
-            onPress={() => Linking.openURL(`mailto:${atractivo.field_email}`)}
+          <View
             style={{
               flexDirection: "row",
-              gap: 10,
-              marginBottom: 15,
               alignItems: "center",
-              justifyContent: "center",
+              gap: 10,
+              marginBottom: 8,
+              maxWidth: 300,
             }}
           >
-            <FontAwesome name="envelope-o" size={22} color="#58bf9c" />
-            <Text
-              style={[
-                {
-                  color: "#777",
-                  fontFamily: "MuseoSans_500",
-                  fontSize: 16,
-                  lineHeight: 20,
-                },
-              ]}
+            <Pressable
+              onPress={() => Linking.openURL(`mailto:${atractivo.field_email}`)}
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                marginBottom: 15,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
             >
-              {atractivo.field_email}
-            </Text>
-          </Pressable>
+              <FontAwesome name="envelope-o" size={22} color="#58bf9c" />
+              <Text
+                style={[
+                  {
+                    color: "#777",
+                    fontFamily: "MuseoSans_500",
+                    fontSize: 16,
+                    lineHeight: 20,
+                  },
+                ]}
+              >
+                {atractivo.field_email}
+              </Text>
+            </Pressable>
           </View>
         )}
         {atractivo.field_phone && (
-          <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:8, maxWidth: 300,}}>
-
-          <Pressable
-            onPress={() => Linking.openURL(`tel:${atractivo.field_phone}`)}
+          <View
             style={{
               flexDirection: "row",
-              gap: 10,
-              marginBottom: 15,
               alignItems: "center",
-              justifyContent: "center",
+              gap: 10,
+              marginBottom: 8,
+              maxWidth: 300,
             }}
           >
-            <FontAwesome name="phone" size={24} color="#E50728" />
+            <Pressable
+              onPress={() => Linking.openURL(`tel:${atractivo.field_phone}`)}
+              style={{
+                flexDirection: "row",
+                gap: 10,
+                marginBottom: 15,
+                alignItems: "center",
+                justifyContent: "center",
+              }}
+            >
+              <FontAwesome name="phone" size={24} color="#E50728" />
+              <Text
+                style={[
+                  {
+                    color: "#777",
+                    fontFamily: "MuseoSans_500",
+                    fontSize: 16,
+                    lineHeight: 20,
+                  },
+                ]}
+              >
+                {atractivo.field_phone}
+              </Text>
+            </Pressable>
+          </View>
+        )}
+        {atractivo.field_horarios && (
+          <View
+            style={{
+              flexDirection: "row",
+              alignItems: "center",
+              gap: 10,
+              marginBottom: 30,
+              maxWidth: 300,
+            }}
+          >
+            <Image
+              source={{
+                uri: `https://visitbogota.co/vacacional/images/horarios.png`,
+              }}
+              width={20}
+              height={20}
+            />
+
             <Text
               style={[
                 {
@@ -212,43 +289,27 @@ const SingleAtractivo = () => {
                 },
               ]}
             >
-              {atractivo.field_phone}
+              {atractivo.field_horarios}
             </Text>
-          </Pressable>
           </View>
-        )} 
-        {atractivo.field_horarios && (
-        <View style={{flexDirection:'row', alignItems:'center', gap: 10, marginBottom:30, maxWidth: 300,}}>
-          <Image source={{uri: `https://visitbogota.co/vacacional/images/horarios.png`}} width={20} height={20} />
-
-          <Text  style={[
-            {
-              color: "#777",
-              fontFamily: "MuseoSans_500",
-              fontSize: 16,
-              lineHeight: 20,
-            },
-          ]}>{atractivo.field_horarios}</Text>
-        </View>
         )}
         <Text
-            style={{
-              fontSize: 14,
-              lineHeight: 22,
-              textAlign: "justify",
-              marginBottom: 15,
-              fontSize: 22,
-              color: Colors.orange,
-              fontFamily: "MuseoSans_900",
-            }}
-          >
-            Acerca de
-          </Text>
+          style={{
+            fontSize: 14,
+            lineHeight: 22,
+            textAlign: "justify",
+            marginBottom: 15,
+            fontSize: 22,
+            color: Colors.orange,
+            fontFamily: "MuseoSans_900",
+          }}
+        >
+          Acerca de
+        </Text>
         <Text style={{ fontSize: 14, lineHeight: 22, textAlign: "justify" }}>
           {atractivo.body}
         </Text>
         <View style={{ marginVertical: 30 }}>
-          
           <Text
             style={{
               fontSize: 14,
@@ -271,7 +332,9 @@ const SingleAtractivo = () => {
         <ComoLlegar
           onPress={() =>
             WebBrowser.openBrowserAsync(
-              atractivo.field_mapslink ? atractivo.field_mapslink : `http://maps.google.com/maps?q=${atractivo.field_location.trim()}`
+              atractivo.field_mapslink
+                ? atractivo.field_mapslink
+                : `http://maps.google.com/maps?q=${atractivo.field_location.trim()}`
             )
           }
         />

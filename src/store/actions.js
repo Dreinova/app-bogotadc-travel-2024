@@ -87,7 +87,30 @@ export const fetchAllEvents = () => async (dispatch, getState) => {
     // Zona Relacionada
     // Categoría Evento
     // Agenda de Evento
-    const endpoint = `/events/all/all/all/all`;
+    const endpoint = `/eventsweb/all/all/all/all`;
+    const eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
+    const uniqueNids = new Set();
+    const uniqueData = [];
+    for (const item of eventsResponse) {
+      if (!uniqueNids.has(item.nid)) {
+        uniqueNids.add(item.nid);
+        uniqueData.push(item);
+      }
+    }
+    dispatch(setEventsData(uniqueData));
+  } catch (error) {
+    console.error("Error fetching places data:", error);
+  }
+};
+export const fetchAllBlogs = () => async (dispatch, getState) => {
+  const state = getState();
+  const actualLanguage = state.language.language;
+  try {
+    // ID
+    // Zona Relacionada
+    // Categoría Evento
+    // Agenda de Evento
+    const endpoint = `/blog/all/all`;
     const eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
     const uniqueNids = new Set();
     const uniqueData = [];

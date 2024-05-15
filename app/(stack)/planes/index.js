@@ -67,6 +67,7 @@ const CustomModal = ({
         return "";
     }
   };
+  
   let persons = [
     {
       name: "1 persona",
@@ -147,7 +148,10 @@ const CustomModal = ({
                 flexWrap: "wrap",
               }}
             >
-              {filtersData[1].map((item, index) => {
+              {filtersData[1].filter((el) => {
+                console.log(el);
+                return el.field_home_view == "1"
+              }).map((item, index) => {
                 const isChecked =
                   Array.isArray(test_zona) && test_zona.includes(item.tid);
                 return (
@@ -196,7 +200,7 @@ const CustomModal = ({
                 );
               })}
             </View>
-            <Text style={stylesModal.titleFilter}>{getTitleByIndex(3)}</Text>
+            {/* <Text style={stylesModal.titleFilter}>{getTitleByIndex(3)}</Text>
             <View
               style={{
                 flex: 1,
@@ -245,10 +249,11 @@ const CustomModal = ({
                   $2.600.000{" "}
                 </Text>
               </View>
-            </View>
+            </View> */}
           </View>
           <View style={{ marginVertical: 10 }}>
             <Button
+            color="#E50728"
               title={wordsLanguage[actualLanguage][27]}
               onPress={() =>
                 filtrarPlanes({
@@ -261,6 +266,7 @@ const CustomModal = ({
           </View>
           <View style={{ marginVertical: 10 }}>
             <Button
+            color="#E50728"
               title={wordsLanguage[actualLanguage][28]}
               onPress={limpiarFiltros}
             />

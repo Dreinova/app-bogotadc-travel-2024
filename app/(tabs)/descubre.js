@@ -17,7 +17,7 @@ export default function TabTwoScreen() {
   const dispatch = useDispatch();
   React.useEffect(() => {
     setFilterID(params.filterID);
-  }, [params.filterID]);
+  }, [params.filterID, filterID]);
   // Variable de estado para controlar si las consultas han finalizado
   React.useEffect(() => {
     const requestAtractivosInit = async (tid) => {
