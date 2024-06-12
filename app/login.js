@@ -57,7 +57,7 @@ const login = () => {
           style={{
             fontSize: 30,
             color: "#FFF",
-            fontFamily: "MuseoSans_900",
+            fontFamily: "MuseoSans_700",
             textAlign: "center",
             marginVertical: 10,
             textShadowColor: "rgba(0, 0, 0, 1)",
@@ -119,7 +119,7 @@ const login = () => {
             padding: 10,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#E50728",
+            backgroundColor: "#35498e",
             width: "100%",
             borderRadius: 25,
             marginVertical: 10,
@@ -131,7 +131,7 @@ const login = () => {
             style={{
               fontSize: 22,
               color: "#FFF",
-              fontFamily: "MuseoSans_900",
+              fontFamily: "MuseoSans_700",
             }}
           >
             {setsendedLoginInfo
@@ -185,7 +185,7 @@ const login = () => {
             style={{
               fontSize: 22,
               color: "#FFF",
-              fontFamily: "MuseoSans_900",
+              fontFamily: "MuseoSans_700",
             }}
           >
             {wordsLanguage[actualLanguage][50]}

@@ -7,6 +7,7 @@ import RestaurantsReducer from "./RestaurantsSlice";
 import planesReducer from "./PlanesSlice";
 import LocationReducer from "./LocationSlice";
 import UserReducer from "./UserReducer";
+import RutasReducer from "./RutasSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
     planes: planesReducer,
     location: LocationReducer,
     user: UserReducer,
+    rutas: RutasReducer
   },
 });

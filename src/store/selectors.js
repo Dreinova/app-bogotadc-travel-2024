@@ -4,6 +4,7 @@ import { createSelector } from "reselect";
 // Define your selectors to access specific parts of the state
 const selectFilters = (state) => state.filters;
 const selectEvents = (state) => state.events;
+const selectRutas = (state) => state.rutas;
 const selectHotels = (state) => state.hoteles;
 const selectRestaurants = (state) => state.restaurantes;
 const selectPlanes = (state) => state.planes;
@@ -34,6 +35,15 @@ export const selectLocalidadesData = createSelector(
 export const selectEventsData = createSelector(
   [selectEvents],
   (events) => events.eventsList
+);
+export const selectBlogsData = createSelector(
+  [selectEvents],
+  (events) => events.blogsList
+);
+
+export const selectRutassData = createSelector(
+  [selectRutas],
+  (rutas) => rutas.rutasList
 );
 
 export const selectHotelsData = createSelector(

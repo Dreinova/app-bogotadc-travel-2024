@@ -73,7 +73,6 @@ export const fetchPlacesWithFilters =
           uniqueData.push(item);
         }
       }
-      console.log(placesResponse, "fetchPlacesWithFilters");
       dispatch(setPlacesData(uniqueData));
     } catch (error) {
       console.error("Error fetching places data:", error);
@@ -97,7 +96,54 @@ export const fetchAllEvents = () => async (dispatch, getState) => {
         uniqueData.push(item);
       }
     }
+    function setMidnight(dateString) {
+      const date = new Date(dateString);
+      date.setHours(0, 0, 0, 0);
+      return date;
+    }
+  
+    function compararFechas(a, b) {
+      // Si el evento no tiene fecha de finalización, usar la fecha de inicio
+      const endDateA = a.field_end_date
+        ? a.field_end_date.length === 10
+          ? setMidnight(a.field_end_date)
+          : new Date(a.field_end_date)
+        : setMidnight(a.field_date);
+      const endDateB = b.field_end_date
+        ? b.field_end_date.length === 10
+          ? setMidnight(b.field_end_date)
+          : new Date(b.field_end_date)
+        : setMidnight(b.field_date);
+  
+      return endDateA - endDateB;
+    }
+    // Ordenar el arreglo por fecha de finalización
+    uniqueData.sort(compararFechas);
+  
     dispatch(setEventsData(uniqueData));
+  } catch (error) {
+    console.error("Error fetching places data:", error);
+  }
+};
+export const fetchAllRutas = () => async (dispatch, getState) => {
+  const state = getState();
+  const actualLanguage = state.language.language;
+  try {
+    // ID
+    // Zona Relacionada
+    // Categoría Evento
+    // Agenda de Evento
+    const endpoint = `/rt/all`;
+    const rutasResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
+    const uniqueNids = new Set();
+    const uniqueData = [];
+    for (const item of rutasResponse) {
+      if (!uniqueNids.has(item.nid)) {
+        uniqueNids.add(item.nid);
+        uniqueData.push(item);
+      }
+    }
+    dispatch(setRutasData(uniqueData));
   } catch (error) {
     console.error("Error fetching places data:", error);
   }
@@ -120,7 +166,7 @@ export const fetchAllBlogs = () => async (dispatch, getState) => {
         uniqueData.push(item);
       }
     }
-    dispatch(setEventsData(uniqueData));
+    dispatch(setBlogsData(uniqueData));
   } catch (error) {
     console.error("Error fetching places data:", error);
   }
@@ -176,7 +222,7 @@ export const fetchAllPLanes = () => async (dispatch, getState) => {
   const state = getState();
   const actualLanguage = state.language.language;
   try {
-    const endpoint = `/ofertasapp/all/all/all/all/all`;
+    const endpoint = `/all_ofertas/all/all/all/all/all`;
     const eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
     const uniqueNids = new Set();
     const uniqueData = [];
@@ -235,7 +281,12 @@ export const fetchAllFilters =
       try {
         const arrayFilters = await Promise.all(
           filters.map(async (filter) => {
-            const response = await fetchBogotaDrpl(`/tax/${filter}`);
+            let response;
+            if(filter == 'categorias_atractivos_2024'){
+              response = await fetchBogotaDrplV2(`/categorias_atractivos/all`);
+            }else{
+              response = await fetchBogotaDrpl(`/tax/${filter}`);
+            }
             return response;
           })
         );
@@ -285,6 +336,18 @@ export const setPlacesData = (data) => {
 export const setEventsData = (data) => {
   return {
     type: "SET_EVENTS_DATA",
+    payload: data,
+  };
+};
+export const setBlogsData = (data) => {
+  return {
+    type: "SET_BLOGS_DATA",
+    payload: data,
+  };
+};
+export const setRutasData = (data) => {
+  return {
+    type: "SET_RUTAS_DATA",
     payload: data,
   };
 };

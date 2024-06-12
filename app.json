@@ -2,7 +2,7 @@
   "expo": {
     "name": "Visit Bogotá",
     "slug": "bogota_app",
-    "version": "3.3.7",
+    "version": "3.3.9",
     "orientation": "portrait",
     "scheme": "com.idt.bogota-app",
     "userInterfaceStyle": "automatic",
@@ -10,9 +10,11 @@
     "splash": {
       "image": "./assets/splash.png",
       "resizeMode": "contain",
-      "backgroundColor": "#E50728"
+      "backgroundColor": "#FFF"
     },
-    "assetBundlePatterns": ["**/*"],
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.servinf.idtturismo",
@@ -20,7 +22,7 @@
     },
     "android": {
       "package": "com.servinf.test.bogotadctravel",
-      "versionCode": 82,
+      "versionCode": 88,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
@@ -30,7 +32,7 @@
       ],
       "adaptiveIcon": {
         "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#E50728"
+        "backgroundColor": "#FFF"
       }
     },
     "web": {
@@ -52,7 +54,8 @@
         {
           "microphonePermission": "Allow $(PRODUCT_NAME) to access your microphone."
         }
-      ]
+      ],
+      "expo-font"
     ],
     "experiments": {
       "typedRoutes": true

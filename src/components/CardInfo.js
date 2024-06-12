@@ -22,7 +22,7 @@ const CardInfo = (props) => {
         <Text
           style={{
             color: "#FFF",
-            fontFamily: "MuseoSans_900",
+            fontFamily: "MuseoSans_700",
             fontSize: 16,
             textAlign: "center",
             textShadowColor: "rgba(0,0,0,.5)",

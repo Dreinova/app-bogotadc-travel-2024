@@ -72,7 +72,7 @@ const CardRuta = ({
         <Text
           style={{
             color: Colors.white,
-            fontFamily: "MuseoSans_900",
+            fontFamily: "MuseoSans_700",
             fontSize: 20,
             textShadowColor: "rgba(0, 0, 0, .7)",
             textShadowOffset: { width: 1, height: 1 },
@@ -104,7 +104,7 @@ const CardRuta = ({
             fontSize: 14,
             textAlign: "center",
             textTransform: "uppercase",
-            fontFamily: "MuseoSans_900",
+            fontFamily: "MuseoSans_700",
           }}
         >
           Ver más

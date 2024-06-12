@@ -8,10 +8,10 @@ import {
 
 const PreloaderComponent = ({ planBogota }) => {
   return planBogota ? (
-    < PreloaderComponent/>
+    <PreloaderComponent />
   ) : (
     <View style={styles.container}>
-      <ActivityIndicator size="large" color="#E50728" />
+      <ActivityIndicator size="large" color="#35498e" />
     </View>
   );
 };

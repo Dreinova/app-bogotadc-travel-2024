@@ -28,7 +28,7 @@ export default {
   grayBg: "#f0f0f0",
   grayText: "#8193a1",
   grayBtn: "#9E9E9E",
-  orange: "#E50728",
+  orange: "#35498E",
   orangeDark: "#DC4C1F",
   red: "#F44336",
   amber: "#FFC107",

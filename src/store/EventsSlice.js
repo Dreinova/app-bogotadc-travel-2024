@@ -1,5 +1,6 @@
 const initialState = {
   eventsList: [],
+  blogsList: [],
 };
 
 const EventsReducer = (state = initialState, action) => {
@@ -8,6 +9,11 @@ const EventsReducer = (state = initialState, action) => {
       return {
         ...state,
         eventsList: action.payload,
+      };
+    case "SET_BLOGS_DATA":
+      return {
+        ...state,
+        blogsList: action.payload,
       };
     default:
       return state;
