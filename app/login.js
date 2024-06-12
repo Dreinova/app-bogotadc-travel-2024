@@ -57,7 +57,7 @@ const login = () => {
           style={{
             fontSize: 30,
             color: "#FFF",
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             textAlign: "center",
             marginVertical: 10,
             textShadowColor: "rgba(0, 0, 0, 1)",
@@ -119,7 +119,7 @@ const login = () => {
             padding: 10,
             alignItems: "center",
             justifyContent: "center",
-            backgroundColor: "#35498e",
+            backgroundColor: "#354999",
             width: "100%",
             borderRadius: 25,
             marginVertical: 10,
@@ -131,7 +131,7 @@ const login = () => {
             style={{
               fontSize: 22,
               color: "#FFF",
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
             }}
           >
             {setsendedLoginInfo
@@ -152,7 +152,7 @@ const login = () => {
             style={{
               fontSize: 18,
               color: "#FFF",
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
               textDecorationColor: "#FFF",
               textDecorationStyle: "solid",
               textDecorationLine: "underline",
@@ -185,7 +185,7 @@ const login = () => {
             style={{
               fontSize: 22,
               color: "#FFF",
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
             }}
           >
             {wordsLanguage[actualLanguage][50]}
@@ -194,7 +194,7 @@ const login = () => {
         <Text
           style={{
             color: "#777",
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             fontSize: 14,
             marginVertical: 20,
             textAlign: "center",
@@ -220,7 +220,7 @@ const login = () => {
         <Text
           style={{
             color: "#777",
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             fontSize: 14,
             marginVertical: 20,
             textAlign: "center",

@@ -149,12 +149,12 @@ const info = (props) => {
                 onPress={() => setModalInfoVisible(false)}
                 style={{ position: "absolute", right: 15, top: 15 }}
               >
-                <Ionicons name="close" size={35} color="#35498e" />
+                <Ionicons name="close" size={35} color="#354999" />
               </Pressable>
               <Text
                 style={{
                   color: "#FFF",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 25,
                   textAlign: "center",
                   textShadowColor: "rgba(0,0,0,.5)",
@@ -170,7 +170,7 @@ const info = (props) => {
                 <Text
                   style={{
                     color: "#333",
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 16,
                     marginBottom: 30,
                   }}
@@ -182,7 +182,7 @@ const info = (props) => {
                 <Text
                   style={{
                     color: "#333",
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 16,
                   }}
                 >
@@ -199,8 +199,8 @@ const info = (props) => {
                 >
                   <Text
                     style={{
-                      color: "#35498e",
-                      fontFamily: "MuseoSans_700",
+                      color: "#354999",
+                      fontFamily: "MuseoSans_500",
                       fontSize: 16,
                       textAlign: "center",
                     }}
@@ -215,7 +215,7 @@ const info = (props) => {
       </Modal>
       <View
         style={{
-          backgroundColor: "#35498e",
+          backgroundColor: "#354999",
           alignItems: "center",
           justifyContent: "center",
           padding: 10,
@@ -228,7 +228,7 @@ const info = (props) => {
         <Text
           style={{
             color: "#FFF",
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             fontSize: 30,
             textAlign: "center",
           }}
@@ -242,7 +242,7 @@ const info = (props) => {
             <Text
               style={{
                 color: "#333",
-                fontFamily: "MuseoSans_700",
+                fontFamily: "MuseoSans_500",
                 fontSize: 30,
                 marginBottom: 15,
                 textAlign: "center",
@@ -272,7 +272,7 @@ const info = (props) => {
         <Text
           style={{
             color: "#333",
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             fontSize: 30,
             marginBottom: 15,
             textAlign: "center",
@@ -322,7 +322,7 @@ const info = (props) => {
                   <Text
                     style={{
                       color: "#FFF",
-                      fontFamily: "MuseoSans_700",
+                      fontFamily: "MuseoSans_500",
                       fontSize: 13,
                       textAlign: "center",
                       textShadowColor: "rgba(0,0,0,.5)",
@@ -340,7 +340,7 @@ const info = (props) => {
         <Text
           style={{
             color: "#333",
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             fontSize: 30,
             marginBottom: 15,
             textAlign: "center",
@@ -352,11 +352,11 @@ const info = (props) => {
           const colorTitle = (type) => {
             switch (type) {
               case "4":
-                return "#35498e";
+                return "#354999";
               case "5":
-                return "#35498e";
+                return "#354999";
               case "6":
-                return "#35498e";
+                return "#354999";
             }
           };
 
@@ -368,7 +368,7 @@ const info = (props) => {
                   color: colorTitle(item.tid),
                   textAlign: "center",
                   paddingVertical: 15,
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                 }}
               >
                 {item.title}

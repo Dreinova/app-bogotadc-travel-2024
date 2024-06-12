@@ -13,12 +13,7 @@ import { windowWidth } from "../constants/ScreenWidth";
 import { Colors } from "../constants";
 import RenderHtml from "react-native-render-html";
 
-const CardRuta = ({
-  image,
-  title,
-  desc,
-  onPress,
-}) => {
+const CardRuta = ({ image, title, desc, onPress }) => {
   const { width } = useWindowDimensions();
   const source = {
     html: desc,
@@ -62,7 +57,7 @@ const CardRuta = ({
           {
             height: 150,
             alignItems: "center",
-            justifyContent:"flex-end",
+            justifyContent: "flex-end",
             padding: 10,
           },
         ]}
@@ -82,7 +77,6 @@ const CardRuta = ({
         >
           {title}
         </Text>
-
       </ImageBackground>
       <RenderHtml
         baseStyle={{ flex: 1 }}
@@ -103,7 +97,6 @@ const CardRuta = ({
             color: "#FFF",
             fontSize: 14,
             textAlign: "center",
-            textTransform: "uppercase",
             fontFamily: "MuseoSans_700",
           }}
         >

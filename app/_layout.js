@@ -1,11 +1,11 @@
 import * as Location from "expo-location";
 import * as SplashScreen from "expo-splash-screen";
-import * as Updates from 'expo-updates';
+import * as Updates from "expo-updates";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { StatusBar } from "expo-status-bar";
-import { ImageBackground, SafeAreaView, Text } from "react-native";
+import { ImageBackground, Platform, SafeAreaView, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { Provider, useDispatch } from "react-redux";
@@ -16,7 +16,6 @@ const splash = require("../assets/splash.png");
 SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
-  
   async function onFetchUpdateAsync() {
     try {
       const update = await Updates.checkForUpdateAsync();
@@ -68,8 +67,7 @@ export default function RootLayout() {
           paddingVertical: 80,
           paddingHorizontal: 20,
         }}
-      >
-      </ImageBackground>
+      ></ImageBackground>
     );
   }
   return (
@@ -97,11 +95,20 @@ function RootLayoutNav() {
   }, []);
   return (
     <SafeAreaProvider>
-      <Stack
-        screenOptions={{ headerShown: false }}
-        initialRouteName="(tabs)"
-      ></Stack>
-      <StatusBar hidden />
+      <SafeAreaView style={{ flex: 1 }}>
+        <Stack
+          screenOptions={{ headerShown: false }}
+          initialRouteName="(tabs)"
+        ></Stack>
+        {Platform.OS === "ios" && (
+          <StatusBar
+            barStyle="dark-content"
+            backgroundColor="transparent"
+            translucent
+          />
+        )}
+        {Platform.OS === "android" && <StatusBar hidden />}
+      </SafeAreaView>
     </SafeAreaProvider>
   );
 }

@@ -42,14 +42,17 @@ const SingleBlog = () => {
     p: {
       textAlign: "left",
       color: "#777",
-      fontFamily: "MuseoSans_500", lineHeight: 22, fontSize:16
+      fontFamily: "MuseoSans_500",
+      lineHeight: 22,
+      fontSize: 16,
     },
     ul: { paddingLeft: 0, margin: 0 },
     li: {
-      paddingLeft: 0,
-      margin: 0,
       textAlign: "left",
       color: "#777",
+      fontFamily: "MuseoSans_500",
+      lineHeight: 22,
+      fontSize: 16,
     },
   };
 
@@ -109,7 +112,12 @@ const SingleBlog = () => {
       <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
         <Text
           style={[
-            { color: "#35498E", fontFamily: "MuseoSans_500", lineHeight: 22, fontSize:16 },
+            {
+              color: "#354999",
+              fontFamily: "MuseoSans_500",
+              lineHeight: 22,
+              fontSize: 16,
+            },
           ]}
         >
           {blog.field_intro_blog}
@@ -129,7 +137,7 @@ const SingleBlog = () => {
 const styles = StyleSheet.create({
   text: {
     color: Colors.white,
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 20,
     textShadowColor: "rgba(0, 0, 0, .7)",
     textShadowOffset: { width: 1, height: 1 },
@@ -142,7 +150,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   firstLetter: {
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 33, // Establece el tamaño de la primera letra
     color: "#777777", // Establece el color de la primera letra
     // Agrega otros estilos según tus preferencias

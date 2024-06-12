@@ -36,8 +36,8 @@ const ReadMoreText = ({ text, maxLines = 3 }) => {
       >
         <Text
           style={{
-            color: "#35498e",
-            fontFamily: "MuseoSans_700",
+            color: "#354999",
+            fontFamily: "MuseoSans_500",
             fontSize: 16,
           }}
         >

@@ -33,7 +33,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
       year: "numeric",
     };
     const dateFormatteddateStart = dateStart.toLocaleDateString(
-      actualLanguage == 'es' ? "es-ES":"en-US",
+      actualLanguage == "es" ? "es-ES" : "en-US",
       optionsdateStart
     );
     monthStart = dateFormatteddateStart.substring(0, 3);
@@ -48,7 +48,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
       year: "numeric",
     };
     const dateFormatteddateEnd = dateEnd.toLocaleDateString(
-      actualLanguage == 'es' ? "es-ES":"en-US",
+      actualLanguage == "es" ? "es-ES" : "en-US",
       optionsdateEnd
     );
 
@@ -101,7 +101,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
             <Text
               style={{
                 color: Colors.white,
-                fontFamily: "MuseoSans_700",
+                fontFamily: "MuseoSans_500",
                 fontSize: 22,
               }}
             >
@@ -124,7 +124,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
                 <Text
                   style={{
                     color: Colors.white,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 18,
                     textAlign: "center",
                   }}
@@ -135,7 +135,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
                   <Text
                     style={{
                       color: Colors.white,
-                      fontFamily: "MuseoSans_700",
+                      fontFamily: "MuseoSans_500",
                       fontSize: 18,
                       textAlign: "center",
                     }}

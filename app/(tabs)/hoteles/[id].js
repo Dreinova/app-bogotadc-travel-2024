@@ -106,7 +106,7 @@ const SingleHotel = () => {
               justifyContent: "center",
             }}
           >
-            <FontAwesome name="map-marker" size={22} color="#35498e" />
+            <FontAwesome name="map-marker" size={22} color="#354999" />
             <Text
               style={[
                 { color: "#777", fontFamily: "MuseoSans_500", fontSize: 16 },
@@ -127,7 +127,7 @@ const SingleHotel = () => {
               justifyContent: "center",
             }}
           >
-            <FontAwesome name="phone" size={24} color="#35498e" />
+            <FontAwesome name="phone" size={24} color="#354999" />
             <Text
               style={[
                 { color: "#777", fontFamily: "MuseoSans_500", fontSize: 16 },
@@ -190,7 +190,7 @@ const SingleHotel = () => {
 const styles = StyleSheet.create({
   text: {
     color: Colors.white,
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 25,
     textShadowColor: "rgba(0, 0, 0, .7)",
     textShadowOffset: { width: 1, height: 1 },
@@ -203,7 +203,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   firstLetter: {
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 33, // Establece el tamaño de la primera letra
     color: "#777777", // Establece el color de la primera letra
     // Agrega otros estilos según tus preferencias

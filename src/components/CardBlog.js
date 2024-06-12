@@ -27,8 +27,8 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
     p: {
       textAlign: "left",
       color: "#FFF",
-      fontSize:22,
-      fontFamily: "MuseoSans_700",
+      fontSize: 22,
+      fontFamily: "MuseoSans_500",
     },
   };
   return (
@@ -45,7 +45,6 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
         style={[
           {
             height: isHorizontal ? windowHeight - 250 : windowWidth,
-            
           },
           isHorizontal && { borderRadius: 10, overflow: "hidden" },
         ]}
@@ -60,29 +59,28 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
             padding: 20,
           }}
         >
-          <View style={{maxWidth:280}}>
-
-          <Text
-            style={{
-              color: Colors.white,
-              fontFamily: "MuseoSans_700",
-              fontSize: 28,
-              textShadowColor: "rgba(0, 0, 0, .7)",
-              textShadowOffset: { width: 1, height: 1 },
-              textShadowRadius: 10,
-            }}
-          >
-            {title}
-          </Text>
-          <Text
-            style={{
-              color: Colors.white,
-              fontFamily: "MuseoSans_500",
-              fontSize: 14,
-            }}
-          >
-            {intro}
-          </Text>
+          <View style={{ maxWidth: 280 }}>
+            <Text
+              style={{
+                color: Colors.white,
+                fontFamily: "MuseoSans_500",
+                fontSize: 28,
+                textShadowColor: "rgba(0, 0, 0, .7)",
+                textShadowOffset: { width: 1, height: 1 },
+                textShadowRadius: 10,
+              }}
+            >
+              {title}
+            </Text>
+            <Text
+              style={{
+                color: Colors.white,
+                fontFamily: "MuseoSans_500",
+                fontSize: 14,
+              }}
+            >
+              {intro}
+            </Text>
           </View>
         </View>
       </ImageBackground>

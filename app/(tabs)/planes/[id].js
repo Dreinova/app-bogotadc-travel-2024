@@ -129,8 +129,8 @@ const ModalReserva = (
           >
             <Text
               style={{
-                color: "#35498e",
-                fontFamily: "MuseoSans_700",
+                color: "#354999",
+                fontFamily: "MuseoSans_500",
                 textAlign: "center",
                 fontSize: 35,
                 marginBottom: 15,
@@ -140,7 +140,7 @@ const ModalReserva = (
             </Text>
             <Text
               style={{
-                color: "#35498e",
+                color: "#354999",
                 fontFamily: "MuseoSans_500",
                 textAlign: "center",
                 fontSize: 25,
@@ -151,8 +151,8 @@ const ModalReserva = (
             </Text>
             <Text
               style={{
-                color: "#35498e",
-                fontFamily: "MuseoSans_700",
+                color: "#354999",
+                fontFamily: "MuseoSans_500",
                 textAlign: "center",
                 fontSize: 30,
                 marginBottom: 15,
@@ -171,7 +171,7 @@ const ModalReserva = (
               <Text
                 style={{
                   color: "#333",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 14,
                   marginBottom: 15,
                 }}
@@ -191,7 +191,7 @@ const ModalReserva = (
               <Text
                 style={{
                   color: "#333",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 14,
                   marginBottom: 15,
                 }}
@@ -211,7 +211,7 @@ const ModalReserva = (
               <Text
                 style={{
                   color: "#333",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 14,
                   marginBottom: 15,
                 }}
@@ -231,7 +231,7 @@ const ModalReserva = (
               <Text
                 style={{
                   color: "#333",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 14,
                   marginBottom: 15,
                 }}
@@ -243,7 +243,7 @@ const ModalReserva = (
             <Text
               style={{
                 color: "#333",
-                fontFamily: "MuseoSans_700",
+                fontFamily: "MuseoSans_500",
                 fontSize: 18,
                 marginBottom: 15,
               }}
@@ -258,8 +258,8 @@ const ModalReserva = (
             >
               <Text
                 style={{
-                  color: "#35498e",
-                  fontFamily: "MuseoSans_700",
+                  color: "#354999",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 18,
                   textDecorationLine: "underline",
                   marginBottom: 15,
@@ -289,7 +289,7 @@ const ModalReserva = (
             <Text
               style={{
                 color: Colors.white,
-                fontFamily: "MuseoSans_700",
+                fontFamily: "MuseoSans_500",
                 fontSize: 25,
                 textAlign: "center",
                 marginBottom: 10,
@@ -317,7 +317,7 @@ const ModalReserva = (
                   style={{
                     color: Colors.white,
                     opacity: 0.8,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 25,
                     textAlign: "center",
                   }}
@@ -342,7 +342,7 @@ const ModalReserva = (
               <Text
                 style={{
                   color: Colors.white,
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 35,
 
                   textAlign: "center",
@@ -352,7 +352,7 @@ const ModalReserva = (
               </Text>
               <View
                 style={{
-                  backgroundColor: "#35498e",
+                  backgroundColor: "#354999",
                   width: 80,
                   height: 80,
                   borderRadius: 80,
@@ -365,7 +365,7 @@ const ModalReserva = (
                 <Text
                   style={{
                     color: Colors.white,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 22,
                     textAlign: "center",
                   }}
@@ -375,7 +375,7 @@ const ModalReserva = (
                 <Text
                   style={{
                     color: Colors.white,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 20,
                     textAlign: "center",
                   }}
@@ -397,7 +397,7 @@ const ModalReserva = (
                 placeholderTextColor="#FFF"
                 style={{
                   color: "#FFF",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   backgroundColor: "rgba(255,255,255,.18)",
@@ -417,7 +417,7 @@ const ModalReserva = (
                 placeholderTextColor="#FFF"
                 style={{
                   color: "#FFF",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   backgroundColor: "rgba(255,255,255,.18)",
@@ -437,7 +437,7 @@ const ModalReserva = (
                 }}
                 style={{
                   color: "#FFF",
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   paddingHorizontal: 15,
                   paddingVertical: 10,
                   backgroundColor: "rgba(255,255,255,.18)",
@@ -461,7 +461,7 @@ const ModalReserva = (
                     opacity: pressed ? 0.5 : 1,
                   },
                   {
-                    backgroundColor: "#35498e",
+                    backgroundColor: "#354999",
                     alignItems: "center",
                     justifyContent: "center",
                     borderRadius: 25,
@@ -476,9 +476,8 @@ const ModalReserva = (
                   <Text
                     style={{
                       color: Colors.white,
-                      fontFamily: "MuseoSans_700",
+                      fontFamily: "MuseoSans_500",
                       fontSize: 20,
-                      textTransform: "uppercase",
                       textAlign: "center",
                     }}
                   >
@@ -589,10 +588,11 @@ const SinglePlan = () => {
     },
     ul: { paddingLeft: 25, margin: 0 },
     li: {
-      paddingLeft: 0,
-      margin: 0,
       textAlign: "left",
       color: "#777",
+      fontFamily: "MuseoSans_500",
+      lineHeight: 22,
+      fontSize: 16,
     },
   };
 
@@ -676,9 +676,10 @@ const SinglePlan = () => {
           <Text
             style={{
               color: Colors.orange,
-              fontFamily: "MuseoSans_700",
-              fontSize: 22,
+              fontFamily: "MuseoSans_500",
+              fontSize: 20,
               marginBottom: 10,
+              maxWidth: 280,
             }}
           >
             {plan.title}
@@ -714,7 +715,7 @@ const SinglePlan = () => {
         <Text
           style={{
             color: Colors.gray,
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             fontSize: 18,
           }}
         >
@@ -735,15 +736,15 @@ const SinglePlan = () => {
               width="18"
               height="26"
               icon={`<svg width="18" height="26" viewBox="0 0 18 26" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M8.81156 25.6209C8.60304 25.45 8.4113 25.2595 8.23897 25.052C6.72569 22.8947 5.20332 20.7419 3.73094 18.5528C2.48799 16.763 1.47711 14.8222 0.722566 12.7772C0.242954 11.4998 -0.00184317 10.146 1.04483e-05 8.78122C0.0586328 6.60994 0.897166 4.53266 2.36172 2.93063C3.82627 1.3286 5.81858 0.309286 7.97302 0.059767C10.1275 -0.189752 12.2995 0.347262 14.0904 1.57225C15.8814 2.79724 17.1712 4.62803 17.7231 6.7286C18.1726 8.58286 18.0732 10.5281 17.4368 12.3267C16.7749 14.316 15.8421 16.2044 14.6647 17.9384C13.3241 19.9728 11.9108 21.9571 10.5293 23.9642C10.2794 24.3283 10.0431 24.7061 9.77042 25.0565C9.59215 25.2571 9.40087 25.4456 9.19783 25.6209H8.81156ZM9.00242 23.5182C9.03345 23.4868 9.06229 23.4534 9.08877 23.4181C10.4748 21.4201 11.8836 19.4448 13.2287 17.4241C14.3939 15.7375 15.3249 13.9002 15.9962 11.9626C16.532 10.5074 16.6547 8.93204 16.3507 7.41129C15.9459 5.49163 14.8084 3.80628 13.1806 2.7146C11.5528 1.62292 9.56363 1.2113 7.63715 1.56749C5.71068 1.92369 3.99936 3.01952 2.8681 4.62133C1.73684 6.22314 1.27514 8.20419 1.58145 10.1421C1.82035 11.5045 2.25668 12.8246 2.8766 14.0607C3.90979 16.1202 5.11213 18.0901 6.4712 19.95C7.30737 21.1288 8.14808 22.3076 9.00242 23.5182Z" fill="#35498E"/>
-<path d="M9.03418 4.46206C9.92406 4.47017 10.7916 4.74214 11.5273 5.24364C12.2629 5.74515 12.8338 6.4537 13.1677 7.27985C13.5016 8.106 13.5836 9.01271 13.4034 9.88551C13.2232 10.7583 12.7888 11.5581 12.1551 12.1838C11.5215 12.8096 10.7168 13.2333 9.84291 13.4015C8.96898 13.5696 8.06489 13.4747 7.24477 13.1287C6.42466 12.7826 5.7253 12.201 5.23498 11.4572C4.74465 10.7135 4.48535 9.84086 4.4898 8.94961C4.49337 8.35593 4.61381 7.76879 4.84423 7.2218C5.07465 6.6748 5.41053 6.17869 5.83264 5.76186C6.25475 5.34503 6.75479 5.01567 7.30416 4.79263C7.85352 4.5696 8.44141 4.45726 9.03418 4.46206ZM9.01146 5.96398C8.41755 5.96398 7.83697 6.1403 7.34309 6.47067C6.84921 6.80103 6.4642 7.27061 6.23672 7.82006C6.00923 8.3695 5.94948 8.97415 6.06501 9.5576C6.18055 10.141 6.46619 10.6771 6.88583 11.098C7.30546 11.5189 7.84027 11.8058 8.42266 11.9224C9.00505 12.039 9.60887 11.9801 10.1578 11.7531C10.7068 11.5261 11.1762 11.1412 11.5068 10.647C11.8375 10.1529 12.0144 9.57172 12.0153 8.97691C12.0141 8.17899 11.6974 7.41402 11.1344 6.84938C10.5715 6.28474 9.80817 5.96638 9.01146 5.96398Z" fill="#35498E"/>
+<path d="M8.81156 25.6209C8.60304 25.45 8.4113 25.2595 8.23897 25.052C6.72569 22.8947 5.20332 20.7419 3.73094 18.5528C2.48799 16.763 1.47711 14.8222 0.722566 12.7772C0.242954 11.4998 -0.00184317 10.146 1.04483e-05 8.78122C0.0586328 6.60994 0.897166 4.53266 2.36172 2.93063C3.82627 1.3286 5.81858 0.309286 7.97302 0.059767C10.1275 -0.189752 12.2995 0.347262 14.0904 1.57225C15.8814 2.79724 17.1712 4.62803 17.7231 6.7286C18.1726 8.58286 18.0732 10.5281 17.4368 12.3267C16.7749 14.316 15.8421 16.2044 14.6647 17.9384C13.3241 19.9728 11.9108 21.9571 10.5293 23.9642C10.2794 24.3283 10.0431 24.7061 9.77042 25.0565C9.59215 25.2571 9.40087 25.4456 9.19783 25.6209H8.81156ZM9.00242 23.5182C9.03345 23.4868 9.06229 23.4534 9.08877 23.4181C10.4748 21.4201 11.8836 19.4448 13.2287 17.4241C14.3939 15.7375 15.3249 13.9002 15.9962 11.9626C16.532 10.5074 16.6547 8.93204 16.3507 7.41129C15.9459 5.49163 14.8084 3.80628 13.1806 2.7146C11.5528 1.62292 9.56363 1.2113 7.63715 1.56749C5.71068 1.92369 3.99936 3.01952 2.8681 4.62133C1.73684 6.22314 1.27514 8.20419 1.58145 10.1421C1.82035 11.5045 2.25668 12.8246 2.8766 14.0607C3.90979 16.1202 5.11213 18.0901 6.4712 19.95C7.30737 21.1288 8.14808 22.3076 9.00242 23.5182Z" fill="#354999"/>
+<path d="M9.03418 4.46206C9.92406 4.47017 10.7916 4.74214 11.5273 5.24364C12.2629 5.74515 12.8338 6.4537 13.1677 7.27985C13.5016 8.106 13.5836 9.01271 13.4034 9.88551C13.2232 10.7583 12.7888 11.5581 12.1551 12.1838C11.5215 12.8096 10.7168 13.2333 9.84291 13.4015C8.96898 13.5696 8.06489 13.4747 7.24477 13.1287C6.42466 12.7826 5.7253 12.201 5.23498 11.4572C4.74465 10.7135 4.48535 9.84086 4.4898 8.94961C4.49337 8.35593 4.61381 7.76879 4.84423 7.2218C5.07465 6.6748 5.41053 6.17869 5.83264 5.76186C6.25475 5.34503 6.75479 5.01567 7.30416 4.79263C7.85352 4.5696 8.44141 4.45726 9.03418 4.46206ZM9.01146 5.96398C8.41755 5.96398 7.83697 6.1403 7.34309 6.47067C6.84921 6.80103 6.4642 7.27061 6.23672 7.82006C6.00923 8.3695 5.94948 8.97415 6.06501 9.5576C6.18055 10.141 6.46619 10.6771 6.88583 11.098C7.30546 11.5189 7.84027 11.8058 8.42266 11.9224C9.00505 12.039 9.60887 11.9801 10.1578 11.7531C10.7068 11.5261 11.1762 11.1412 11.5068 10.647C11.8375 10.1529 12.0144 9.57172 12.0153 8.97691C12.0141 8.17899 11.6974 7.41402 11.1344 6.84938C10.5715 6.28474 9.80817 5.96638 9.01146 5.96398Z" fill="#354999"/>
 </svg>
 `}
             />
 
             <Text
               style={[
-                { color: "#777", fontFamily: "MuseoSans_700", fontSize: 16 },
+                { color: "#777", fontFamily: "MuseoSans_500", fontSize: 16 },
               ]}
             >
               {plan.field_pb_oferta_direccion}
@@ -764,7 +765,7 @@ const SinglePlan = () => {
             );
           }}
           style={{
-            backgroundColor: "#35498e",
+            backgroundColor: "#354999",
             alignItems: "center",
             justifyContent: "center",
             borderRadius: 25,
@@ -775,9 +776,8 @@ const SinglePlan = () => {
           <Text
             style={{
               color: Colors.white,
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
               fontSize: 16,
-              textTransform: "uppercase",
               textAlign: "center",
             }}
           >
@@ -800,7 +800,7 @@ const SinglePlan = () => {
 const styles = StyleSheet.create({
   text: {
     color: Colors.white,
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 25,
     textShadowColor: "rgba(0, 0, 0, .7)",
     textShadowOffset: { width: 1, height: 1 },
@@ -813,7 +813,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   firstLetter: {
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 33, // Establece el tamaño de la primera letra
     color: "#777777", // Establece el color de la primera letra
     // Agrega otros estilos según tus preferencias

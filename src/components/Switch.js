@@ -82,7 +82,7 @@ export default Switch = ({ size, onPress, isActive }) => {
         style={{
           color: Colors.orange,
           fontSize: 12,
-          fontFamily: "MuseoSans_700",
+          fontFamily: "MuseoSans_500",
           marginVertical: 5,
         }}
       >

@@ -5,6 +5,7 @@ import {
   Pressable,
   StyleSheet,
   Text,
+  Platform,
   View,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
@@ -12,7 +13,7 @@ import { windowHeight, windowWidth } from "../constants/ScreenWidth";
 import { Colors } from "../constants";
 import { LinearGradient } from "expo-linear-gradient";
 
-const CardAtractivoBig = ({ image, title, onPress }) => {
+const CardAtractivoBig = ({ image, title, onPress, atractivo }) => {
   const [imagesLoaded, setImagesLoaded] = React.useState(false);
 
   const handleImageLoad = () => {
@@ -29,7 +30,8 @@ const CardAtractivoBig = ({ image, title, onPress }) => {
           width: windowWidth - 100,
           borderRadius: 10,
           overflow: "hidden",
-          height: windowHeight - 320,
+          height:
+            Platform.OS === "ios" ? windowHeight - 450 : windowHeight - 320,
         },
       ]}
     >
@@ -45,19 +47,20 @@ const CardAtractivoBig = ({ image, title, onPress }) => {
         onLoad={handleImageLoad}
       >
         <LinearGradient
-          colors={["transparent", "rgba(0,0,0,.2)"]}
+          colors={["transparent", "rgba(0,0,0,.7)"]}
           style={{
             flex: 1,
-            justifyContent: "flex-end",
+            justifyContent: "center",
             padding: 20,
-            justifyContent: "flex-end",
+            alignItems: "center",
           }}
         >
           <Text
             style={{
+              textAlign: "center",
               color: Colors.white,
-              fontFamily: "MuseoSans_700",
-              fontSize: 25,
+              fontFamily: "MuseoSans_500",
+              fontSize: 40,
             }}
           >
             {title}

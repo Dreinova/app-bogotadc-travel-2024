@@ -27,7 +27,7 @@ export const CustomCheckbox = ({
         <Text
           style={[
             {
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
               fontSize: 14,
               lineHeight: 16,
               color: light ? "#FFF" : "#55637E",
@@ -55,7 +55,7 @@ const styles = StyleSheet.create({
   },
   filled: {
     borderWidth: 0,
-    backgroundColor: "#35498e",
+    backgroundColor: "#354999",
   },
 });
 

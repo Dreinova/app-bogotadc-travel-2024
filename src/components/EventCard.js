@@ -36,7 +36,7 @@ const EventCard = ({
       year: "numeric",
     };
     const dateFormatteddateStart = dateStart.toLocaleDateString(
-      actualLanguage == 'es' ? "es-ES":"en-US",
+      actualLanguage == "es" ? "es-ES" : "en-US",
       optionsdateStart
     );
     monthStart = dateFormatteddateStart.substring(0, 3);
@@ -51,7 +51,7 @@ const EventCard = ({
       year: "numeric",
     };
     const dateFormatteddateEnd = dateEnd.toLocaleDateString(
-      actualLanguage == 'es' ? "es-ES":"en-US",
+      actualLanguage == "es" ? "es-ES" : "en-US",
       optionsdateEnd
     );
 
@@ -82,14 +82,13 @@ const EventCard = ({
           <Text
             style={{
               color: Colors.white,
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
               fontSize: 25,
               textShadowColor: "rgba(0, 0, 0, .7)",
               textShadowOffset: { width: 1, height: 1 },
               textShadowRadius: 10,
               textAlign: "center",
               marginBottom: 15,
-              textTransform: "uppercase",
             }}
           >
             {title.replace(/&quot;/g, '"')}
@@ -97,7 +96,7 @@ const EventCard = ({
           <Text
             style={{
               color: Colors.white,
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
               fontSize: 14,
               textShadowColor: "rgba(0, 0, 0, .7)",
               textShadowOffset: { width: 1, height: 1 },
@@ -118,7 +117,7 @@ const EventCard = ({
           >
             <View
               style={{
-                backgroundColor: "#35498e",
+                backgroundColor: "#354999",
                 padding: 15,
                 borderRadius: 25,
                 gap: 5,
@@ -127,7 +126,7 @@ const EventCard = ({
               <Text
                 style={{
                   color: Colors.white,
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 16,
                   textAlign: "center",
                 }}
@@ -137,7 +136,7 @@ const EventCard = ({
               <Text
                 style={{
                   color: Colors.white,
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 22,
                   textAlign: "center",
                 }}
@@ -147,7 +146,7 @@ const EventCard = ({
               <Text
                 style={{
                   color: Colors.white,
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 16,
                   textAlign: "center",
                 }}
@@ -158,7 +157,7 @@ const EventCard = ({
             {end && (
               <View
                 style={{
-                  backgroundColor: "#35498e",
+                  backgroundColor: "#354999",
                   padding: 15,
                   gap: 5,
                   borderRadius: 25,
@@ -167,7 +166,7 @@ const EventCard = ({
                 <Text
                   style={{
                     color: Colors.white,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 16,
                     textAlign: "center",
                   }}
@@ -177,7 +176,7 @@ const EventCard = ({
                 <Text
                   style={{
                     color: Colors.white,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 22,
                     textAlign: "center",
                   }}
@@ -187,7 +186,7 @@ const EventCard = ({
                 <Text
                   style={{
                     color: Colors.white,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 16,
                     textAlign: "center",
                   }}

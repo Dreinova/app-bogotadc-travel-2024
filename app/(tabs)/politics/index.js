@@ -14,7 +14,7 @@ const politics = () => {
   React.useEffect(() => {
     const getPolitics = async () => {
       const data = await fetchBogotaDrplV2("/gcontent/1", actualLanguage);
-  
+
       setPolitics(data[0]);
     };
     getPolitics();
@@ -38,7 +38,7 @@ const politics = () => {
           marginBottom: 30,
           lineHeight: 25,
           textAlign: "center",
-          fontFamily: "MuseoSans_700",
+          fontFamily: "MuseoSans_500",
         }}
       >
         {politics.title}
@@ -56,14 +56,14 @@ const politics = () => {
           },
           ul: { paddingLeft: 25, margin: 0 },
           li: {
-            paddingLeft: 0,
-            margin: 0,
             textAlign: "left",
             color: "#777",
+            fontFamily: "MuseoSans_500",
+            lineHeight: 22,
+            fontSize: 16,
           },
         }}
       />
-   
     </ScrollView>
   );
 };

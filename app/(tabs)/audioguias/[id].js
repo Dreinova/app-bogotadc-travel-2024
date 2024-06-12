@@ -57,7 +57,8 @@ const SingleAudio = () => {
     .map((path) => path.trim());
 
   const audioArray = audioTitles.map((title, index) => ({
-    title,
+    title: title.split(" / ")[0],
+    subtitle: title.split(" / ")[1],
     audio: `https://bogotadc.travel${audioPaths[index]}`,
   }));
 
@@ -103,14 +104,13 @@ const SingleAudio = () => {
 const styles = StyleSheet.create({
   text: {
     color: Colors.white,
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 22,
     textShadowColor: "rgba(0, 0, 0, .7)",
     textShadowOffset: { width: 1, height: 1 },
     textShadowRadius: 10,
     marginVertical: 15,
     textAlign: "center",
-    textTransform: "uppercase",
   },
 });
 

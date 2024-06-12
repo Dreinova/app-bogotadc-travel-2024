@@ -53,7 +53,7 @@ const SingleRutas = () => {
   const tagsStyles = {
     p: {
       textAlign: "left",
-      fontSize: 18,
+      fontSize: 16,
       color: Colors.gray,
       lineHeight: 28,
     },
@@ -62,15 +62,13 @@ const SingleRutas = () => {
     },
     ul: { paddingLeft: 25, margin: 0 },
     li: {
-      paddingLeft: 0,
-      margin: 0,
       textAlign: "left",
-      fontSize: 18,
-      color: Colors.gray,
-      lineHeight: 28,
+      color: "#777",
+      fontFamily: "MuseoSans_500",
+      lineHeight: 22,
+      fontSize: 16,
     },
   };
-
 
   return (
     <ScrollView>
@@ -89,11 +87,10 @@ const SingleRutas = () => {
         style={{
           alignSelf: "center",
           marginTop: -60,
-          alignItems: "center",
           justifyContent: "center",
           backgroundColor: "rgba(255,255,255,1)",
           borderRadius: 10,
-          padding: 20,
+          padding: 10,
           justifyContent: "flex-end",
           width: windowWidth - 40,
           shadowColor: "#000",
@@ -110,17 +107,16 @@ const SingleRutas = () => {
           <View
             style={{
               flexDirection: "row",
-              alignItems: "center",
               justifyContent: "space-between",
             }}
           >
             <Text
               style={{
                 color: Colors.orange,
-                fontFamily: "MuseoSans_700",
+                fontFamily: "MuseoSans_500",
                 fontSize: 22,
                 marginBottom: 10,
-                width: 250,
+                width: "50%",
               }}
             >
               {events.title}
@@ -170,14 +166,15 @@ const SingleRutas = () => {
 <path d="M15.4334 7.91332C15.3757 7.91813 15.3178 7.91813 15.2601 7.91332C15.192 7.90929 15.1279 7.8783 15.0805 7.82652C15.0331 7.77475 15.006 7.70601 15.0046 7.63406C14.998 7.59864 14.9981 7.56218 15.005 7.5268C15.0118 7.49143 15.0253 7.45784 15.0445 7.42798C15.0637 7.39812 15.0884 7.37259 15.117 7.35287C15.1457 7.33314 15.1778 7.31962 15.2114 7.31307C15.3664 7.28578 15.5247 7.28578 15.6797 7.31307C15.7136 7.31924 15.7461 7.3325 15.775 7.35206C15.804 7.37162 15.829 7.3971 15.8486 7.427C15.8681 7.4569 15.8818 7.49061 15.8889 7.52617C15.8959 7.56173 15.8961 7.59841 15.8896 7.63406C15.8865 7.70649 15.8575 7.77497 15.8083 7.82563C15.7592 7.87629 15.6937 7.90535 15.625 7.9069C15.5642 7.9069 15.4973 7.9069 15.4334 7.9069V7.91332Z" fill="white"/>
 <path d="M16.4948 2.22303C16.4577 2.44589 16.3473 2.64784 16.183 2.79336C16.0186 2.93889 15.8108 3.01867 15.5961 3.01867C15.3815 3.01867 15.1737 2.93889 15.0093 2.79336C14.845 2.64784 14.7346 2.44589 14.6975 2.22303C14.6975 1.96801 14.7936 1.72344 14.9647 1.54311C15.1358 1.36278 15.3679 1.26147 15.6098 1.26147C15.847 1.26898 16.0721 1.37359 16.2373 1.55311C16.4025 1.73263 16.4949 1.97293 16.4948 2.22303ZM15.8866 2.22303C15.8866 2.13802 15.8545 2.0565 15.7975 1.99639C15.7405 1.93628 15.6631 1.90251 15.5825 1.90251C15.5018 1.90251 15.4245 1.93628 15.3674 1.99639C15.3104 2.0565 15.2784 2.13802 15.2784 2.22303C15.2784 2.30804 15.3104 2.38956 15.3674 2.44967C15.4245 2.50978 15.5018 2.54355 15.5825 2.54355C15.6238 2.54741 15.6655 2.54172 15.7046 2.52686C15.7437 2.512 15.7793 2.48834 15.8088 2.45753C15.8383 2.42671 15.8611 2.38948 15.8756 2.34843C15.8901 2.30738 15.8959 2.26349 15.8926 2.21983L15.8866 2.22303Z" fill="white"/>
 <path d="M3.30558 12.6592C3.06834 12.6605 2.83609 12.5875 2.63826 12.4495C2.44042 12.3115 2.2859 12.1147 2.19428 11.8841C2.10266 11.6535 2.07806 11.3993 2.1236 11.154C2.16915 10.9086 2.28278 10.683 2.4501 10.5057C2.61743 10.3284 2.83091 10.2075 3.0635 10.1583C3.29608 10.109 3.53731 10.1337 3.7566 10.2291C3.97589 10.3244 4.16338 10.4863 4.29531 10.6941C4.42724 10.9019 4.49767 11.1463 4.49767 11.3964C4.49847 11.5619 4.46823 11.726 4.40868 11.8792C4.34913 12.0323 4.26145 12.1716 4.15067 12.289C4.0399 12.4063 3.90821 12.4994 3.76318 12.563C3.61815 12.6265 3.46264 12.6592 3.30558 12.6592ZM3.30558 12.0182C3.46688 12.0182 3.62159 11.9506 3.73565 11.8304C3.84971 11.7102 3.91379 11.5472 3.91379 11.3771C3.91379 11.2071 3.84971 11.0441 3.73565 10.9239C3.62159 10.8036 3.46688 10.7361 3.30558 10.7361C3.14799 10.7419 2.9987 10.812 2.8892 10.9316C2.77971 11.0512 2.71856 11.2109 2.71865 11.3771C2.71455 11.4602 2.7264 11.5433 2.75348 11.6215C2.78057 11.6996 2.82233 11.7712 2.87627 11.832C2.93022 11.8927 2.99523 11.9414 3.06743 11.975C3.13963 12.0087 3.21752 12.0266 3.29645 12.0278L3.30558 12.0182Z" fill="white"/>
-</svg>`}/>
+</svg>`}
+              />
             </View>
           </View>
           <Text
             style={{
               color: Colors.gray,
-              fontFamily: "MuseoSans_700",
-              fontSize: 18,
+              fontFamily: "MuseoSans_500",
+              fontSize: 14,
               marginBottom: 10,
               width: 250,
             }}
@@ -186,77 +183,77 @@ const SingleRutas = () => {
           </Text>
         </View>
       </View>
-      <View style={{paddingHorizontal:20}}>
+      <View style={{ padding: 20 }}>
         <RenderHTML
           contentWidth={windowWidth}
           source={{ html: events.field_intro_blog }}
           tagsStyles={tagsStyles}
         />
-        </View>
-        
-        <FlatList
-          showsHorizontalScrollIndicator={false}
-          horizontal
-          style={{backgroundColor:'#F1F1F1'}}
-          contentContainerStyle={{paddingVertical:10}}
-          data={[
-            {
-              field: "body",
-              label: wordsLanguage[actualLanguage][75],
-            },
-            {
-              field: "field_como_llegar",
-              label: wordsLanguage[actualLanguage][73],
-            },
-            {
-              field: "field_quieres_ir",
-              label: wordsLanguage[actualLanguage][74],
-            },
-            {
-              field: "field_conocer",
-              label: wordsLanguage[actualLanguage][76],
-            },
-          ]}
-          renderItem={({ item, index }) => (
-            <Pressable
-              onPress={() => {
-                setActiveIndex(index);
+      </View>
+
+      <FlatList
+        showsHorizontalScrollIndicator={false}
+        horizontal
+        style={{ backgroundColor: "#F1F1F1", marginBottom: 30 }}
+        contentContainerStyle={{ paddingVertical: 10 }}
+        data={[
+          {
+            field: "body",
+            label: wordsLanguage[actualLanguage][75],
+          },
+          {
+            field: "field_como_llegar",
+            label: wordsLanguage[actualLanguage][73],
+          },
+          {
+            field: "field_quieres_ir",
+            label: wordsLanguage[actualLanguage][74],
+          },
+          {
+            field: "field_conocer",
+            label: wordsLanguage[actualLanguage][76],
+          },
+        ]}
+        renderItem={({ item, index }) => (
+          <Pressable
+            onPress={() => {
+              setActiveIndex(index);
+            }}
+          >
+            <View
+              style={{
+                borderRadius: 18,
+                backgroundColor:
+                  activeIndex == index ? Colors.orange : "transparent",
+                marginLeft: 20,
+                alignItems: "center",
+                justifyContent: "center",
+                padding: 10,
+                height: 40,
               }}
             >
-              <View
+              <Text
                 style={{
-                  borderRadius: 18,
-                  backgroundColor:
-                    activeIndex == index ? Colors.orange : "transparent",
-                  marginLeft: 20,
-                  alignItems: "center",
-                  justifyContent: "center",
-                  padding: 10,
-                  height: 40,
+                  fontSize: 14,
+                  lineHeight: 14,
+                  color: activeIndex == index ? "#FFF" : Colors.orange,
+                  fontFamily: "MuseoSans_500",
+                  textAlignVertical: "center",
                 }}
               >
-                <Text
-                  style={{
-                    fontSize: 14,
-                    lineHeight: 14,
-                    color: activeIndex == index ? "#FFF" : Colors.orange,
-                    fontFamily: "MuseoSans_700",
-                    textAlignVertical: "center",
-                  }}
-                >
-                  {item.label}
-                </Text>
-              </View>
-            </Pressable>
-          )}
-        />
-      <View style={{paddingHorizontal:20}}>
+                {item.label}
+              </Text>
+            </View>
+          </Pressable>
+        )}
+      />
+      <View style={{ paddingHorizontal: 20 }}>
         {activeIndex == 0 && (
           <RenderHTML
-          contentWidth={windowWidth}
-          source={{ html: events.body }}
-          tagsStyles={tagsStyles}
-        />
+            contentWidth={windowWidth}
+            source={{ html: events.body }}
+            tagsStyles={tagsStyles}
+          />
         )}
         {activeIndex == 1 && (
           <RenderHTML
@@ -287,15 +284,20 @@ const SingleRutas = () => {
           />
         )}
       </View>
+      <View style={{ paddingHorizontal: 20 }}>
         {events.field_iframe_google_maps ? (
           <WebView
-            style={{width: 600, height: windowWidth}}
-            originWhitelist={['*']}
+            style={{ width: 620, height: windowWidth }}
+            originWhitelist={["*"]}
             source={{ html: events.field_iframe_google_maps }}
           />
-          ):(
-          <Image source={{uri: events.field_imagen_ruta}} style={{width: '100%', height:320}} />
+        ) : (
+          <Image
+            source={{ uri: events.field_imagen_ruta }}
+            style={{ width: "100%", height: 320 }}
+          />
         )}
+      </View>
     </ScrollView>
   );
 };
@@ -303,7 +305,7 @@ const SingleRutas = () => {
 const styles = StyleSheet.create({
   text: {
     color: Colors.white,
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 18,
     textAlign: "center",
     marginBottom: 15,
@@ -314,7 +316,7 @@ const styles = StyleSheet.create({
     paddingVertical: 15,
   },
   firstLetter: {
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     fontSize: 33, // Establece el tamaño de la primera letra
     color: "#777777", // Establece el color de la primera letra
     // Agrega otros estilos según tus preferencias

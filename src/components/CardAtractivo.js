@@ -36,7 +36,7 @@ const CardAtractivo = ({
       year: "numeric",
     };
     const dateFormatteddateStart = dateStart.toLocaleDateString(
-      actualLanguage == 'es' ? "es-ES":"en-US",
+      actualLanguage == "es" ? "es-ES" : "en-US",
       optionsdateStart
     );
     monthStart = dateFormatteddateStart.substring(0, 3);
@@ -51,7 +51,7 @@ const CardAtractivo = ({
       year: "numeric",
     };
     const dateFormatteddateEnd = dateEnd.toLocaleDateString(
-      actualLanguage == 'es' ? "es-ES":"en-US",
+      actualLanguage == "es" ? "es-ES" : "en-US",
       optionsdateEnd
     );
 
@@ -90,7 +90,7 @@ const CardAtractivo = ({
         <Text
           style={{
             color: Colors.white,
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
             fontSize: 16,
             textShadowColor: "rgba(0, 0, 0, .7)",
             textShadowOffset: { width: 1, height: 1 },
@@ -104,7 +104,7 @@ const CardAtractivo = ({
           <Text
             style={{
               color: Colors.white,
-              fontFamily: "MuseoSans_700",
+              fontFamily: "MuseoSans_500",
               fontSize: 12,
               textShadowColor: "rgba(0, 0, 0, .7)",
               textShadowOffset: { width: 1, height: 1 },

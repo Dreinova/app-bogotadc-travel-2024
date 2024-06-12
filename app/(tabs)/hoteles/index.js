@@ -76,7 +76,7 @@ const CustomModal = ({
           style={{ marginBottom: 30 }}
           onPress={() => closeModal(false)}
         >
-          <FontAwesome name="close" size={30} color="#35498e" />
+          <FontAwesome name="close" size={30} color="#354999" />
         </Pressable>
         <ScrollView>
           <View style={{ paddingHorizontal: 20, flex: 1 }}>
@@ -225,7 +225,7 @@ const stylesModal = StyleSheet.create({
   titleFilter: {
     color: "#333",
     fontSize: 25,
-    fontFamily: "MuseoSans_700",
+    fontFamily: "MuseoSans_500",
     textAlign: "center",
     paddingVertical: 15,
   },
@@ -364,11 +364,11 @@ const EventsList = () => {
       />
       <Text
         style={{
-          fontFamily: "MuseoSans_700",
+          fontFamily: "MuseoSans_500",
           fontSize: 30,
           textAlign: "center",
           paddingVertical: 20,
-          color: "#35498e",
+          color: "#354999",
         }}
       >
         {wordsLanguage[actualLanguage][21]}
@@ -378,7 +378,7 @@ const EventsList = () => {
           { opacity: pressed ? 0.5 : 1 },
           {
             alignItems: "center",
-            backgroundColor: "#35498e",
+            backgroundColor: "#354999",
             flexDirection: "row",
             padding: 10,
             justifyContent: "center",
@@ -390,7 +390,7 @@ const EventsList = () => {
       >
         <FontAwesome name="filter" size={24} color="#FFF" />
         <Text
-          style={{ color: "#FFF", fontFamily: "MuseoSans_700", fontSize: 20 }}
+          style={{ color: "#FFF", fontFamily: "MuseoSans_500", fontSize: 20 }}
         >
           {wordsLanguage[actualLanguage][22]}
         </Text>
@@ -406,7 +406,7 @@ const EventsList = () => {
           >
             <Text
               style={{
-                fontFamily: "MuseoSans_700",
+                fontFamily: "MuseoSans_500",
                 fontSize: 22,
                 textAlign: "center",
                 marginBottom: 30,
@@ -421,7 +421,7 @@ const EventsList = () => {
                   opacity: pressed ? 0.5 : 1,
                 },
                 {
-                  backgroundColor: "#35498e",
+                  backgroundColor: "#354999",
                   alignItems: "center",
                   justifyContent: "center",
                   padding: 15,
@@ -431,7 +431,7 @@ const EventsList = () => {
             >
               <Text
                 style={{
-                  fontFamily: "MuseoSans_700",
+                  fontFamily: "MuseoSans_500",
                   fontSize: 16,
                   color: "#FFF",
                   textAlign: "center",
@@ -444,7 +444,7 @@ const EventsList = () => {
         )}
         renderItem={({ item }) => (
           <Pressable
-            onPress={() => router.navigate(`(tabs)/hoteles/${item.nid}`)}
+            onPress={() => router.push(`(tabs)/hoteles/${item.nid}`)}
             style={{ width: windowWidth / 3, height: windowWidth / 3 }}
           >
             <ImageBackground
@@ -467,7 +467,7 @@ const EventsList = () => {
                 <Text
                   style={{
                     color: Colors.white,
-                    fontFamily: "MuseoSans_700",
+                    fontFamily: "MuseoSans_500",
                     fontSize: 14,
                     textShadowColor: "rgba(0, 0, 0, .7)",
                     textShadowOffset: { width: 1, height: 1 },
