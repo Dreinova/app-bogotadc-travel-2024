@@ -138,7 +138,7 @@ const CardEventoBig = ({
           borderRadius: 10,
           overflow: "hidden",
           height:
-            Platform.OS === "ios" ? windowHeight - 430 : windowHeight - 280,
+            Platform.OS === "ios" ? windowHeight - 430 : windowHeight - 320,
         },
       ]}
     >
@@ -150,7 +150,7 @@ const CardEventoBig = ({
             borderRadius: 10,
             overflow: "hidden",
             height:
-              Platform.OS === "ios" ? windowHeight - 400 : windowHeight - 250,
+              Platform.OS === "ios" ? windowHeight - 400 : windowHeight - 320,
           },
         ]}
         source={{ uri: image }}
