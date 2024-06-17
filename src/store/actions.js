@@ -78,7 +78,7 @@ export const fetchPlacesWithFilters =
       console.error("Error fetching places data:", error);
     }
   };
-export const fetchAllEvents = () => async (dispatch, getState) => {
+export const fetchAllEvents = (agenda) => async (dispatch, getState) => {
   const state = getState();
   const actualLanguage = state.language.language;
   try {
@@ -86,7 +86,7 @@ export const fetchAllEvents = () => async (dispatch, getState) => {
     // Zona Relacionada
     // Categoría Evento
     // Agenda de Evento
-    const endpoint = `/eventsweb/all/all/all/all`;
+    const endpoint = `/eventsweb/all/all/all/${agenda}`;
     const eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
     const uniqueNids = new Set();
     const uniqueData = [];

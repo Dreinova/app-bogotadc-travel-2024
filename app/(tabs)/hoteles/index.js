@@ -365,7 +365,7 @@ const EventsList = () => {
       <Text
         style={{
           fontFamily: "MuseoSans_500",
-          fontSize: 30,
+          fontSize: 20,
           textAlign: "center",
           paddingVertical: 20,
           color: "#354999",

@@ -85,10 +85,10 @@ const RutassList = () => {
         />
         <Text
           style={{
-            fontSize: 30,
+            fontSize: 20,
             textAlign: "center",
             color: "#354999",
-            fontFamily: "MuseoSans_700",
+            fontFamily: "MuseoSans_500",
           }}
         >
           {wordsLanguage[actualLanguage][66]}

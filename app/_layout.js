@@ -99,7 +99,10 @@ function RootLayoutNav() {
         <Stack
           screenOptions={{ headerShown: false }}
           initialRouteName="(tabs)"
-        ></Stack>
+        >
+
+        </Stack>
+        
         {Platform.OS === "ios" && (
           <StatusBar
             barStyle="dark-content"

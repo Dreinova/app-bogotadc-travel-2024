@@ -1,11 +1,10 @@
-import React from "react";
+import React, { useEffect, useMemo, useState } from "react";
 import {
-  Image,
   ImageBackground,
   Pressable,
-  StyleSheet,
   Text,
   View,
+  StyleSheet,
 } from "react-native";
 import { FontAwesome5 } from "@expo/vector-icons";
 import { windowWidth } from "../constants/ScreenWidth";
@@ -14,48 +13,74 @@ import { LinearGradient } from "expo-linear-gradient";
 import IconSvg from "./IconSvg";
 import { useSelector } from "react-redux";
 import { selectActualLanguage, selectWordsLang } from "../store/selectors";
-
+const setMidnight = (dateString) => {
+  const date = new Date(dateString);
+  date.setHours(0, 0, 0, 0);
+  return date;
+};
 const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
+
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
-  const [imagesLoaded, setImagesLoaded] = React.useState(false);
+  const [imagesLoaded, setImagesLoaded] = useState(false);
+
+  const [dateTextAll, setDateTextAll] = useState("");
+
+  const dateStart = useMemo(() => setMidnight(start), [start]);
+
+  const dateEnd = useMemo(() => {
+    let endDate;
+    if (end.length === 10) {
+      endDate = setMidnight(end);
+      endDate.setDate(endDate.getDate() + 1);
+    } else {
+      endDate = setMidnight(end);
+    }
+    return endDate;
+  }, [end]);
+
+  const options = {
+    month: "long",
+    day: "numeric",
+    year: "numeric",
+  };
+  let dateFormattedStart =dateStart.toLocaleDateString(
+    actualLanguage == "es" ? "es-ES" : "en-US",
+    options
+  );
+let dateFormattedEnd = dateEnd.toLocaleDateString(
+    actualLanguage == "es" ? "es-ES" : "en-US",
+    options
+  );
+
+  const alText = actualLanguage === "es" ? "al" : "to";
+  const hastaElText = actualLanguage === "es" ? "Hasta el" : "Until";
+
+  const today = useMemo(() => {
+    const now = new Date();
+    now.setHours(0, 0, 0, 0);
+    return now;
+  }, []);
+
+  useEffect(() => {
+    let dateText = "";
+    if (!end) {
+      dateText = dateFormattedStart;
+    } else if (dateStart.getTime() === dateEnd.getTime()) {
+      dateText = dateFormattedEnd;
+    } else if (dateStart < today) {
+      dateText = `${hastaElText} ${dateFormattedEnd}`;
+    } else {
+      dateText = `${dateFormattedStart} ${alText} ${dateFormattedEnd}`;
+    }
+    setDateTextAll(dateText);
+  }, [end, dateStart, dateEnd, today, dateFormattedStart, dateFormattedEnd, alText, hastaElText]);
+
 
   const handleImageLoad = () => {
     setImagesLoaded(true);
   };
-  let monthStart, dayStart, yearStart;
-  let monthEnd, dayEnd, yearEnd;
-  if (start) {
-    const dateStart = new Date(start);
-    const optionsdateStart = {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    };
-    const dateFormatteddateStart = dateStart.toLocaleDateString(
-      actualLanguage == "es" ? "es-ES" : "en-US",
-      optionsdateStart
-    );
-    monthStart = dateFormatteddateStart.substring(0, 3);
-    dayStart = dateFormatteddateStart.substring(4, 6);
-    yearStart = dateFormatteddateStart.substring(7);
-  }
-  if (end) {
-    const dateEnd = new Date(end);
-    const optionsdateEnd = {
-      month: "short",
-      day: "numeric",
-      year: "numeric",
-    };
-    const dateFormatteddateEnd = dateEnd.toLocaleDateString(
-      actualLanguage == "es" ? "es-ES" : "en-US",
-      optionsdateEnd
-    );
 
-    monthEnd = dateFormatteddateEnd.substring(0, 3);
-    dayEnd = dateFormatteddateEnd.substring(4, 6);
-    yearEnd = dateFormatteddateEnd.substring(7);
-  }
   return (
     <Pressable
       onPress={onPress}
@@ -72,7 +97,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
       <ImageBackground
         style={[
           {
-            height: isHorizontal ? 120 : 170,
+            height: isHorizontal ? 160 : 170,
             justifyContent: isHorizontal ? "flex-start" : "flex-end",
             flexDirection: isHorizontal ? "row" : "column",
           },
@@ -81,7 +106,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
         onLoad={handleImageLoad}
       >
         <LinearGradient
-          colors={["transparent", "rgba(0,0,0,.3)"]}
+          colors={["transparent", "rgba(0,0,0,.8)"]}
           style={{
             flex: 1,
             justifyContent: "flex-end",
@@ -90,11 +115,9 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
           <View
             style={[
               {
-                padding: 10,
+                paddingHorizontal: 20,
+                paddingVertical: 10,
                 gap: 5,
-              },
-              isHorizontal && {
-                flex: 0.5,
               },
             ]}
           >
@@ -102,7 +125,7 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
               style={{
                 color: Colors.white,
                 fontFamily: "MuseoSans_500",
-                fontSize: 22,
+                fontSize: 16,
               }}
             >
               {title}
@@ -125,24 +148,12 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
                   style={{
                     color: Colors.white,
                     fontFamily: "MuseoSans_500",
-                    fontSize: 18,
+                    fontSize: 16,
                     textAlign: "center",
                   }}
                 >
-                  {monthStart} {dayStart} {yearStart}
+                  {dateTextAll}
                 </Text>
-                {end && (
-                  <Text
-                    style={{
-                      color: Colors.white,
-                      fontFamily: "MuseoSans_500",
-                      fontSize: 18,
-                      textAlign: "center",
-                    }}
-                  >
-                    {monthEnd} {dayEnd} {yearEnd}
-                  </Text>
-                )}
               </View>
             </View>
           </View>

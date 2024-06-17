@@ -52,6 +52,7 @@ export default function Page() {
             name: cat.name,
             tid: cat.tid,
             field_cover_image: cat.field_banner_prod,
+            field_categor: cat.field_categor
           }))
         );
         setRutas(rutas);
@@ -162,7 +163,7 @@ export default function Page() {
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
         <Text
           style={{
-            fontSize: 30,
+            fontSize: 20,
             marginBottom: 20,
             color: "#354999",
             fontFamily: "MuseoSans_500",
@@ -186,7 +187,7 @@ export default function Page() {
 
           <Text
             style={{
-              fontSize: 30,
+              fontSize: 20,
               textAlign: "center",
 
               color: "#354999",
@@ -205,22 +206,27 @@ export default function Page() {
             horizontal
             data={BogNatural}
             keyExtractor={(item) => item.tid}
-            renderItem={({ item }) => (
-              <CardAtractivoBig
-                onPress={() => {
-                  router.push({
-                    pathname: "descubre",
-                    params: { filterID: item.tid },
-                  });
-                }}
-                title={item.name}
-                image={
-                  item.field_cover_image != ""
-                    ? `https://bogotadc.travel${item.field_cover_image}`
-                    : "https://bogotadc.travel/img/noimg.png"
-                }
-              />
-            )}
+            renderItem={({ item }) => {
+              if(item.field_categor == '1'){
+
+                return(
+                <CardAtractivoBig
+                  onPress={() => {
+                    router.push({
+                      pathname: "atractivos",
+                      params: { filterID: item.tid },
+                    });
+                  }}
+                  title={item.name}
+                  image={
+                    item.field_cover_image != ""
+                      ? `https://bogotadc.travel${item.field_cover_image}`
+                      : "https://bogotadc.travel/img/noimg.png"
+                  }
+                />
+              )
+              }
+          }}
           />
         </View>
       </View>
@@ -248,7 +254,7 @@ export default function Page() {
             />
             <Text
               style={{
-                fontSize: 30,
+                fontSize: 20,
                 textAlign: "center",
 
                 color: "#354999",
@@ -320,7 +326,7 @@ export default function Page() {
             />
             <Text
               style={{
-                fontSize: 30,
+                fontSize: 20,
                 textAlign: "center",
 
                 color: "#354999",
@@ -380,7 +386,7 @@ const styles = StyleSheet.create({
     padding: 10, // Espaciado interno para los elementos
   },
   title: {
-    fontSize: 30,
+    fontSize: 20,
     flex: 1,
     textAlign: "center",
 

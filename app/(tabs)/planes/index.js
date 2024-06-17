@@ -37,6 +37,7 @@ import {
 } from "../../../src/api/imperdibles";
 import Slider from "@react-native-community/slider";
 import IconSvg from "../../../src/components/IconSvg";
+import { LinearGradient } from "expo-linear-gradient";
 
 const CustomModal = ({
   visible,
@@ -400,6 +401,8 @@ const EventsList = () => {
               alignItems: "center",
               gap: 8,
               paddingHorizontal: 20,
+              paddingVertical: 20,
+             
             }}
           >
             <IconSvg
@@ -410,9 +413,8 @@ const EventsList = () => {
             <Text
               style={{
                 fontFamily: "MuseoSans_500",
-                fontSize: 30,
+                fontSize: 20,
                 textAlign: "center",
-                paddingVertical: 20,
                 color: "#354999",
               }}
             >
@@ -422,13 +424,13 @@ const EventsList = () => {
           <View
             style={{
               flexDirection: "row",
-              padding: 20,
+              paddingHorizontal:20,
+               marginBottom:20
             }}
           >
             <TextInput
               style={{
                 backgroundColor: "#f2f2f2",
-                padding: 8,
                 paddingHorizontal: 15,
                 flex: 1,
                 borderTopLeftRadius: 25,
@@ -488,7 +490,6 @@ const EventsList = () => {
                 onPress={() => router.push(`(tabs)/planes/${item.nid}`)}
                 style={[
                   {
-                    justifyContent: "flex-end",
                     width: windowWidth - 100,
                     borderRadius: 10,
                     overflow: "hidden",
@@ -504,7 +505,6 @@ const EventsList = () => {
                     flex: 1,
                     borderRadius: 10,
                     overflow: "hidden",
-                    justifyContent: "flex-end",
                   }}
                   source={{
                     uri: `https://bogotadc.travel${
@@ -512,47 +512,26 @@ const EventsList = () => {
                     }`,
                   }}
                 >
-                  <View
+                  <LinearGradient
+                    colors={["transparent", "rgba(0,0,0,.6)","rgba(0,0,0,.6)"]}
                     style={{
-                      backgroundColor: "rgba(0,0,0,.3)",
                       flex: 1,
-                      justifyContent: "flex-end",
+                      justifyContent:'center',
+                      padding:20
                     }}
                   >
-                    <View
-                      style={{
-                        justifyContent: "flex-end",
-                      }}
-                    ></View>
-                    <View
-                      style={{
-                        padding: 10,
-                        gap: 5,
-                        backgroundColor: "rgba(255,255,255,.9)",
-                        minHeight: 120,
-                        borderRadius: 10,
-                      }}
-                    >
+                   
                       <Text
                         style={{
-                          color: Colors.orange,
+                          color: Colors.white,
                           fontFamily: "MuseoSans_500",
-                          fontSize: 22,
+                          fontSize: 20,
                         }}
                       >
                         {item.title}
                       </Text>
-                      <Text
-                        style={{
-                          color: Colors.gray,
-                          fontFamily: "MuseoSans_500",
-                          fontSize: 14,
-                        }}
-                      >
-                        {item.field_pb_oferta_desc_corta}
-                      </Text>
-                    </View>
-                  </View>
+                     
+                  </LinearGradient>
                 </ImageBackground>
               </Pressable>
             )}

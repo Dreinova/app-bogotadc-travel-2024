@@ -79,17 +79,11 @@ const DateComponent = ({ evento }) => {
       <IconSvg
         width="20"
         height="20"
-        icon={`<svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg">
-<path d="M9.77778 12H1.22222C0.547207 12 0 11.4627 0 10.8V2.4C0 1.73726 0.547207 1.2 1.22222 1.2H2.44444V0H3.66667V1.2H7.33333V0H8.55556V1.2H9.77778C10.4528 1.2 11 1.73726 11 2.4V10.8C11 11.4627 10.4528 12 9.77778 12ZM1.22222 4.8V10.8H9.77778V4.8H1.22222ZM1.22222 2.4V3.6H9.77778V2.4H1.22222ZM8.55556 9.6H7.33333V8.4H8.55556V9.6ZM6.11111 9.6H4.88889V8.4H6.11111V9.6ZM3.66667 9.6H2.44444V8.4H3.66667V9.6ZM8.55556 7.2H7.33333V6H8.55556V7.2ZM6.11111 7.2H4.88889V6H6.11111V7.2ZM3.66667 7.2H2.44444V6H3.66667V7.2Z" fill="#354999"/>
-</svg>
-
-`}
+        icon={`<svg width="11" height="12" viewBox="0 0 11 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9.77778 12H1.22222C0.547207 12 0 11.4627 0 10.8V2.4C0 1.73726 0.547207 1.2 1.22222 1.2H2.44444V0H3.66667V1.2H7.33333V0H8.55556V1.2H9.77778C10.4528 1.2 11 1.73726 11 2.4V10.8C11 11.4627 10.4528 12 9.77778 12ZM1.22222 4.8V10.8H9.77778V4.8H1.22222ZM1.22222 2.4V3.6H9.77778V2.4H1.22222ZM8.55556 9.6H7.33333V8.4H8.55556V9.6ZM6.11111 9.6H4.88889V8.4H6.11111V9.6ZM3.66667 9.6H2.44444V8.4H3.66667V9.6ZM8.55556 7.2H7.33333V6H8.55556V7.2ZM6.11111 7.2H4.88889V6H6.11111V7.2ZM3.66667 7.2H2.44444V6H3.66667V7.2Z" fill="#354999"/></svg>`}
       />
       <Text
         style={{
-          color: Colors.black,
-          fontFamily: "MuseoSans_500",
-          fontSize: 20,
+          color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
         }}
       >
         {dateText}
@@ -124,8 +118,7 @@ const SingleEvent = () => {
 
   const tagsStyles = {
     p: {
-      textAlign: "left",
-      fontSize: 18,
+      color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
     },
   };
 
@@ -148,7 +141,6 @@ const SingleEvent = () => {
         style={{
           alignSelf: "center",
           marginTop: -60,
-          alignItems: "center",
           justifyContent: "center",
           backgroundColor: "rgba(255,255,255,1)",
           borderRadius: 10,
@@ -165,7 +157,7 @@ const SingleEvent = () => {
           elevation: 5,
         }}
       >
-        <Text style={[styles.text, { fontSize: 30, color: Colors.orange }]}>
+        <Text style={[styles.text, { fontSize: 20, color: Colors.orange }]}>
           {events.title}
         </Text>
         <DateComponent evento={events} />
@@ -184,9 +176,7 @@ const SingleEvent = () => {
           />
           <Text
             style={{
-              color: Colors.black,
-              fontFamily: "MuseoSans_500",
-              fontSize: 20,
+              color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
             }}
           >
             {events.field_place}
@@ -248,7 +238,6 @@ const styles = StyleSheet.create({
     color: Colors.white,
     fontFamily: "MuseoSans_500",
     fontSize: 18,
-    textAlign: "center",
     marginBottom: 15,
   },
   container: {

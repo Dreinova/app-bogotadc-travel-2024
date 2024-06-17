@@ -345,8 +345,11 @@ const Header = (props) => {
     pathname === "/" ||
     pathname === "/descubre" ||
     pathname === "/events" ||
+    pathname === "/atractivos" ||
+    pathname === "/audioguias" ||
     pathname === "/rutas" ||
-    pathname === "/planes"
+    pathname === "/planes" ||
+    pathname === "/blog" 
       ? "#354999"
       : "#F1F1F1";
   return (
@@ -357,6 +360,9 @@ const Header = (props) => {
       pathname === "/descubre" ||
       pathname === "/events" ||
       pathname === "/rutas" ||
+      pathname === "/atractivos" ||
+      pathname === "/audioguias" ||
+      pathname === "/blog" ||
       pathname === "/planes" ? (
         <IconSvg
           width="100"
@@ -378,15 +384,21 @@ const Header = (props) => {
             pathname === "/descubre" ||
             pathname === "/events" ||
             pathname === "/rutas" ||
+            pathname === "/atractivos" ||
+            pathname === "/audioguias" ||
+            pathname === "/blog" ||
             pathname === "/planes"
               ? router.push("search")
-              : router.back();
+              : router.push(pathname.split('/')[1]);
           }}
         >
           {pathname === "/" ||
           pathname === "/descubre" ||
           pathname === "/events" ||
           pathname === "/rutas" ||
+          pathname === "/blog" ||
+          pathname === "/atractivos" ||
+          pathname === "/audioguias" ||
           pathname === "/planes" ? (
             <IconSvg
               width="30"
@@ -406,6 +418,9 @@ const Header = (props) => {
           pathname === "/descubre" ||
           pathname === "/events" ||
           pathname === "/rutas" ||
+          pathname === "/atractivos" ||
+          pathname === "/audioguias" ||
+          pathname === "/blog" ||
           pathname === "/planes" ? (
             <IconSvg
               width="30"

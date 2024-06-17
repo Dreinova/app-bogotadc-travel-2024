@@ -2,6 +2,7 @@ import React from "react";
 import {
   Image,
   ImageBackground,
+  Platform,
   Pressable,
   StyleSheet,
   Text,
@@ -38,13 +39,14 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
         {
           width: isHorizontal ? windowWidth - 40 : windowWidth,
           opacity: pressed ? 0.5 : 1,
+          height:  Platform.OS === "ios" ? windowHeight - 400 : windowHeight - 320,
         },
       ]}
     >
       <ImageBackground
         style={[
           {
-            height: isHorizontal ? windowHeight - 250 : windowWidth,
+            height:  Platform.OS === "ios" ? windowHeight - 400 : windowHeight - 320,
           },
           isHorizontal && { borderRadius: 10, overflow: "hidden" },
         ]}
@@ -55,24 +57,24 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
           style={{
             backgroundColor: "rgba(0,0,0,.3)",
             flex: 1,
-            justifyContent: "flex-end",
+            justifyContent: "center",
             padding: 20,
           }}
         >
-          <View style={{ maxWidth: 280 }}>
             <Text
               style={{
                 color: Colors.white,
                 fontFamily: "MuseoSans_500",
-                fontSize: 28,
+                fontSize: 20,
                 textShadowColor: "rgba(0, 0, 0, .7)",
                 textShadowOffset: { width: 1, height: 1 },
                 textShadowRadius: 10,
+                marginBottom:10
               }}
             >
               {title}
             </Text>
-            <Text
+            {/* <Text
               style={{
                 color: Colors.white,
                 fontFamily: "MuseoSans_500",
@@ -80,8 +82,7 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
               }}
             >
               {intro}
-            </Text>
-          </View>
+            </Text> */}
         </View>
       </ImageBackground>
     </Pressable>

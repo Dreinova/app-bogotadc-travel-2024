@@ -20,7 +20,7 @@ const planesReducer = (state = initialState, action) => {
     case "SET_FILTERS_DATA":
       return {
         ...state,
-        filters: action.payload,
+        filters: action.payload.filters,
       };
     default:
       return state;

@@ -53,20 +53,14 @@ const SingleRutas = () => {
   const tagsStyles = {
     p: {
       textAlign: "left",
-      fontSize: 16,
-      color: Colors.gray,
-      lineHeight: 28,
+      color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,margin:0, marginBottom:10
     },
     a: {
       color: "#6474AD",
     },
     ul: { paddingLeft: 25, margin: 0 },
     li: {
-      textAlign: "left",
-      color: "#777",
-      fontFamily: "MuseoSans_500",
-      lineHeight: 22,
-      fontSize: 16,
+      color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
     },
   };
 
@@ -108,6 +102,7 @@ const SingleRutas = () => {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
+              alignItems:'center'
             }}
           >
             <Text
@@ -115,7 +110,6 @@ const SingleRutas = () => {
                 color: Colors.orange,
                 fontFamily: "MuseoSans_500",
                 fontSize: 22,
-                marginBottom: 10,
                 width: "50%",
               }}
             >
@@ -124,16 +118,16 @@ const SingleRutas = () => {
             <View
               style={{
                 backgroundColor: Colors.orange,
-                width: 50,
-                height: 50,
-                borderRadius: 50 / 2,
+                width: 35,
+                height: 35,
+                borderRadius: 35 / 2,
                 alignItems: "center",
                 justifyContent: "center",
               }}
             >
               <IconSvg
-                width="25"
-                height="25"
+                width="18"
+                height="18"
                 icon={`<svg width="18" height="19" viewBox="0 0 18 19" fill="none" xmlns="http://www.w3.org/2000/svg">
 <path d="M18 2.75515C17.6381 4.22633 16.7258 5.36097 15.85 6.51163C15.8233 6.5522 15.788 6.58572 15.747 6.60958C15.706 6.63343 15.6603 6.64697 15.6135 6.64914C15.5667 6.65131 15.52 6.64206 15.4772 6.6221C15.4343 6.60214 15.3964 6.57201 15.3664 6.53407C14.5842 5.61234 13.9281 4.5799 13.4171 3.4667C13.2192 3.04446 13.1506 2.56784 13.2209 2.10274C13.2912 1.63764 13.4969 1.20705 13.8094 0.870496C14.0986 0.498682 14.4879 0.22798 14.9261 0.0940868C15.3642 -0.0398068 15.8305 -0.0306043 16.2636 0.120481C16.7013 0.241388 17.0957 0.495052 17.3979 0.850017C17.7 1.20498 17.8967 1.64563 17.9635 2.11732C17.9635 2.15898 17.9878 2.19744 18 2.23591V2.75515ZM15.5976 5.84816C15.7739 5.60777 15.9442 5.3802 16.1085 5.14943C16.5639 4.53019 16.9506 3.85807 17.261 3.14618C17.3603 2.90837 17.4052 2.64927 17.392 2.38982C17.3788 2.13036 17.3079 1.87781 17.185 1.65256C16.9676 1.22343 16.6024 0.898491 16.1645 0.744655C15.7266 0.590818 15.2494 0.619797 14.8312 0.825623C14.4152 1.02749 14.0915 1.39414 13.9304 1.84599C13.7693 2.29784 13.7837 2.79844 13.9706 3.23913C14.4185 4.1703 14.9642 5.04547 15.5976 5.84816Z" fill="white"/>
 <path d="M8.43597 18.9904C8.28391 18.9037 8.18052 18.7817 8.23222 18.5891C8.28391 18.3965 8.42988 18.3484 8.60322 18.3548C8.77656 18.3612 8.87388 18.3548 9.00768 18.3548C9.14149 18.3548 9.33004 18.3548 9.40302 18.5506C9.47601 18.7464 9.37869 18.8716 9.24489 18.9904H8.43597Z" fill="white"/>
@@ -172,9 +166,7 @@ const SingleRutas = () => {
           </View>
           <Text
             style={{
-              color: Colors.gray,
-              fontFamily: "MuseoSans_500",
-              fontSize: 14,
+              color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
               marginBottom: 10,
               width: 250,
             }}

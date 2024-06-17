@@ -20,7 +20,6 @@ const SingleBlog = () => {
   const { id } = useLocalSearchParams();
   const [blog, setBlog] = React.useState(null);
   const actualLanguage = useSelector(selectActualLanguage);
-
   const getSingleBlog = async () => {
     const data = await fetchBogotaDrplV2(`/blog/${id}/all`, actualLanguage);
     setBlog(data[0]);
@@ -33,9 +32,14 @@ const SingleBlog = () => {
   if (!blog) {
     return <PreloaderComponent />;
   }
+  const adjustImageUrls = (htmlContent) => {
+    const baseUrl = 'https://files.visitbogota.co';
+    return htmlContent.replace(/src="\/drpl/g, `src="${baseUrl}/drpl`);
+  };
+  
 
   const source = {
-    html: blog.body,
+    html: adjustImageUrls(blog.body),
   };
 
   const tagsStyles = {
@@ -46,13 +50,14 @@ const SingleBlog = () => {
       lineHeight: 22,
       fontSize: 16,
     },
-    ul: { paddingLeft: 0, margin: 0 },
+    ul: { paddingLeft: 10, margin: 0 },
     li: {
       textAlign: "left",
       color: "#777",
       fontFamily: "MuseoSans_500",
       lineHeight: 22,
       fontSize: 16,
+      marginBottom:15
     },
   };
 

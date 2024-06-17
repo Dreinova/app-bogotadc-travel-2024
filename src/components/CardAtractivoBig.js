@@ -60,7 +60,7 @@ const CardAtractivoBig = ({ image, title, onPress, atractivo }) => {
               textAlign: "center",
               color: Colors.white,
               fontFamily: "MuseoSans_500",
-              fontSize: 40,
+              fontSize: 25,
             }}
           >
             {title}

@@ -33,7 +33,6 @@ const List = () => {
   if (!queriesCompleted) {
     return <PreloaderComponent />;
   }
-  console.log(blogData);
 
   return (
     <GestureHandlerRootView style={{ flex: 1 }}>
@@ -53,7 +52,7 @@ const List = () => {
         <Text
           style={{
             fontFamily: "MuseoSans_500",
-            fontSize: 30,
+            fontSize: 20,
             textAlign: "center",
             paddingVertical: 20,
             color: "#354999",
