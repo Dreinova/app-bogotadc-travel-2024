@@ -16,20 +16,13 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import IconSvg from "../src/components/IconSvg";
 
 const logoWhite = require("../assets/images/logo_blue.png");
-
+const splash = require("../assets/splash.png");
 const LoadingScreen = () => {
   return (
     <ImageBackground
-      source={{ uri: "https://visitbogota.co/assets_app/init.png" }}
+      source={splash}
       style={styles.background}
-    >
-      <View style={styles.container}>
-        <Image
-          source={require("../assets/images/loading.gif")}
-          style={{ width: 200, resizeMode: "contain" }}
-        />
-      </View>
-    </ImageBackground>
+    ></ImageBackground>
   );
 };
 

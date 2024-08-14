@@ -15,6 +15,49 @@ import { PreloaderComponent } from "../../../src/components";
 import { selectActualLanguage } from "../../../src/store/selectors";
 import { useSelector } from "react-redux";
 import RenderHTML from "react-native-render-html";
+import WebView from "react-native-webview";
+const transformIframesToWebViews = (htmlContent) => {
+  const iframeRegex = /<iframe[^>]*src="([^"]*)"[^>]*><\/iframe>/g;
+  let match;
+  const parts = [];
+  let lastIndex = 0;
+
+  while ((match = iframeRegex.exec(htmlContent)) !== null) {
+    const [iframeTag, src] = match;
+    const index = match.index;
+
+    parts.push(htmlContent.substring(lastIndex, index));
+    parts.push(`<div class="webview" data-src="${src}"></div>`);
+
+    lastIndex = index + iframeTag.length;
+  }
+
+  parts.push(htmlContent.substring(lastIndex));
+
+  return parts.join("");
+};
+
+const renderers = {
+  div: ({ TDefaultRenderer, tnode }) => {
+    const { attributes } = tnode;
+    if (attributes.class === "webview" && attributes["data-src"]) {
+      const src = attributes["data-src"];
+      return (
+        <View
+          style={{ width: windowWidth - 40, height: 200, marginBottom: 10 }}
+        >
+          <WebView
+            originWhitelist={["*"]}
+            source={{
+              html: `<iframe allowfullscreen="allowfullscreen" height="500" src="${src}" width="100%"></iframe>`,
+            }}
+          />
+        </View>
+      );
+    }
+    return <TDefaultRenderer tnode={tnode} />;
+  },
+};
 
 const SingleBlog = () => {
   const { id } = useLocalSearchParams();
@@ -33,13 +76,13 @@ const SingleBlog = () => {
     return <PreloaderComponent />;
   }
   const adjustImageUrls = (htmlContent) => {
-    const baseUrl = 'https://files.visitbogota.co';
+    const baseUrl = "https://files.visitbogota.co";
     return htmlContent.replace(/src="\/drpl/g, `src="${baseUrl}/drpl`);
   };
-  
+  const transformedHtml = transformIframesToWebViews(blog.body);
 
   const source = {
-    html: adjustImageUrls(blog.body),
+    html: adjustImageUrls(transformedHtml),
   };
 
   const tagsStyles = {
@@ -49,6 +92,7 @@ const SingleBlog = () => {
       fontFamily: "MuseoSans_500",
       lineHeight: 22,
       fontSize: 16,
+      marginVertical: 5,
     },
     ul: { paddingLeft: 10, margin: 0 },
     li: {
@@ -57,7 +101,7 @@ const SingleBlog = () => {
       fontFamily: "MuseoSans_500",
       lineHeight: 22,
       fontSize: 16,
-      marginBottom:15
+      marginBottom: 15,
     },
   };
 
@@ -66,30 +110,6 @@ const SingleBlog = () => {
       enableExperimentalPercentWidth: true,
     },
   };
-
-  const StyledFirstLetterText = ({ text }) => {
-    // Obtén la primera letra del texto
-    const firstLetter = text.charAt(0);
-    // Obtén el resto del texto (desde el segundo carácter hasta el final)
-    const restOfText = text.slice(1);
-
-    return (
-      <Text style={styles.container}>
-        <Text style={styles.firstLetter}>{firstLetter}</Text>
-        <Text
-          style={{
-            color: "#777777",
-            fontFamily: "MuseoSans_500",
-            fontSize: 16,
-            lineHeight: 30,
-          }}
-        >
-          {restOfText}
-        </Text>
-      </Text>
-    );
-  };
-
   return (
     <ScrollView>
       <ImageBackground
@@ -134,6 +154,7 @@ const SingleBlog = () => {
         contentWidth={windowWidth}
         source={source}
         tagsStyles={tagsStyles}
+        renderers={renderers}
       />
     </ScrollView>
   );

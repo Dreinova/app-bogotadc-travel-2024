@@ -194,7 +194,7 @@ export const fetchAllHoteles = () => async (dispatch, getState) => {
     console.error("Error fetching places data:", error);
   }
 };
-export const fetchAllRestaurants = () => async (dispatch, getState) => {
+export const fetchAllRestaurants = (zone) => async (dispatch, getState) => {
   const state = getState();
   const actualLanguage = state.language.language;
   try {
@@ -203,7 +203,7 @@ export const fetchAllRestaurants = () => async (dispatch, getState) => {
     // Zona de la ciudad
     // Zona Gastronómica relacionada
     // Rango de precios
-    const endpoint = `/restaurants/all/all/all/all/all`;
+    const endpoint = `/restaurants/all/all/all/${zone}/all`;
     const eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
     const uniqueNids = new Set();
     const uniqueData = [];

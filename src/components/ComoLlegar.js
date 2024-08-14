@@ -16,7 +16,7 @@ const aspectRatioHeight = (windowWidth - 40) * (9 / 16);
     >
       <ImageBackground
         source={{
-          uri: "https://visitbogota.co/img/map.jpg",
+          uri: "https://visitbogota.co/img/map_1.jpg",
         }}
         style={{
           width: windowWidth - 40,
@@ -24,6 +24,7 @@ const aspectRatioHeight = (windowWidth - 40) * (9 / 16);
       overflow: 'hidden',
       alignItems: 'center',
       justifyContent: 'center',
+      borderRadius: 20
         }}
       >
       </ImageBackground>
