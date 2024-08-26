@@ -16,11 +16,10 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import IconSvg from "../src/components/IconSvg";
 
 const logoWhite = require("../assets/images/logo_blue.png");
-const splash = require("../assets/splash.png");
 const LoadingScreen = () => {
   return (
     <ImageBackground
-      source={splash}
+      source={{uri:`https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`}}
       style={styles.background}
     ></ImageBackground>
   );

@@ -491,7 +491,6 @@ const EventsList = () => {
                 style={[
                   {
                     width: windowWidth - 100,
-                    borderRadius: 10,
                     overflow: "hidden",
                     height:
                       Platform.OS === "ios"
@@ -503,7 +502,6 @@ const EventsList = () => {
                 <ImageBackground
                   style={{
                     flex: 1,
-                    borderRadius: 10,
                     overflow: "hidden",
                   }}
                   source={{

@@ -136,7 +136,6 @@ const CardEventoBig = ({
           justifyContent: "flex-end",
           opacity: pressed ? 0.5 : 1,
           width: windowWidth - 100,
-          borderRadius: 10,
           overflow: "hidden",
           height:
             Platform.OS === "ios" ? windowHeight - 430 : windowHeight - 320,
@@ -148,7 +147,6 @@ const CardEventoBig = ({
           {
             justifyContent: "flex-end",
             width: windowWidth - 100,
-            borderRadius: 10,
             overflow: "hidden",
             height:
               Platform.OS === "ios" ? windowHeight - 400 : windowHeight - 320,
@@ -171,7 +169,6 @@ const CardEventoBig = ({
               paddingHorizontal: 10,
               paddingVertical: 20,
               gap: 5,
-              borderRadius: 10,
             },
           ]}
         >

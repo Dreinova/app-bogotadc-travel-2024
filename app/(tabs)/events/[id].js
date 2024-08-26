@@ -143,7 +143,6 @@ const SingleEvent = () => {
           marginTop: -60,
           justifyContent: "center",
           backgroundColor: "rgba(255,255,255,1)",
-          borderRadius: 10,
           padding: 20,
           justifyContent: "flex-end",
           width: windowWidth - 40,

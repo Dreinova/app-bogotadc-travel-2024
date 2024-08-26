@@ -61,7 +61,7 @@ export default function Page() {
               marginBottom: 20,
               alignItems: "center",
               backgroundColor: "#F1F1F1",
-              borderRadius: 8,
+              
             }}
           >
             <View
@@ -99,7 +99,7 @@ export default function Page() {
           onPress={searchBogota}
           style={{
             backgroundColor: "#FFF",
-            borderRadius: 8,
+            
             paddingVertical: 8,
             marginBottom: 20,
             paddingHorizontal: 16,
@@ -136,7 +136,7 @@ export default function Page() {
             numColumns={2}
             style={{ marginBottom: 30 }}
             contentContainerStyle={{
-              borderRadius: 25,
+              
               overflow: "hidden",
             }}
             ItemSeparatorComponent={() => (

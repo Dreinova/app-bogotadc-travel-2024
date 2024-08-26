@@ -24,7 +24,6 @@ const aspectRatioHeight = (windowWidth - 40) * (9 / 16);
       overflow: 'hidden',
       alignItems: 'center',
       justifyContent: 'center',
-      borderRadius: 20
         }}
       >
       </ImageBackground>

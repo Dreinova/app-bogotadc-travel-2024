@@ -311,7 +311,6 @@ const info = (props) => {
                     height: windowWidth / 2 - 30,
                     overflow: "hidden",
                     alignItems: "center",
-                    borderRadius: 8,
                     justifyContent: "flex-end",
                     padding: 5,
                   }}

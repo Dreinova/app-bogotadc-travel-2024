@@ -11,7 +11,6 @@ import { Stack } from "expo-router";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "../src/store";
 import { setLocation } from "../src/store/actions";
-const splash = require("../assets/splash.png");
 
 SplashScreen.preventAutoHideAsync();
 
@@ -59,7 +58,7 @@ export default function RootLayout() {
     return (
       <ImageBackground
         onLayout={onLayoutRootView}
-        source={splash}
+        source={{uri:`https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`}}
         style={{
           flex: 1,
           alignItems: "center",

@@ -48,7 +48,7 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
           {
             height:  Platform.OS === "ios" ? windowHeight - 400 : windowHeight - 320,
           },
-          isHorizontal && { borderRadius: 10, overflow: "hidden" },
+          isHorizontal && {  overflow: "hidden" },
         ]}
         source={{ uri: image }}
         onLoad={handleImageLoad}

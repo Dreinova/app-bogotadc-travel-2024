@@ -125,7 +125,6 @@ if(!queriesCompleted){
                   setQueriesCompleted(true);
                 }}
                 style={{
-                  borderRadius: 18,
                   backgroundColor:
                     activeIndex == index ? Colors.orange : "transparent",
                   marginLeft: 20,

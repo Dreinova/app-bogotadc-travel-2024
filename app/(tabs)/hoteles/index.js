@@ -425,7 +425,6 @@ const EventsList = () => {
                   alignItems: "center",
                   justifyContent: "center",
                   padding: 15,
-                  borderRadius: 15,
                 },
               ]}
             >

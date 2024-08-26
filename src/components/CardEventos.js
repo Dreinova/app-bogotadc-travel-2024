@@ -89,7 +89,6 @@ let dateFormattedEnd = dateEnd.toLocaleDateString(
           width: isHorizontal ? windowWidth - 40 : windowWidth - 120,
           justifyContent: "flex-end",
           opacity: pressed ? 0.8 : 1,
-          borderRadius: 8,
           overflow: "hidden",
         },
       ]}
@@ -139,17 +138,12 @@ let dateFormattedEnd = dateEnd.toLocaleDateString(
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
               >
-                <IconSvg
-                  width="8"
-                  height="12"
-                  icon={`<svg width="8" height="12" viewBox="0 0 8 12" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M7.21772 7.62328C8.15317 6.82485 8.15317 5.37926 7.21772 4.58083L3.29841 1.23559C2.00024 0.12756 0 1.05007 0 2.75681L0 9.4473C0 11.154 2.00024 12.0766 3.29841 10.9685L7.21772 7.62328Z" fill="white"/></svg>`}
-                />
+             
                 <Text
                   style={{
                     color: Colors.white,
                     fontFamily: "MuseoSans_500",
                     fontSize: 16,
-                    textAlign: "center",
                   }}
                 >
                   {dateTextAll}

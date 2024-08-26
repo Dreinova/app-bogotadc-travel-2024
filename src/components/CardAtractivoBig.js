@@ -28,7 +28,6 @@ const CardAtractivoBig = ({ image, title, onPress, atractivo }) => {
           justifyContent: "flex-end",
           opacity: pressed ? 0.5 : 1,
           width: windowWidth - 100,
-          borderRadius: 10,
           overflow: "hidden",
           height:
             Platform.OS === "ios" ? windowHeight - 450 : windowHeight - 320,
@@ -39,7 +38,6 @@ const CardAtractivoBig = ({ image, title, onPress, atractivo }) => {
         style={[
           {
             flex: 1,
-            borderRadius: 10,
             overflow: "hidden",
           },
         ]}
