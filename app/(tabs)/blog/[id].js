@@ -80,7 +80,23 @@ const SingleBlog = () => {
     return htmlContent.replace(/src="\/drpl/g, `src="${baseUrl}/drpl`);
   };
   const transformedHtml = transformIframesToWebViews(blog.body);
-
+  function decodeSpecialChars(str) {
+    return str
+      .replace(/&#039;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&apos;/g, "'")
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&cent;/g, '¢')
+      .replace(/&pound;/g, '£')
+      .replace(/&yen;/g, '¥')
+      .replace(/&euro;/g, '€')
+      .replace(/&copy;/g, '©')
+      .replace(/&reg;/g, '®')
+      .replace(/&trade;/g, '™');
+  }
   const source = {
     html: adjustImageUrls(transformedHtml),
   };
@@ -131,7 +147,7 @@ const SingleBlog = () => {
             justifyContent: "flex-end",
           }}
         >
-          <Text style={styles.text}>{blog.title}</Text>
+          <Text style={styles.text}>{decodeSpecialChars(blog.title)}</Text>
         </View>
       </ImageBackground>
       <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>

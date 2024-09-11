@@ -3751,6 +3751,11 @@ expo-updates@~0.25.14:
     ignore "^5.3.1"
     resolve-from "^5.0.0"
 
+expo-video@^1.2.5:
+  version "1.2.5"
+  resolved "https://registry.yarnpkg.com/expo-video/-/expo-video-1.2.5.tgz#3d2bd7667a90ca4efa5c456cae675922e28bf445"
+  integrity sha512-882zQr2rgP9nA/xDIIEEaho5+PwhHTubg9MTUk2c4LU5+6Y/JzvqJjTVx9Hui3c2R3KIaucJwsE7surahgcszA==
+
 expo-web-browser@~13.0.3:
   version "13.0.3"
   resolved "https://registry.yarnpkg.com/expo-web-browser/-/expo-web-browser-13.0.3.tgz#dceb05dbc187b498ca937b02adf385b0232a4e92"

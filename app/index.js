@@ -19,7 +19,9 @@ const logoWhite = require("../assets/images/logo_blue.png");
 const LoadingScreen = () => {
   return (
     <ImageBackground
-      source={{uri:`https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`}}
+      source={{
+        uri: `https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`,
+      }}
       style={styles.background}
     ></ImageBackground>
   );
@@ -46,13 +48,9 @@ const Page = () => {
         await dispatch(fetchAllWords());
         if (storedLanguage) {
           dispatch(setLanguage(storedLanguage ? storedLanguage : "es"));
-          setTimeout(() => {
-            router.push("/(tabs)");
-          }, 4000);
+          router.push("/(tabs)");
         }
-        setTimeout(() => {
-          setIsLoading(false);
-        }, 4000);
+        setIsLoading(false);
       } catch (error) {
         console.error("Error retrieving language from AsyncStorage", error);
         setIsLoading(false);

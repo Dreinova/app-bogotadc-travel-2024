@@ -28,6 +28,7 @@ import IconSvg from "../../src/components/IconSvg";
 import CardAtractivoBig from "../../src/components/CardAtractivoBig";
 import Swiper from "react-native-swiper";
 import RenderHTML, { defaultSystemFonts } from "react-native-render-html";
+import WebView from "react-native-webview";
 
 const ITEM_WIDTH = windowWidth + 40;
 export default function Page() {
@@ -38,6 +39,8 @@ export default function Page() {
   const [Blog, setBlog] = React.useState([]);
   const [rutas, setRutas] = React.useState([]);
   const [eventsProx, setEventsProx] = React.useState([]);
+  const [linkVideo, setLinkVideo] = React.useState([]);
+
   // Variable de estado para controlar si las consultas han finalizado
   const [queriesCompleted, setQueriesCompleted] = React.useState(false);
   React.useEffect(() => {
@@ -45,14 +48,17 @@ export default function Page() {
       fetchBogotaDrplV2("/eventos-destacados-app", actualLanguage),
       fetchBogotaDrplV2("/tax/categorias_atractivos_2024", actualLanguage),
       fetchBogotaDrplV2("/rt/all", actualLanguage),
+      fetchBogotaDrplV2("/appinfo", actualLanguage),
     ])
-      .then(([eventsData, categories, rutas]) => {
+      .then(([eventsData, categories, rutas, infoGnrl]) => {
+        
+        setLinkVideo(infoGnrl[0].field_link_video_home);
         setBogNatural(
           categories.map((cat) => ({
             name: cat.name,
             tid: cat.tid,
             field_cover_image: cat.field_banner_prod,
-            field_categor: cat.field_categor
+            field_categor: cat.field_categor,
           }))
         );
         setRutas(rutas);
@@ -160,6 +166,7 @@ export default function Page() {
         minHeight: Dimensions.get("window").height,
       }}
     >
+    
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
         <Text
           style={{
@@ -207,26 +214,25 @@ export default function Page() {
             data={BogNatural}
             keyExtractor={(item) => item.tid}
             renderItem={({ item }) => {
-              if(item.field_categor == '1'){
-
-                return(
-                <CardAtractivoBig
-                  onPress={() => {
-                    router.push({
-                      pathname: "atractivos",
-                      params: { filterID: item.tid },
-                    });
-                  }}
-                  title={item.name}
-                  image={
-                    item.field_cover_image != ""
-                      ? `https://bogotadc.travel${item.field_cover_image}`
-                      : "https://bogotadc.travel/img/noimg.png"
-                  }
-                />
-              )
+              if (item.field_categor == "1") {
+                return (
+                  <CardAtractivoBig
+                    onPress={() => {
+                      router.push({
+                        pathname: "atractivos",
+                        params: { filterID: item.tid },
+                      });
+                    }}
+                    title={item.name}
+                    image={
+                      item.field_cover_image != ""
+                        ? `https://bogotadc.travel${item.field_cover_image}`
+                        : "https://bogotadc.travel/img/noimg.png"
+                    }
+                  />
+                );
               }
-          }}
+            }}
           />
         </View>
       </View>
@@ -363,6 +369,17 @@ export default function Page() {
           </Swiper>
         </View>
       </View>
+      {linkVideo && (
+        <WebView
+          source={{
+            uri: `${linkVideo}`,
+          }}
+          startInLoadingState
+          scalesPageToFit
+          javaScriptEnabled
+          style={{ height:Dimensions.get('screen').width / 16 * 9, width:Dimensions.get('screen').width}}
+        />
+      )}
     </ScrollView>
   );
 }

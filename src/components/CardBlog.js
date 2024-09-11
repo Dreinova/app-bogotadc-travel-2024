@@ -32,6 +32,23 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
       fontFamily: "MuseoSans_500",
     },
   };
+  function decodeSpecialChars(str) {
+    return str
+      .replace(/&#039;/g, "'")
+      .replace(/&quot;/g, '"')
+      .replace(/&apos;/g, "'")
+      .replace(/&amp;/g, '&')
+      .replace(/&lt;/g, '<')
+      .replace(/&gt;/g, '>')
+      .replace(/&nbsp;/g, ' ')
+      .replace(/&cent;/g, '¢')
+      .replace(/&pound;/g, '£')
+      .replace(/&yen;/g, '¥')
+      .replace(/&euro;/g, '€')
+      .replace(/&copy;/g, '©')
+      .replace(/&reg;/g, '®')
+      .replace(/&trade;/g, '™');
+  }
   return (
     <Pressable
       onPress={onPress}
@@ -72,7 +89,7 @@ const CardBlog = ({ image, title, onPress, intro, isHorizontal }) => {
                 marginBottom:10
               }}
             >
-              {title}
+              {decodeSpecialChars(title)}
             </Text>
             {/* <Text
               style={{
