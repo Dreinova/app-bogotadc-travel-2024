@@ -1,5 +1,6 @@
 import React from "react";
 import { Link, router, useLocalSearchParams } from "expo-router";
+import AntDesign from '@expo/vector-icons/AntDesign';
 import {
   StyleSheet,
   Text,
@@ -23,6 +24,7 @@ import { setLanguage } from "../store/actions";
 import IconSvg from "./IconSvg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../constants";
+import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
 
 const Header = (props) => {
   const ActualUser = useSelector(selectActualUser);
@@ -69,7 +71,6 @@ const Header = (props) => {
       console.error("Error saving language to AsyncStorage", error);
     }
   };
-
   const menuModal = () => {
     return (
       <>
@@ -340,6 +341,28 @@ const Header = (props) => {
       </>
     );
   };
+  
+  const CandelariaModal = ({candelariaActive, setCandelariaActive}) => {
+    return (
+      <GestureHandlerRootView>
+      <Modal presentationStyle="fullScreen" animationType="slide" visible={candelariaActive} >
+      <View style={{flex:1, padding: 20}}>
+      <Pressable onPress={()=>{setCandelariaActive(!candelariaActive)}}><Text style={{fontSize: 20, marginBottom:15, alignSelf: "flex-end"}}><AntDesign name="close" size={24} color="black" /></Text></Pressable>
+      <View style={{backgroundColor: "#e8f1f3", paddingVertical: 18,paddingHorizontal: 20,borderRadius: 7,position: "relative"}}>
+      <Text style={{textAlign: "right", color: "#444", fontSize:16, lineHeight:20}}>¡Hola! Soy Candelaria, la asistente virtual de turismo de Bogotá. ¿En qué puedo ayudarte hoy?</Text>
+      <View style={{backgroundColor: "#e8f1f3", position: "absolute", top:-4, right:5, width:10, height:10, transform:[{rotate: "45deg"}]}} />
+      </View>
+      </View>
+      <View style={{padding: 20}}>
+      <TextInput placeholder="Escribir..." style={{borderBottomWidth:1, borderBottomColor:"#333"}} />
+      </View>
+      <View style={{paddingHorizontal: 20}}>
+      <Text style={{fontSize:11, color:"#333"}}>Todas mis respuestas son generadas por IA, basadas en la información contenida en Visitbogota.co. Si notas inconsistencias o algún error, puedes notificarlo a visitbogota@idt.gov.co</Text>
+      </View>
+      </Modal>
+      </GestureHandlerRootView>
+    );
+  }
   const pathname = usePathname();
   const backgroundColor =
     pathname === "/" ||
@@ -353,9 +376,12 @@ const Header = (props) => {
       ? "#354999"
       : "#F1F1F1";
   const { zone, zoneName, atractivoId, id, filterID } = useLocalSearchParams();
+  const [candelariaActive, setCandelariaActive] = React.useState(false)
   return (
     <View style={[styles.container, { backgroundColor }]}>
+    
       {menuModal()}
+      
 
       {pathname === "/" ||
       pathname === "/descubre" ||
@@ -378,7 +404,9 @@ const Header = (props) => {
         />
       )}
       <View></View>
+      <CandelariaModal candelariaActive={candelariaActive} setCandelariaActive={setCandelariaActive} />
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
+      <Pressable onPress={()=>{setCandelariaActive(!candelariaActive)}}><View><Image source={{uri: "https://visitbogota.co/chatbot/sticker/asisstant2.webp"}} style={{width: 40, height:40, resizeMode: "cover", borderRadius: 20, borderWidth:2, borderColor:"#FFF"}} /></View></Pressable>
         {pathname === `/restaurantes/${id}` ? (
           <Link
             href={{
@@ -482,6 +510,7 @@ const Header = (props) => {
             </Pressable>
           </>
         )}
+        
         <Pressable onPress={openModal} style={{ padding: 10 }}>
           {pathname === "/" ||
           pathname === "/descubre" ||
