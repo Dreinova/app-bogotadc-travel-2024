@@ -14,6 +14,8 @@ import {
   TouchableWithoutFeedback,
   Linking,
   View,
+  KeyboardAvoidingView,
+  Platform,
 } from "react-native";
 import { usePathname } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -512,6 +514,11 @@ const Header = (props) => {
         visible={candelariaActive}
         style={{ backgroundColor: "#f5f5f5" }}
       >
+      <KeyboardAvoidingView
+    behavior={Platform.OS === "ios" ? "padding" : "height"}
+    style={{ flex: 1 }}
+    keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0} // Ajusta el offset según sea necesario
+  >
         <View style={{ flex: 1, padding: 20 }}>
           <Pressable
             onPress={() => {
@@ -564,6 +571,8 @@ const Header = (props) => {
             puedes notificarlo a visitbogota@idt.gov.co
           </Text>
         </View>
+
+  </KeyboardAvoidingView>
       </Modal>
     );
   };
