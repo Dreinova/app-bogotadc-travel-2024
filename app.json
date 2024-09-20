@@ -2,7 +2,7 @@
   "expo": {
     "name": "Visit Bogotá",
     "slug": "bogota_app",
-    "version": "3.3.23",
+    "version": "3.3.24",
     "orientation": "portrait",
     "scheme": "com.idt.bogota-app",
     "userInterfaceStyle": "automatic",
@@ -22,7 +22,7 @@
     },
     "android": {
       "package": "com.servinf.test.bogotadctravel",
-      "versionCode": 103,
+      "versionCode": 104,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",

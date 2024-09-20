@@ -1,17 +1,19 @@
 import React from "react";
 import { Link, router, useLocalSearchParams } from "expo-router";
-import AntDesign from '@expo/vector-icons/AntDesign';
+import AntDesign from "@expo/vector-icons/AntDesign";
 import {
-  StyleSheet,
-  Text,
-  View,
+  FlatList,
+  Image,
   Modal,
   Pressable,
-  Image,
   ScrollView,
-  FlatList,
+  StyleSheet,
+  Text,
+  TextInput,
   TouchableOpacity,
   TouchableWithoutFeedback,
+  Linking,
+  View,
 } from "react-native";
 import { usePathname } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -24,7 +26,7 @@ import { setLanguage } from "../store/actions";
 import IconSvg from "./IconSvg";
 import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../constants";
-import { GestureHandlerRootView, TextInput } from "react-native-gesture-handler";
+import { fetchBogotaDrplV2 } from "../api/imperdibles";
 
 const Header = (props) => {
   const ActualUser = useSelector(selectActualUser);
@@ -341,28 +343,230 @@ const Header = (props) => {
       </>
     );
   };
-  
-  const CandelariaModal = ({candelariaActive, setCandelariaActive}) => {
+
+  const ChatMessage = ({ message, type }) => {
+    // Separar líneas por \n
+    const lines = message.split("\n");
+
+    const renderLine = (line, index) => {
+      // Detectar subtítulos como "Día 1:"
+      if (line.startsWith("Día")) {
+        return (
+          <Text key={index} style={styles.subtitle}>
+            {line}
+          </Text>
+        );
+      }
+
+      // Detectar listas que empiezan con "-"
+      if (line.startsWith("-")) {
+        return (
+          <Text key={index} style={styles.listItem}>
+            {line}
+          </Text>
+        );
+      }
+
+      // Párrafos normales
+      return (
+        <Text key={index} style={styles.paragraph}>
+          {line}
+        </Text>
+      );
+    };
+
     return (
-      <GestureHandlerRootView>
-      <Modal presentationStyle="fullScreen" animationType="slide" visible={candelariaActive} >
-      <View style={{flex:1, padding: 20}}>
-      <Pressable onPress={()=>{setCandelariaActive(!candelariaActive)}}><Text style={{fontSize: 20, marginBottom:15, alignSelf: "flex-end"}}><AntDesign name="close" size={24} color="black" /></Text></Pressable>
-      <View style={{backgroundColor: "#e8f1f3", paddingVertical: 18,paddingHorizontal: 20,borderRadius: 7,position: "relative"}}>
-      <Text style={{textAlign: "right", color: "#444", fontSize:16, lineHeight:20}}>¡Hola! Soy Candelaria, la asistente virtual de turismo de Bogotá. ¿En qué puedo ayudarte hoy?</Text>
-      <View style={{backgroundColor: "#e8f1f3", position: "absolute", top:-4, right:5, width:10, height:10, transform:[{rotate: "45deg"}]}} />
+      <View
+        style={[
+          type == "user"
+            ? styles.messageContainerSent
+            : styles.messageContainerReceived,
+        ]}
+      >
+        {lines.map((line, index) => renderLine(line, index))}
       </View>
-      </View>
-      <View style={{padding: 20}}>
-      <TextInput placeholder="Escribir..." style={{borderBottomWidth:1, borderBottomColor:"#333"}} />
-      </View>
-      <View style={{paddingHorizontal: 20}}>
-      <Text style={{fontSize:11, color:"#333"}}>Todas mis respuestas son generadas por IA, basadas en la información contenida en Visitbogota.co. Si notas inconsistencias o algún error, puedes notificarlo a visitbogota@idt.gov.co</Text>
-      </View>
-      </Modal>
-      </GestureHandlerRootView>
     );
-  }
+  };
+
+  const CandelariaModal = ({ candelariaActive, setCandelariaActive }) => {
+    const [message, setMessage] = React.useState("");
+    const [chatHistory, setChatHistory] = React.useState([]);
+    const currentMan = {
+      name: "Candelaria",
+      source: "cha_CBoB2TwZi50OnRUpbWQMx",
+      avatar: "https://example.com/sticker/asisstant2.webp",
+    };
+
+    React.useEffect(() => {
+      addMessageToChat("assistant", "Escribiendo...", true);
+      addMessageToChat(
+        "assistant",
+        "¡Hola! Soy Candelaria, la asistente virtual de turismo de Bogotá. ¿En qué puedo ayudarte hoy?"
+      );
+    }, []);
+    const parseMarkdown = (text) => {
+      // Verificar si el input no es texto o está vacío
+      if (typeof text !== "string" || text.trim() === "") {
+        return null;
+      }
+
+      // Encabezados (## Header)
+      text = text.replace(/## (.+)/g, "## $1"); // Indica que es un encabezado de nivel 2
+      text = text.replace(/# (.+)/g, "# $1"); // Indica que es un encabezado de nivel 1
+
+      // Reemplazar saltos de línea con nuevas líneas
+      text = text.replace(/\n/g, "\n");
+
+      // Eliminar enlaces ([text](url))
+      text = text.replace(/\[.+?\]\(https?:\/\/[^\s]+\)/g, "");
+
+      // Dividir en partes por negritas e itálicas
+      const parts = text.split(/(\*\*.+?\*\*|\*.+?\*)/g);
+
+      return (
+        <Text>
+          {parts.map((part, index) => {
+            // Negritas
+            if (part.match(/\*\*(.+?)\*\*/)) {
+              return (
+                <Text key={index} style={{ fontWeight: "bold" }}>
+                  {part.replace(/\*\*/g, "")}
+                </Text>
+              );
+            }
+
+            // Itálicas
+            if (part.match(/\*(.+?)\*/)) {
+              return (
+                <Text key={index} style={{ fontStyle: "italic" }}>
+                  {part.replace(/\*/g, "")}
+                </Text>
+              );
+            }
+
+            // Texto normal
+            return <Text key={index}>{part}</Text>;
+          })}
+        </Text>
+      );
+    };
+
+    function addMessageToChat(sender, content, isTemporary = false) {
+      setChatHistory((prevHistory) => [
+        ...prevHistory.filter((msg) => !msg.isTemporary),
+        { sender, content, isTemporary },
+      ]);
+    }
+
+    async function sendMessageToServer(message, threadId = "", runId = "") {
+      try {
+        const response = await fetch(
+          "https://visitbogota.co/chatbot/process_chat.php",
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify({ message, threadId, runId }),
+          }
+        );
+        const data = await response.json();
+        if (data.runStatus === "completed") {
+          console.log("Completed");
+        }
+
+        console.log(data);
+
+        return data;
+      } catch (error) {
+        console.error("Error al comunicarse con el servidor:", error);
+        return "Hubo un error al comunicarse con el servidor.";
+      }
+    }
+
+    const handleSend = async () => {
+      if (message) {
+        addMessageToChat("user", message);
+        setMessage("");
+        addMessageToChat("assistant", "Escribiendo...", true);
+
+        const data = await sendMessageToServer(message);
+        if (data.response != 0) {
+          addMessageToChat("assistant", parseMarkdown(data.response), false);
+        } else {
+          var data2 = await sendMessageToServer(
+            message,
+            data.threadId,
+            data.runID
+          );
+          addMessageToChat("assistant", parseMarkdown(data2.response), false);
+          console.log("Ok", runId);
+        }
+      }
+    };
+
+    return (
+      <Modal
+        presentationStyle="fullScreen"
+        animationType="slide"
+        visible={candelariaActive}
+        style={{ backgroundColor: "#f5f5f5" }}
+      >
+        <View style={{ flex: 1, padding: 20 }}>
+          <Pressable
+            onPress={() => {
+              setCandelariaActive(!candelariaActive);
+            }}
+          >
+            <Text
+              style={{
+                fontSize: 20,
+                marginBottom: 15,
+                alignSelf: "flex-end",
+              }}
+            >
+              <AntDesign name="close" size={24} color="black" />
+            </Text>
+          </Pressable>
+          <FlatList
+            data={chatHistory}
+            keyExtractor={(item, index) => index.toString()}
+            renderItem={({ item }) => (
+              <View
+                style={
+                  item.sender === "user"
+                    ? styles.userMessage
+                    : styles.assistantMessage
+                }
+              >
+                <Text>{item.content}</Text>
+              </View>
+            )}
+          />
+        </View>
+        {/* Input de mensaje */}
+        <View style={styles.inputContainer}>
+          <TextInput
+            onChangeText={setMessage}
+            value={message}
+            placeholder="Haz tu pregunta aquí. (Hasta 150 caractéres)"
+            style={styles.textInput}
+          />
+          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+            <Text style={styles.sendButtonText}>Enviar</Text>
+          </TouchableOpacity>
+        </View>
+
+        <View style={{ paddingHorizontal: 20 }}>
+          <Text style={{ fontSize: 11, color: "#333" }}>
+            Todas mis respuestas son generadas por IA, basadas en la información
+            contenida en Visitbogota.co. Si notas inconsistencias o algún error,
+            puedes notificarlo a visitbogota@idt.gov.co
+          </Text>
+        </View>
+      </Modal>
+    );
+  };
   const pathname = usePathname();
   const backgroundColor =
     pathname === "/" ||
@@ -376,12 +580,19 @@ const Header = (props) => {
       ? "#354999"
       : "#F1F1F1";
   const { zone, zoneName, atractivoId, id, filterID } = useLocalSearchParams();
-  const [candelariaActive, setCandelariaActive] = React.useState(false)
+  const [candelariaActive, setCandelariaActive] = React.useState(false);
+  const [candelariaButtonActive, setCandelariaButtonActive] =
+    React.useState(false);
+  React.useEffect(() => {
+    Promise.all([fetchBogotaDrplV2("/appinfo", actualLanguage)])
+      .then(([infoGnrl]) => {
+        setCandelariaButtonActive(infoGnrl[0].field_enable_chat);
+      })
+      .catch((error) => console.error(error));
+  }, [actualLanguage]);
   return (
     <View style={[styles.container, { backgroundColor }]}>
-    
       {menuModal()}
-      
 
       {pathname === "/" ||
       pathname === "/descubre" ||
@@ -404,9 +615,36 @@ const Header = (props) => {
         />
       )}
       <View></View>
-      <CandelariaModal candelariaActive={candelariaActive} setCandelariaActive={setCandelariaActive} />
+
+      <CandelariaModal
+        candelariaActive={candelariaActive}
+        setCandelariaActive={setCandelariaActive}
+      />
+
       <View style={{ flexDirection: "row", alignItems: "center", gap: 5 }}>
-      <Pressable onPress={()=>{setCandelariaActive(!candelariaActive)}}><View><Image source={{uri: "https://visitbogota.co/chatbot/sticker/asisstant2.webp"}} style={{width: 40, height:40, resizeMode: "cover", borderRadius: 20, borderWidth:2, borderColor:"#FFF"}} /></View></Pressable>
+        {candelariaButtonActive == 1 && (
+          <Pressable
+            onPress={() => {
+              setCandelariaActive(!candelariaActive);
+            }}
+          >
+            <View>
+              <Image
+                source={{
+                  uri: "https://visitbogota.co/chatbot/sticker/asisstant2.webp",
+                }}
+                style={{
+                  width: 40,
+                  height: 40,
+                  resizeMode: "cover",
+                  borderRadius: 20,
+                  borderWidth: 2,
+                  borderColor: "#FFF",
+                }}
+              />
+            </View>
+          </Pressable>
+        )}
         {pathname === `/restaurantes/${id}` ? (
           <Link
             href={{
@@ -470,9 +708,9 @@ const Header = (props) => {
             <Pressable
               style={{ padding: 10 }}
               onPress={() => {
-                if(pathname === "/search"){
-                  router.back()
-                }else{
+                if (pathname === "/search") {
+                  router.back();
+                } else {
                   pathname === "/" ||
                   pathname === "/descubre" ||
                   pathname === "/events" ||
@@ -483,7 +721,6 @@ const Header = (props) => {
                   pathname === "/planes"
                     ? router.push("search")
                     : router.push(pathname.split("/")[1]);
-
                 }
               }}
             >
@@ -510,7 +747,7 @@ const Header = (props) => {
             </Pressable>
           </>
         )}
-        
+
         <Pressable onPress={openModal} style={{ padding: 10 }}>
           {pathname === "/" ||
           pathname === "/descubre" ||
@@ -539,6 +776,104 @@ const Header = (props) => {
 };
 
 const styles = StyleSheet.create({
+  messageContainer: {
+    backgroundColor: "#e8f1f3",
+    padding: 15,
+    borderRadius: 10,
+    marginBottom: 10,
+  },
+  paragraph: {
+    fontSize: 16,
+    color: "#444",
+    marginBottom: 10,
+    lineHeight: 22,
+  },
+  subtitle: {
+    fontSize: 18,
+    fontWeight: "bold",
+    color: "#333",
+    marginBottom: 8,
+  },
+  listItem: {
+    fontSize: 16,
+    color: "#444",
+    marginLeft: 10,
+    marginBottom: 5,
+    lineHeight: 22,
+  },
+
+  messageContainerReceived: {
+    backgroundColor: "#e8f1f3",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignSelf: "flex-start",
+    maxWidth: "80%",
+    position: "relative",
+  },
+  messageContainerSent: {
+    backgroundColor: "#d1e7dd",
+    paddingVertical: 12,
+    paddingHorizontal: 16,
+    borderRadius: 10,
+    marginBottom: 10,
+    alignSelf: "flex-end",
+    maxWidth: "80%",
+    position: "relative",
+  },
+  messageText: {
+    color: "#444",
+    fontSize: 16,
+    lineHeight: 20,
+  },
+  messageTailReceived: {
+    backgroundColor: "#e8f1f3",
+    position: "absolute",
+    bottom: 0,
+    left: -10,
+    width: 10,
+    height: 10,
+    transform: [{ rotate: "45deg" }],
+  },
+  messageTailSent: {
+    backgroundColor: "#d1e7dd",
+    position: "absolute",
+    bottom: 0,
+    right: -10,
+    width: 10,
+    height: 10,
+    transform: [{ rotate: "45deg" }],
+  },
+  inputContainer: {
+    flexDirection: "row",
+    alignItems: "center",
+    borderTopWidth: 1,
+    borderTopColor: "#ddd",
+    paddingHorizontal: 10,
+    paddingVertical: 5,
+  },
+  textInput: {
+    flex: 1,
+    borderWidth: 1,
+    borderColor: "#ccc",
+    borderRadius: 25,
+    paddingHorizontal: 15,
+    paddingVertical: 8,
+    fontSize: 16,
+    backgroundColor: "#fff",
+  },
+  sendButton: {
+    marginLeft: 10,
+    backgroundColor: "#007bff",
+    paddingHorizontal: 20,
+    paddingVertical: 10,
+    borderRadius: 25,
+  },
+  sendButtonText: {
+    color: "#fff",
+    fontSize: 16,
+  },
   container: {
     padding: 20,
     flexDirection: "row",
@@ -607,6 +942,20 @@ const styles = StyleSheet.create({
     marginBottom: 20,
     fontFamily: "MuseoSans_500",
     color: Colors.black,
+  },
+  userMessage: {
+    alignSelf: "flex-end",
+    backgroundColor: "#DCF8C6",
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 5,
+  },
+  assistantMessage: {
+    alignSelf: "flex-start",
+    backgroundColor: "#e1e1e1",
+    padding: 10,
+    borderRadius: 10,
+    marginVertical: 5,
   },
 });
 

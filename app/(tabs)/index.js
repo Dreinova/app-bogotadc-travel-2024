@@ -40,6 +40,8 @@ export default function Page() {
   const [rutas, setRutas] = React.useState([]);
   const [eventsProx, setEventsProx] = React.useState([]);
   const [linkVideo, setLinkVideo] = React.useState([]);
+  const [candelariaActive, setCandelariaActive] = React.useState(false);
+
 
   // Variable de estado para controlar si las consultas han finalizado
   const [queriesCompleted, setQueriesCompleted] = React.useState(false);
@@ -51,7 +53,6 @@ export default function Page() {
       fetchBogotaDrplV2("/appinfo", actualLanguage),
     ])
       .then(([eventsData, categories, rutas, infoGnrl]) => {
-        
         setLinkVideo(infoGnrl[0].field_link_video_home);
         setBogNatural(
           categories.map((cat) => ({
