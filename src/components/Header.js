@@ -477,8 +477,6 @@ const Header = (props) => {
           console.log("Completed");
         }
 
-        console.log(data);
-
         return data;
       } catch (error) {
         console.error("Error al comunicarse con el servidor:", error);
@@ -502,7 +500,6 @@ const Header = (props) => {
             data.runID
           );
           addMessageToChat("assistant", parseMarkdown(data2.response), false);
-          console.log("Ok", runId);
         }
       }
     };
@@ -514,65 +511,64 @@ const Header = (props) => {
         visible={candelariaActive}
         style={{ backgroundColor: "#f5f5f5" }}
       >
-      <KeyboardAvoidingView
-    behavior={Platform.OS === "ios" ? "padding" : "height"}
-    style={{ flex: 1 }}
-    keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0} // Ajusta el offset según sea necesario
-  >
-        <View style={{ flex: 1, padding: 20 }}>
-          <Pressable
-            onPress={() => {
-              setCandelariaActive(!candelariaActive);
-            }}
-          >
-            <Text
-              style={{
-                fontSize: 20,
-                marginBottom: 15,
-                alignSelf: "flex-end",
+        <KeyboardAvoidingView
+          behavior={Platform.OS === "ios" ? "padding" : "height"}
+          style={{ flex: 1 }}
+          keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0} // Ajusta el offset según sea necesario
+        >
+          <View style={{ flex: 1, padding: 20 }}>
+            <Pressable
+              onPress={() => {
+                setCandelariaActive(!candelariaActive);
               }}
             >
-              <AntDesign name="close" size={24} color="black" />
-            </Text>
-          </Pressable>
-          <FlatList
-            data={chatHistory}
-            keyExtractor={(item, index) => index.toString()}
-            renderItem={({ item }) => (
-              <View
-                style={
-                  item.sender === "user"
-                    ? styles.userMessage
-                    : styles.assistantMessage
-                }
+              <Text
+                style={{
+                  fontSize: 20,
+                  marginBottom: 15,
+                  alignSelf: "flex-end",
+                }}
               >
-                <Text>{item.content}</Text>
-              </View>
-            )}
-          />
-        </View>
-        {/* Input de mensaje */}
-        <View style={styles.inputContainer}>
-          <TextInput
-            onChangeText={setMessage}
-            value={message}
-            placeholder="Haz tu pregunta aquí. (Hasta 150 caractéres)"
-            style={styles.textInput}
-          />
-          <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
-            <Text style={styles.sendButtonText}>Enviar</Text>
-          </TouchableOpacity>
-        </View>
+                <AntDesign name="close" size={24} color="black" />
+              </Text>
+            </Pressable>
+            <FlatList
+              data={chatHistory}
+              keyExtractor={(item, index) => index.toString()}
+              renderItem={({ item }) => (
+                <View
+                  style={
+                    item.sender === "user"
+                      ? styles.userMessage
+                      : styles.assistantMessage
+                  }
+                >
+                  <Text>{item.content}</Text>
+                </View>
+              )}
+            />
+          </View>
+          {/* Input de mensaje */}
+          <View style={styles.inputContainer}>
+            <TextInput
+              onChangeText={setMessage}
+              value={message}
+              placeholder="Haz tu pregunta aquí. (Hasta 150 caractéres)"
+              style={styles.textInput}
+            />
+            <TouchableOpacity style={styles.sendButton} onPress={handleSend}>
+              <Text style={styles.sendButtonText}>Enviar</Text>
+            </TouchableOpacity>
+          </View>
 
-        <View style={{ paddingHorizontal: 20 }}>
-          <Text style={{ fontSize: 11, color: "#333" }}>
-            Todas mis respuestas son generadas por IA, basadas en la información
-            contenida en Visitbogota.co. Si notas inconsistencias o algún error,
-            puedes notificarlo a visitbogota@idt.gov.co
-          </Text>
-        </View>
-
-  </KeyboardAvoidingView>
+          <View style={{ paddingHorizontal: 20 }}>
+            <Text style={{ fontSize: 11, color: "#333" }}>
+              Todas mis respuestas son generadas por IA, basadas en la
+              información contenida en Visitbogota.co. Si notas inconsistencias
+              o algún error, puedes notificarlo a visitbogota@idt.gov.co
+            </Text>
+          </View>
+        </KeyboardAvoidingView>
       </Modal>
     );
   };

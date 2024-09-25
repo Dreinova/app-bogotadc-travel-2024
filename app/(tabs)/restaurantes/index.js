@@ -240,9 +240,7 @@ const stylesModal = StyleSheet.create({
 });
 
 const EventsList = () => {
-  const { zone, zoneName, atractivoId,filterID } = useLocalSearchParams();
-console.log(filterID);
-
+  const { zone, zoneName, atractivoId, filterID } = useLocalSearchParams();
   const dispatch = useDispatch();
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
@@ -344,7 +342,7 @@ console.log(filterID);
             style={{ marginBottom: 10, height: 155 }}
             href={{
               pathname: `/restaurantes/${item.nid}`,
-              params: { zone, zoneName, atractivoId, filterID},
+              params: { zone, zoneName, atractivoId, filterID },
             }}
           >
             <ImageBackground

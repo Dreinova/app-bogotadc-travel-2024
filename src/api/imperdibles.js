@@ -30,11 +30,28 @@ export const fetchBogotaDrpl = async (endpoint) => {
     return [];
   }
 };
-export const fetchBogotaDrplV2 = async (endpoint, actualLanguage = "es") => {
+export const fetchBogotaDrplV2 = async (
+  endpoint,
+  actualLanguage = "es",
+  queryParams = {}
+) => {
   try {
+    // Creamos un objeto URLSearchParams para agregar parámetros dinámicos
+    const urlParams = new URLSearchParams({ langcode: actualLanguage });
+
+    // Agregar parámetros dinámicos del objeto queryParams
+    for (const key in queryParams) {
+      if (queryParams.hasOwnProperty(key)) {
+        urlParams.append(key, queryParams[key]);
+      }
+    }
+
+    // Construimos la URL con los parámetros dinámicos
+
     const res = await fetch(
-      `${BASE_URL_DRPLV2}${endpoint}?langcode=${actualLanguage}`
+      `${BASE_URL_DRPLV2}${endpoint}?${urlParams.toString()}`
     );
+
     return await res.json();
   } catch (e) {
     console.log("Error fetching", e.message);

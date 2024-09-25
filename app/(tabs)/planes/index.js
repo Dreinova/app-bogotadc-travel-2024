@@ -154,21 +154,24 @@ const CustomModal = ({
               {filtersData[1].map((item, index) => {
                 const isChecked =
                   Array.isArray(test_zona) && test_zona.includes(item.tid);
-                return (
-                  <View style={{ width: "50%" }} key={item.tid}>
-                    <CustomCheckbox
-                      checked={isChecked}
-                      label={item.name}
-                      onPress={() => {
-                        setTest_zona((prevState) => {
-                          return isChecked
-                            ? prevState.filter((id) => id !== item.tid) // Desmarca el checkbox
-                            : [...prevState, item.tid];
-                        });
-                      }}
-                    />
-                  </View>
-                );
+
+                if (item.field_categor == 1) {
+                  return (
+                    <View style={{ width: "50%" }} key={item.tid}>
+                      <CustomCheckbox
+                        checked={isChecked}
+                        label={item.name}
+                        onPress={() => {
+                          setTest_zona((prevState) => {
+                            return isChecked
+                              ? prevState.filter((id) => id !== item.tid) // Desmarca el checkbox
+                              : [...prevState, item.tid];
+                          });
+                        }}
+                      />
+                    </View>
+                  );
+                }
               })}
             </View>
             <Text style={stylesModal.titleFilter}>{getTitleByIndex(2)}</Text>
@@ -402,7 +405,6 @@ const EventsList = () => {
               gap: 8,
               paddingHorizontal: 20,
               paddingVertical: 20,
-             
             }}
           >
             <IconSvg
@@ -424,8 +426,8 @@ const EventsList = () => {
           <View
             style={{
               flexDirection: "row",
-              paddingHorizontal:20,
-               marginBottom:20
+              paddingHorizontal: 20,
+              marginBottom: 20,
             }}
           >
             <TextInput
@@ -511,24 +513,22 @@ const EventsList = () => {
                   }}
                 >
                   <LinearGradient
-                    colors={["transparent", "rgba(0,0,0,.6)","rgba(0,0,0,.6)"]}
+                    colors={["transparent", "rgba(0,0,0,.6)", "rgba(0,0,0,.6)"]}
                     style={{
                       flex: 1,
-                      justifyContent:'center',
-                      padding:20
+                      justifyContent: "center",
+                      padding: 20,
                     }}
                   >
-                   
-                      <Text
-                        style={{
-                          color: Colors.white,
-                          fontFamily: "MuseoSans_500",
-                          fontSize: 20,
-                        }}
-                      >
-                        {item.title}
-                      </Text>
-                     
+                    <Text
+                      style={{
+                        color: Colors.white,
+                        fontFamily: "MuseoSans_500",
+                        fontSize: 20,
+                      }}
+                    >
+                      {item.title}
+                    </Text>
                   </LinearGradient>
                 </ImageBackground>
               </Pressable>

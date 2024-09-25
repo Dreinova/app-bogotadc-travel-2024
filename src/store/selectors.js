@@ -41,6 +41,11 @@ export const selectBlogsData = createSelector(
   (events) => events.blogsList
 );
 
+export const selectEventsFilterData = createSelector(
+  [selectEvents],
+  (events) => events.filters
+);
+
 export const selectRutassData = createSelector(
   [selectRutas],
   (rutas) => rutas.rutasList
@@ -73,6 +78,7 @@ export const selectPlanesFilterData = createSelector(
   [selectPlanes],
   (planes) => planes.filters
 );
+
 export const selectActualLanguage = createSelector(
   [selectLanguage],
   (lang) => lang.language

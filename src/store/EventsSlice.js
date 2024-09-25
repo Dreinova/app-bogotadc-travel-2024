@@ -1,6 +1,8 @@
 const initialState = {
   eventsList: [],
   blogsList: [],
+  filters: [],
+  filterType: "",
 };
 
 const EventsReducer = (state = initialState, action) => {
@@ -14,6 +16,12 @@ const EventsReducer = (state = initialState, action) => {
       return {
         ...state,
         blogsList: action.payload,
+      };
+    case "SET_EVENTS_FILTER_DATA":
+      return {
+        ...state,
+        filters: action.payload.filters,
+        filterType: action.payload.filterType,
       };
     default:
       return state;

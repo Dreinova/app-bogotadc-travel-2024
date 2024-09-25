@@ -78,53 +78,97 @@ export const fetchPlacesWithFilters =
       console.error("Error fetching places data:", error);
     }
   };
-export const fetchAllEvents = (agenda) => async (dispatch, getState) => {
-  const state = getState();
-  const actualLanguage = state.language.language;
-  try {
-    // ID
-    // Zona Relacionada
-    // Categoría Evento
-    // Agenda de Evento
-    const endpoint = `/eventsweb/all/all/all/${agenda}`;
-    const eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
-    const uniqueNids = new Set();
-    const uniqueData = [];
-    for (const item of eventsResponse) {
-      if (!uniqueNids.has(item.nid)) {
-        uniqueNids.add(item.nid);
-        uniqueData.push(item);
+export const fetchAllEvents =
+  (agenda, zone = "all", cat = "all", startdate = "all", enddate = "all") =>
+  async (dispatch, getState) => {
+    const state = getState();
+    const actualLanguage = state.language.language;
+    let filteredEvents;
+    try {
+      // Formato de fechas en caso de que existan
+      const formattedStartDate =
+        startdate !== "all"
+          ? new Date(startdate).toISOString().split("T")[0]
+          : "all";
+      const formattedEndDate =
+        enddate !== "all"
+          ? new Date(enddate).toISOString().split("T")[0]
+          : "all";
+      let endpoint, eventsResponse;
+      if (formattedStartDate !== "all" || formattedEndDate !== "all") {
+        endpoint = `/eventslist/all/${zone}/${cat}/${agenda}`;
+        eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage, {
+          langcode: actualLanguage,
+          field_date_value: formattedStartDate,
+          field_end_date_value: formattedEndDate,
+        });
+        // Filtrado de eventos por la fecha de finalización
+        filteredEvents = eventsResponse.filter((event) => {
+          const eventEndDate = event.field_end_date
+            ? new Date(event.field_end_date).toISOString().split("T")[0]
+            : null;
+          const eventStartDate = event.field_date
+            ? new Date(event.field_date).toISOString().split("T")[0]
+            : null;
+
+          if (formattedEndDate !== "all" && eventEndDate) {
+            // Si tiene fecha de finalización, compararla con formattedEndDate
+            return eventEndDate <= formattedEndDate;
+          } else if (eventStartDate && formattedStartDate !== "all") {
+            // Si no tiene fecha de finalización, asegurarse que la fecha de inicio no sea mayor que la fecha de inicio proporcionada
+            return eventStartDate <= formattedEndDate;
+          }
+          return true;
+        });
+      } else {
+        endpoint = `/eventslist/all/${zone}/${cat}/${agenda}`;
+        eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
+        filteredEvents = eventsResponse;
       }
+
+      // Filtrado de datos únicos
+      const uniqueNids = new Set();
+      const uniqueData = [];
+      for (const item of filteredEvents) {
+        if (!uniqueNids.has(item.nid)) {
+          uniqueNids.add(item.nid);
+          uniqueData.push(item);
+        }
+      }
+
+      // Función para ajustar la hora a medianoche
+      function setMidnight(dateString) {
+        const date = new Date(dateString);
+        date.setHours(0, 0, 0, 0);
+        return date;
+      }
+
+      // Función para comparar fechas (utiliza fecha de finalización o de inicio si no hay)
+      function compararFechas(a, b) {
+        const endDateA = a.field_end_date
+          ? a.field_end_date.length === 10
+            ? setMidnight(a.field_end_date)
+            : new Date(a.field_end_date)
+          : setMidnight(a.field_date);
+        const endDateB = b.field_end_date
+          ? b.field_end_date.length === 10
+            ? setMidnight(b.field_end_date)
+            : new Date(b.field_end_date)
+          : setMidnight(b.field_date);
+
+        return endDateA - endDateB;
+      }
+
+      // Ordenar los datos por fecha de finalización
+      uniqueData.sort(compararFechas);
+
+      // Despachar los datos al estado
+      dispatch(setEventsData(uniqueData));
+    } catch (error) {
+      console.error("Error fetching events data:", error);
     }
-    function setMidnight(dateString) {
-      const date = new Date(dateString);
-      date.setHours(0, 0, 0, 0);
-      return date;
-    }
-  
-    function compararFechas(a, b) {
-      // Si el evento no tiene fecha de finalización, usar la fecha de inicio
-      const endDateA = a.field_end_date
-        ? a.field_end_date.length === 10
-          ? setMidnight(a.field_end_date)
-          : new Date(a.field_end_date)
-        : setMidnight(a.field_date);
-      const endDateB = b.field_end_date
-        ? b.field_end_date.length === 10
-          ? setMidnight(b.field_end_date)
-          : new Date(b.field_end_date)
-        : setMidnight(b.field_date);
-  
-      return endDateA - endDateB;
-    }
-    // Ordenar el arreglo por fecha de finalización
-    uniqueData.sort(compararFechas);
-  
-    dispatch(setEventsData(uniqueData));
-  } catch (error) {
-    console.error("Error fetching places data:", error);
-  }
-};
+  };
+
 export const fetchAllRutas = () => async (dispatch, getState) => {
   const state = getState();
   const actualLanguage = state.language.language;
@@ -277,14 +321,31 @@ export const fetchAllFilters =
         console.error("Error fetching filters data:", error);
       }
     }
+    if (filterType == "eventos") {
+      try {
+        const arrayFilters = await Promise.all(
+          filters.map(async (filter) => {
+            const response = await fetchBogotaDrpl(
+              `/micefilters?filter=${filter}`
+            );
+
+            return response;
+          })
+        );
+
+        dispatch(setFiltersEventData({ filters: arrayFilters, filterType }));
+      } catch (error) {
+        console.error("Error fetching filters data:", error);
+      }
+    }
     if (filterType == "planes") {
       try {
         const arrayFilters = await Promise.all(
           filters.map(async (filter) => {
             let response;
-            if(filter == 'categorias_atractivos_2024'){
+            if (filter == "categorias_atractivos_2024") {
               response = await fetchBogotaDrplV2(`/categorias_atractivos/all`);
-            }else{
+            } else {
               response = await fetchBogotaDrpl(`/tax/${filter}`);
             }
             return response;
@@ -387,6 +448,12 @@ export const setFiltersHotelsData = (data) => {
 export const setFiltersRestaurantssData = (data) => {
   return {
     type: "SET_REST_FILTER_DATA",
+    payload: data,
+  };
+};
+export const setFiltersEventData = (data) => {
+  return {
+    type: "SET_EVENTS_FILTER_DATA",
     payload: data,
   };
 };

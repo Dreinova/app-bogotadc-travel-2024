@@ -54,10 +54,7 @@ const RutassList = () => {
     }
   }, [eventsData, actualLanguage]);
 
-  React.useEffect(() => {
-    // console.log("Active Category:", activeCat);
-    // console.log("Active Routes:", rutasActivas);
-  }, [activeCat, rutasActivas, actualLanguage]);
+  React.useEffect(() => {}, [activeCat, rutasActivas, actualLanguage]);
   const scrollToTop = () => {
     if (flatListRef.current) {
       flatListRef.current.scrollToOffset({ animated: true, offset: 0 });
