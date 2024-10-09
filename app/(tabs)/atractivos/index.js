@@ -200,7 +200,12 @@ export default function AtractivosList() {
           renderItem={({ item }) => (
             <CardAtractivoBig
               atractivo
-              onPress={() => router.push({pathname:`(tabs)/atractivos/${item.nid}`,params: {filterID}})}
+              onPress={() =>
+                router.push({
+                  pathname: `(tabs)/atractivos/${item.nid}`,
+                  params: { filterID },
+                })
+              }
               title={item.title}
               image={
                 item.field_cover_image != ""

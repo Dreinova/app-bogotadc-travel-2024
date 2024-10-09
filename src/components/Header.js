@@ -517,21 +517,58 @@ const Header = (props) => {
           keyboardVerticalOffset={Platform.OS === "ios" ? 20 : 0} // Ajusta el offset según sea necesario
         >
           <View style={{ flex: 1, padding: 20 }}>
-            <Pressable
-              onPress={() => {
-                setCandelariaActive(!candelariaActive);
-              }}
-            >
-              <Text
+            <View style={{ position: "relative" }}>
+              <View
                 style={{
-                  fontSize: 20,
-                  marginBottom: 15,
-                  alignSelf: "flex-end",
+                  position: "relative",
+                  width: 40,
+                  height: 40,
+                  alignSelf: "center",
                 }}
               >
-                <AntDesign name="close" size={24} color="black" />
-              </Text>
-            </Pressable>
+                <Image
+                  source={{
+                    uri: "https://visitbogota.co/chatbot/sticker/asisstant2.webp",
+                  }}
+                  style={{
+                    width: 40,
+                    height: 40,
+
+                    resizeMode: "cover",
+                    borderRadius: 20,
+                    borderWidth: 2,
+                    borderColor: "#FFF",
+                  }}
+                />
+                <View
+                  style={{
+                    position: "absolute",
+                    bottom: 0,
+                    right: 0,
+                    backgroundColor: "#32CD32",
+                    borderRadius: 10 / 2,
+                    width: 10,
+                    height: 10,
+                  }}
+                />
+              </View>
+              <Pressable
+                style={{ position: "absolute", right: 0 }}
+                onPress={() => {
+                  setCandelariaActive(!candelariaActive);
+                }}
+              >
+                <Text
+                  style={{
+                    fontSize: 20,
+                    marginBottom: 15,
+                    alignSelf: "flex-end",
+                  }}
+                >
+                  <AntDesign name="close" size={24} color="black" />
+                </Text>
+              </Pressable>
+            </View>
             <FlatList
               data={chatHistory}
               keyExtractor={(item, index) => index.toString()}
@@ -645,6 +682,17 @@ const Header = (props) => {
                   borderRadius: 20,
                   borderWidth: 2,
                   borderColor: "#FFF",
+                }}
+              />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  right: 0,
+                  backgroundColor: "#32CD32",
+                  borderRadius: 10 / 2,
+                  width: 10,
+                  height: 10,
                 }}
               />
             </View>
