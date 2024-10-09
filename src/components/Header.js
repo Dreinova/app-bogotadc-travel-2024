@@ -16,6 +16,7 @@ import {
   View,
   KeyboardAvoidingView,
   Platform,
+  SafeAreaView,
 } from "react-native";
 import { usePathname } from "expo-router";
 import { useDispatch, useSelector } from "react-redux";
@@ -511,6 +512,7 @@ const Header = (props) => {
         visible={candelariaActive}
         style={{ backgroundColor: "#f5f5f5" }}
       >
+      <SafeAreaView style={{ flex: 1 }}>
         <KeyboardAvoidingView
           behavior={Platform.OS === "ios" ? "padding" : "height"}
           style={{ flex: 1 }}
@@ -569,6 +571,7 @@ const Header = (props) => {
             </Text>
           </View>
         </KeyboardAvoidingView>
+      </SafeAreaView>
       </Modal>
     );
   };

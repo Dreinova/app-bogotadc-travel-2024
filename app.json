@@ -2,7 +2,7 @@
   "expo": {
     "name": "Visit Bogotá",
     "slug": "bogota_app",
-    "version": "3.3.27",
+    "version": "3.3.28",
     "orientation": "portrait",
     "scheme": "com.idt.bogota-app",
     "userInterfaceStyle": "automatic",
