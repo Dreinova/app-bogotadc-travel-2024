@@ -37,9 +37,13 @@ export default function AtractivosList() {
 
   React.useEffect(() => {
     setFilterID(params.filterID);
-  }, [params.filterID, filterID]);
+  }, [params.filterID]);
 
   React.useEffect(() => {
+    let index;
+    // Coloca aquí queriesCompleted en false para que el PreloaderComponent se muestre al cambiar el param
+    setQueriesCompleted(false);
+
     const requestAtractivosInit = async (tid) => {
       const atractivos = await fetchBogotaDrplV2(
         `/atractivos/all/${tid}`,
@@ -56,30 +60,34 @@ export default function AtractivosList() {
     Promise.all([
       fetchBogotaDrplV2("/tax/categorias_atractivos_2024", actualLanguage),
     ])
-      .then(([categorias_atractivos_2024]) => {
+      .then(async ([categorias_atractivos_2024]) => {
         dispatch(fetchData());
+
         setCategories(
           categorias_atractivos_2024.map((cat) => ({
             name: cat.name,
             tid: cat.tid,
+            show: cat.field_categor,
           }))
         );
         if (filterID !== null && filterID !== undefined) {
-          let index = categorias_atractivos_2024.findIndex(
+          index = categorias_atractivos_2024.findIndex(
             (cat) => cat.tid === filterID
           );
-          setActiveIndex(index);
-          requestAtractivosInit(
+          await requestAtractivosInit(
             categorias_atractivos_2024[index === -1 ? 0 : index].tid
           );
-          categoriesListRef.current?.scrollToIndex({ index, animated: true }); // Scroll to the active category
         } else {
-          requestAtractivosInit(categorias_atractivos_2024[0].tid);
+          await requestAtractivosInit(categorias_atractivos_2024[0].tid);
         }
-        setQueriesCompleted(true);
+        setTimeout(() => {
+          setActiveIndex(index);
+          categoriesListRef.current?.scrollToIndex({ index, animated: true });
+          setQueriesCompleted(true); // Finalmente, coloca queriesCompleted en true al completar las consultas
+        }, 200);
       })
       .catch((error) => console.error(error));
-  }, [filterID, dispatch, params.filterID, actualLanguage]);
+  }, [filterID, dispatch, actualLanguage]);
 
   const scrollToTop = () => {
     if (flatListRef.current) {
@@ -127,94 +135,88 @@ export default function AtractivosList() {
           style={{ backgroundColor: "#F1F1F1" }}
           data={categories}
           ref={categoriesListRef} // Set ref to FlatList
-          renderItem={({ item, index }) => (
-            <Pressable
-              onPress={async () => {
-                setAtractivos([]);
-                setQueriesCompleted(false);
-                setActiveIndex(index);
-                scrollToTop();
-                const atractivos = await fetchBogotaDrplV2(
-                  `/atractivos/all/${item.tid}`,
-                  actualLanguage
-                );
-                const filterAtractivos = atractivos.map((atractivo) => ({
-                  title: atractivo.title,
-                  nid: atractivo.nid,
-                  field_cover_image: atractivo.field_cover_image,
-                }));
-                setAtractivos(filterAtractivos);
-                setQueriesCompleted(true);
-              }}
-              style={{
-                borderRadius: 18,
-                backgroundColor:
-                  activeIndex == index ? Colors.orange : "transparent",
-                marginLeft: 20,
-                alignItems: "center",
-                justifyContent: "center",
-                padding: 10,
-                height: 40,
-              }}
-            >
-              <Text
-                style={{
-                  fontSize: 14,
-                  lineHeight: 14,
-                  color: activeIndex == index ? "#FFF" : Colors.orange,
-                  fontFamily: "MuseoSans_500",
-                  textAlignVertical: "center",
-                }}
-              >
-                {item.name}
-              </Text>
-            </Pressable>
-          )}
-        />
-        <FlatList
-          ref={flatListRef}
-          ListEmptyComponent={() => {
-            return queriesCompleted ? (
-              <Text
-                style={{
-                  fontSize: 18,
-                  maxWidth: 280,
-                  color: Colors.orange,
-                  fontFamily: "MuseoSans_500",
-                }}
-              >
-                {wordsLanguage[actualLanguage][80]}
-              </Text>
-            ) : (
-              <PreloaderComponent />
-            );
+          renderItem={({ item, index }) => {
+            if (item.show == 1) {
+              return (
+                <Pressable
+                  onPress={async () => {
+                    setAtractivos([]);
+                    setQueriesCompleted(false);
+                    setActiveIndex(index);
+                    scrollToTop();
+                    const atractivos = await fetchBogotaDrplV2(
+                      `/atractivos/all/${item.tid}`,
+                      actualLanguage
+                    );
+                    const filterAtractivos = atractivos.map((atractivo) => ({
+                      title: atractivo.title,
+                      nid: atractivo.nid,
+                      field_cover_image: atractivo.field_cover_image,
+                    }));
+                    setAtractivos(filterAtractivos);
+                    setQueriesCompleted(true);
+                  }}
+                  style={{
+                    borderRadius: 18,
+                    backgroundColor:
+                      activeIndex == index ? Colors.orange : "transparent",
+                    marginLeft: 20,
+                    alignItems: "center",
+                    justifyContent: "center",
+                    padding: 10,
+                    height: 40,
+                  }}
+                >
+                  <Text
+                    style={{
+                      fontSize: 14,
+                      lineHeight: 14,
+                      color: activeIndex == index ? "#FFF" : Colors.orange,
+                      fontFamily: "MuseoSans_500",
+                      textAlignVertical: "center",
+                    }}
+                  >
+                    {item.name}
+                  </Text>
+                </Pressable>
+              );
+            }
           }}
-          horizontal
-          contentContainerStyle={{ padding: 20 }}
-          ItemSeparatorComponent={<View style={{ marginHorizontal: 4 }} />}
-          data={atractivos}
-          style={{ height: windowHeight - 290 }}
-          snapToStart
-          snapToAlignment="start"
-          keyExtractor={(item) => item.nid}
-          renderItem={({ item }) => (
-            <CardAtractivoBig
-              atractivo
-              onPress={() =>
-                router.push({
-                  pathname: `(tabs)/atractivos/${item.nid}`,
-                  params: { filterID },
-                })
-              }
-              title={item.title}
-              image={
-                item.field_cover_image != ""
-                  ? `https://bogotadc.travel${item.field_cover_image}`
-                  : "https://bogotadc.travel/img/noimg.png"
-              }
-            />
-          )}
         />
+        {queriesCompleted ? (
+          <FlatList
+            ref={flatListRef}
+            horizontal
+            contentContainerStyle={{ padding: 20 }}
+            ItemSeparatorComponent={<View style={{ marginHorizontal: 4 }} />}
+            data={atractivos}
+            style={{ height: windowHeight - 290 }}
+            snapToStart
+            snapToAlignment="start"
+            keyExtractor={(item) => item.nid}
+            renderItem={({ item }) => (
+              <CardAtractivoBig
+                atractivo
+                onPress={() =>
+                  router.push({
+                    pathname: `(tabs)/atractivos/${item.nid}`,
+                    params: { filterID },
+                  })
+                }
+                title={item.title}
+                image={
+                  item.field_cover_image != ""
+                    ? `https://bogotadc.travel${item.field_cover_image}`
+                    : "https://bogotadc.travel/img/noimg.png"
+                }
+              />
+            )}
+          />
+        ) : (
+          <View style={{ height: windowHeight - 290 }}>
+            <PreloaderComponent />
+          </View>
+        )}
       </View>
     </>
   );
