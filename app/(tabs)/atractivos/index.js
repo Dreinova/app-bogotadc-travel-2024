@@ -40,7 +40,7 @@ export default function AtractivosList() {
   }, [params.filterID]);
 
   React.useEffect(() => {
-    let index;
+    let index = 0;
     // Coloca aquí queriesCompleted en false para que el PreloaderComponent se muestre al cambiar el param
     setQueriesCompleted(false);
 
