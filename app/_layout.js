@@ -58,7 +58,9 @@ export default function RootLayout() {
     return (
       <ImageBackground
         onLayout={onLayoutRootView}
-        source={{uri:`https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`}}
+        source={{
+          uri: `https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`,
+        }}
         style={{
           flex: 1,
           alignItems: "center",
@@ -98,10 +100,8 @@ function RootLayoutNav() {
         <Stack
           screenOptions={{ headerShown: false }}
           initialRouteName="(tabs)"
-        >
+        ></Stack>
 
-        </Stack>
-        
         {Platform.OS === "ios" && (
           <StatusBar
             barStyle="dark-content"

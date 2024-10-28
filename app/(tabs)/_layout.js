@@ -1,7 +1,7 @@
 import React, { useEffect, useRef } from "react";
 import { Animated, TouchableOpacity, View, Text } from "react-native";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
-import { Tabs } from "expo-router";
+import { Tabs, useLocalSearchParams } from "expo-router";
 import { Header } from "../../src/components";
 import IconSvg from "../../src/components/IconSvg";
 import { windowWidth } from "../../src/constants/ScreenWidth";
@@ -131,11 +131,14 @@ function MyTabBar({ state, descriptors, navigation }) {
 export default function TabLayout() {
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
+
   return (
     <Tabs
       sceneContainerStyle={{ backgroundColor: "#FFF" }}
       screenOptions={{
-        header: () => <Header />,
+        header: ({ navigation, route, options }) => (
+          <Header navigation={navigation} route={route} options={options} />
+        ),
       }}
       tabBar={(props) => <MyTabBar {...props} />}
     >

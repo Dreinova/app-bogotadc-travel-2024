@@ -31,7 +31,7 @@ import AsyncStorage from "@react-native-async-storage/async-storage";
 import { Colors } from "../constants";
 import { fetchBogotaDrplV2 } from "../api/imperdibles";
 
-const Header = (props) => {
+const Header = ({ navigation, route, options }) => {
   const ActualUser = useSelector(selectActualUser);
 
   const wordsLanguage = useSelector(selectWordsLang);
@@ -625,7 +625,14 @@ const Header = (props) => {
     pathname === "/blog"
       ? "#354999"
       : "#F1F1F1";
-  const { zone, zoneName, atractivoId, id, filterID } = useLocalSearchParams();
+
+  let {
+    zone = null,
+    zoneName = null,
+    atractivoId = null,
+    id = null,
+    filterID = null,
+  } = route.params || {};
   const [candelariaActive, setCandelariaActive] = React.useState(false);
   const [candelariaButtonActive, setCandelariaButtonActive] =
     React.useState(false);
@@ -636,6 +643,7 @@ const Header = (props) => {
       })
       .catch((error) => console.error(error));
   }, [actualLanguage]);
+
   return (
     <View style={[styles.container, { backgroundColor }]}>
       {menuModal()}

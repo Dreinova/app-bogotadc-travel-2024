@@ -275,7 +275,7 @@ const EventsList = () => {
     }
     fetchData();
     getFilters();
-  }, [dispatch]);
+  }, [zone, zoneName, atractivoId, filterID]);
   // Este useEffect se ejecutará cada vez que restaurantsData cambie
   React.useEffect(() => {
     if (restaurantsData.length > 0) {
@@ -320,9 +320,10 @@ const EventsList = () => {
           style={{
             fontFamily: "MuseoSans_500",
             fontSize: 25,
-            lineHeight: 22,
+            lineHeight: 25,
             paddingVertical: 20,
             color: "#354999",
+            width: "80%",
           }}
         >
           {zoneName}

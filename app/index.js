@@ -17,10 +17,11 @@ import IconSvg from "../src/components/IconSvg";
 
 const logoWhite = require("../assets/images/logo_blue.png");
 const LoadingScreen = () => {
+  const [time, setTime] = useState(new Date().getTime());
   return (
     <ImageBackground
       source={{
-        uri: `https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`,
+        uri: `https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png?v=${time}`,
       }}
       style={styles.background}
     ></ImageBackground>

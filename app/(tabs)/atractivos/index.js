@@ -40,7 +40,6 @@ export default function AtractivosList() {
   }, [params.filterID]);
 
   React.useEffect(() => {
-    let index = 0;
     // Coloca aquí queriesCompleted en false para que el PreloaderComponent se muestre al cambiar el param
     setQueriesCompleted(false);
 
@@ -132,7 +131,9 @@ export default function AtractivosList() {
           showsHorizontalScrollIndicator={false}
           contentContainerStyle={{ paddingVertical: 10 }}
           horizontal
-          style={{ backgroundColor: "#F1F1F1" }}
+          style={{
+            backgroundColor: queriesCompleted ? "#F1F1F1" : "transparent",
+          }}
           data={categories}
           ref={categoriesListRef} // Set ref to FlatList
           renderItem={({ item, index }) => {
@@ -165,6 +166,7 @@ export default function AtractivosList() {
                     justifyContent: "center",
                     padding: 10,
                     height: 40,
+                    opacity: queriesCompleted ? 1 : 0,
                   }}
                 >
                   <Text
@@ -198,10 +200,9 @@ export default function AtractivosList() {
               <CardAtractivoBig
                 atractivo
                 onPress={() =>
-                  router.push({
-                    pathname: `(tabs)/atractivos/${item.nid}`,
-                    params: { filterID },
-                  })
+                  router.push(
+                    `(tabs)/atractivos/${item.nid}?filterID=${filterID}`
+                  )
                 }
                 title={item.title}
                 image={

@@ -44,18 +44,17 @@ const CustomModal = ({
   filtrarPlanes,
   closeModal,
   cantidadPersonas,
+  planesData,
   setCantidadPersonas,
   test_zona,
   setTest_zona,
   zonas_gastronomicas,
   setZonas_gastronomicas,
-  setRangos_de_precio,
   limpiarFiltros,
 }) => {
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
   const filtersData = useSelector(selectPlanesFilterData);
-  const [precioSelected, setPrecioSelected] = useState(35000);
   const getTitleByIndex = (index) => {
     switch (index) {
       case 0:
@@ -93,6 +92,60 @@ const CustomModal = ({
       tid: "all",
     },
   ];
+  const getAvailableCategoryIds = (planesData) => {
+    const availableCategoryIds = new Set();
+
+    planesData.forEach((plan) => {
+      if (plan.field_nueva_categorizacion_1) {
+        const categories = plan.field_nueva_categorizacion_1
+          .split(",")
+          .map((cat) => cat.trim());
+        categories.forEach((categoryId) =>
+          availableCategoryIds.add(categoryId)
+        );
+      }
+    });
+    return Array.from(availableCategoryIds);
+  };
+  const getAvailableZonasIds = (planesData) => {
+    const availableZonasIds = new Set();
+
+    planesData.forEach((plan) => {
+      if (plan.field_pb_oferta_zona) {
+        const categories = plan.field_pb_oferta_zona
+          .split(",")
+          .map((cat) => cat.trim());
+        categories.forEach((zoneId) => availableZonasIds.add(zoneId));
+      }
+    });
+    return Array.from(availableZonasIds);
+  };
+  const getAvailablePersons = (planesData) => {
+    const availablePersons = new Set();
+
+    planesData.forEach((plan) => {
+      const maxPeople = parseInt(plan.field_maxpeople, 10);
+
+      if (maxPeople) {
+        // Validar contra las opciones disponibles
+        if (maxPeople == 1) availablePersons.add(1); // Incluye la opción de 1 persona
+        if (maxPeople == 2) availablePersons.add(2); // Incluye la opción de 2 personas
+        if (maxPeople == 3) availablePersons.add(3); // Incluye la opción de 3 personas
+        if (maxPeople == 4) availablePersons.add(4); // Incluye la opción de 4 personas
+
+        // Si el número es mayor a 4, incluye la opción de "Grupos" (tid: 'all')
+        if (maxPeople > 4) availablePersons.add("all");
+      }
+    });
+
+    return Array.from(availablePersons);
+  };
+
+  // Obtener las opciones disponibles para el número de personas
+  const availablePersons = getAvailablePersons(planesData);
+  const availableCategoryIds = getAvailableCategoryIds(planesData);
+  const availableZonasIds = getAvailableZonasIds(planesData);
+
   return (
     <Modal
       visible={visible}
@@ -124,8 +177,16 @@ const CustomModal = ({
                 flexWrap: "wrap",
               }}
             >
-              {persons.map((item, index) => {
-                const isChecked = cantidadPersonas.includes(item.tid);
+              {persons.map((item) => {
+                // Verificar si el filtro está en las opciones disponibles
+                if (!availablePersons.includes(item.tid)) {
+                  return null;
+                }
+
+                const isChecked =
+                  Array.isArray(cantidadPersonas) &&
+                  cantidadPersonas.includes(item.tid);
+
                 return (
                   <View style={{ width: "50%" }} key={item.tid}>
                     <CustomCheckbox
@@ -152,26 +213,28 @@ const CustomModal = ({
               }}
             >
               {filtersData[1].map((item, index) => {
+                if (!availableCategoryIds.includes(item.tid.toString())) {
+                  return null;
+                }
+
                 const isChecked =
                   Array.isArray(test_zona) && test_zona.includes(item.tid);
 
-                if (item.field_categor == 1) {
-                  return (
-                    <View style={{ width: "50%" }} key={item.tid}>
-                      <CustomCheckbox
-                        checked={isChecked}
-                        label={item.name}
-                        onPress={() => {
-                          setTest_zona((prevState) => {
-                            return isChecked
-                              ? prevState.filter((id) => id !== item.tid) // Desmarca el checkbox
-                              : [...prevState, item.tid];
-                          });
-                        }}
-                      />
-                    </View>
-                  );
-                }
+                return (
+                  <View style={{ width: "50%" }} key={item.tid}>
+                    <CustomCheckbox
+                      checked={isChecked}
+                      label={item.name}
+                      onPress={() => {
+                        setTest_zona((prevState) => {
+                          return isChecked
+                            ? prevState.filter((id) => id !== item.tid) // Desmarca el checkbox
+                            : [...prevState, item.tid];
+                        });
+                      }}
+                    />
+                  </View>
+                );
               })}
             </View>
             <Text style={stylesModal.titleFilter}>{getTitleByIndex(2)}</Text>
@@ -183,9 +246,14 @@ const CustomModal = ({
               }}
             >
               {filtersData[0].map((item, index) => {
+                if (!availableZonasIds.includes(item.tid.toString())) {
+                  return null;
+                }
+
                 const isChecked =
                   Array.isArray(zonas_gastronomicas) &&
                   zonas_gastronomicas.includes(item.tid);
+
                 return (
                   <View style={{ width: "50%" }} key={item.tid}>
                     <CustomCheckbox
@@ -203,56 +271,6 @@ const CustomModal = ({
                 );
               })}
             </View>
-            {/* <Text style={stylesModal.titleFilter}>{getTitleByIndex(3)}</Text>
-            <View
-              style={{
-                flex: 1,
-                flexDirection: "row",
-                flexWrap: "wrap",
-              }}
-            >
-              <Slider
-                style={{ marginTop: 10, width: "100%" }}
-                minimumValue={35000}
-                maximumValue={2600000}
-                value={35000}
-                step={15000}
-                onSlidingComplete={(v) => {
-                  setRangos_de_precio(v);
-                }}
-                onValueChange={(v) => {
-                  setPrecioSelected(v);
-                }}
-                maximumTrackTintColor="#ddd"
-                minimumTrackTintColor="#354999"
-                thumbTintColor="#354999"
-              />
-              <View
-                style={{
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                  flexDirection: "row",
-                  width: "100%",
-                  marginTop: 10,
-                }}
-              >
-                <Text style={{ fontSize: 14, fontFamily: "MuseoSans_700" }}>
-                  $35.000{" "}
-                </Text>
-                <Text
-                  style={{
-                    fontSize: 14,
-                    fontFamily: "MuseoSans_500",
-                    color: "#f6931f",
-                  }}
-                >
-                  ${number_format(precioSelected, 0, ".", ".")}
-                </Text>
-                <Text style={{ fontSize: 14, fontFamily: "MuseoSans_700" }}>
-                  $2.600.000{" "}
-                </Text>
-              </View>
-            </View> */}
           </View>
           <View style={{ marginVertical: 10 }}>
             <Button
@@ -291,19 +309,130 @@ const stylesModal = StyleSheet.create({
 });
 
 const EventsList = () => {
+  // NUEVO
   const dispatch = useDispatch();
-
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
   const planesData = useSelector(selectPlanesData);
-  const [queriesCompleted, setQueriesCompleted] = React.useState(false);
-  const [filterModal, setFilterModal] = React.useState(false);
+  const [queriesCompleted, setQueriesCompleted] = useState(false);
+  const [filterModal, setFilterModal] = useState(false);
 
   const [cantidadPersonas, setCantidadPersonas] = useState([]);
   const [test_zona, setTest_zona] = useState([]);
   const [zonas_gastronomicas, setZonas_gastronomicas] = useState([]);
   const [rangos_de_precio, setRangos_de_precio] = useState(0);
   const [searchValue, setSearchValue] = useState("");
+  const [categorias, setCategorias] = useState([]);
+  const [zonas, setZonas] = useState([]);
+  const [availablePersons, setAvailablePersons] = useState([]);
+  const [restaurantArrayData, setRestaurantArrayData] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      await dispatch(fetchAllPLanes());
+      setQueriesCompleted(true);
+    }
+    async function getFilters() {
+      dispatch(
+        fetchAllFilters(["test_zona", "categorias_atractivos_2024"], "planes")
+      );
+    }
+    getFilters();
+    fetchData();
+  }, [dispatch, actualLanguage]);
+
+  // Funciones para obtener filtros
+  const getAvailableCategoryIds = (planes) => {
+    const categories = new Set();
+    planes.forEach((plan) => {
+      if (plan.field_nueva_categorizacion_1) {
+        plan.field_nueva_categorizacion_1
+          .split(",")
+          .map((cat) => cat.trim())
+          .forEach((categoryId) => categories.add(categoryId));
+      }
+    });
+    return Array.from(categories);
+  };
+
+  const getAvailableZonasIds = (planes) => {
+    const zonas = new Set();
+    planes.forEach((plan) => {
+      if (plan.field_pb_oferta_zona) {
+        plan.field_pb_oferta_zona
+          .split(",")
+          .map((zona) => zona.trim())
+          .forEach((zonaId) => zonas.add(zonaId));
+      }
+    });
+    return Array.from(zonas);
+  };
+
+  const getAvailablePersons = (planes) => {
+    const persons = new Set();
+    planes.forEach((plan) => {
+      const maxPeople = parseInt(plan.field_maxpeople, 10);
+      if (maxPeople) {
+        if (maxPeople >= 1) persons.add(1);
+        if (maxPeople >= 2) persons.add(2);
+        if (maxPeople >= 3) persons.add(3);
+        if (maxPeople >= 4) persons.add(4);
+        if (maxPeople > 4) persons.add("all");
+      }
+    });
+    return Array.from(persons);
+  };
+
+  // Función para actualizar los filtros
+  const updateFilters = (planes) => {
+    setCategorias(getAvailableCategoryIds(planes));
+    setZonas(getAvailableZonasIds(planes));
+    setAvailablePersons(getAvailablePersons(planes));
+  };
+
+  useEffect(() => {
+    setRestaurantArrayData(planesData);
+    updateFilters(planesData);
+  }, [planesData, actualLanguage]);
+
+  const filtrarPlanes = async (data) => {
+    setQueriesCompleted(false);
+    const { cantidadPersonas, test_zona, zonas_gastronomicas } = data || {};
+    const categoriasIsEmpty = test_zona.length === 0;
+    const zonasIsEmpty = zonas_gastronomicas.length === 0;
+    const cantidadIsEmpty = cantidadPersonas.length === 0;
+
+    const url = `/all_ofertas/all/${
+      zonasIsEmpty ? "all" : zonas_gastronomicas.join("+")
+    }/${cantidadIsEmpty ? "all" : cantidadPersonas.join("+")}/${
+      categoriasIsEmpty ? "all" : test_zona.join("+")
+    }/${searchValue === "" ? "all" : searchValue}`;
+
+    const newData = await fetchBogotaDrplV2(url, actualLanguage);
+    const uniqueData = [
+      ...new Map(newData.map((item) => [item.nid, item])).values(),
+    ];
+
+    setRestaurantArrayData(uniqueData);
+    updateFilters(uniqueData); // Actualizar filtros con los nuevos datos filtrados
+    setQueriesCompleted(true);
+    closeModal();
+  };
+
+  const openModal = () => setFilterModal(true);
+  const closeModal = () => setFilterModal(false);
+
+  const limpiarFiltros = () => {
+    setCantidadPersonas([]);
+    setTest_zona([]);
+    setZonas_gastronomicas([]);
+    setRangos_de_precio(0);
+    setRestaurantArrayData(planesData);
+    updateFilters(planesData); // Restablece los filtros
+    setSearchValue("");
+    closeModal();
+  };
+  // ANTIGUO
 
   React.useEffect(() => {
     async function fetchData() {
@@ -323,56 +452,6 @@ const EventsList = () => {
     setRestaurantArrayData(planesData);
   }, [planesData, actualLanguage]);
 
-  const openModal = () => {
-    setFilterModal(true);
-  };
-
-  const closeModal = () => {
-    setFilterModal(false);
-  };
-  const [restaurantArrayData, setRestaurantArrayData] = useState([]);
-
-  const limpiarFiltros = () => {
-    setCantidadPersonas([]);
-    setTest_zona([]);
-    setZonas_gastronomicas([]);
-    setRangos_de_precio(0);
-    setRestaurantArrayData(planesData);
-    setSearchValue("");
-    closeModal();
-  };
-
-  const filtrarPlanes = async (data) => {
-    setQueriesCompleted(false);
-    // Desestructuración de las propiedades de data o asignación de valores predeterminados
-    const { cantidadPersonas, test_zona, zonas_gastronomicas } = data || {};
-
-    // Verificar si las propiedades están vacías
-    const serviciosDeHotelesIsEmpty = test_zona.length === 0;
-    const rangosDePreciosHotelesIsEmpty = zonas_gastronomicas.length === 0;
-
-    let url = `/all_ofertas/all/${
-      rangosDePreciosHotelesIsEmpty ? "all" : zonas_gastronomicas.join("+")
-    }/${cantidadPersonas == "" ? "all" : cantidadPersonas}/${
-      serviciosDeHotelesIsEmpty ? "all" : test_zona.join("+")
-    }/${searchValue == "" ? "all" : searchValue}`;
-    const newData = await fetchBogotaDrplV2(url, actualLanguage);
-    const uniqueNids = new Set();
-    const uniqueData = [];
-    for (const item of newData) {
-      if (!uniqueNids.has(item.nid)) {
-        uniqueNids.add(item.nid);
-        uniqueData.push(item);
-      }
-    }
-    // Actualizar el arreglo de hoteles con los resultados filtrados
-    setRestaurantArrayData(uniqueData);
-
-    // Cerrar el modal
-    closeModal();
-    setQueriesCompleted(true);
-  };
-
   if (!queriesCompleted) {
     return <PreloaderComponent planBogota />;
   }
@@ -386,17 +465,20 @@ const EventsList = () => {
           <CustomModal
             visible={filterModal}
             closeModal={closeModal}
-            queriesCompleted={queriesCompleted}
             filtrarPlanes={filtrarPlanes}
             limpiarFiltros={limpiarFiltros}
             cantidadPersonas={cantidadPersonas}
             setCantidadPersonas={setCantidadPersonas}
             test_zona={test_zona}
             setTest_zona={setTest_zona}
+            categorias={categorias}
+            zonas={zonas}
+            planesData={restaurantArrayData}
             zonas_gastronomicas={zonas_gastronomicas}
             setZonas_gastronomicas={setZonas_gastronomicas}
             rangos_de_precio={rangos_de_precio}
             setRangos_de_precio={setRangos_de_precio}
+            availablePersons={availablePersons}
           />
           <View
             style={{

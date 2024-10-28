@@ -42,7 +42,6 @@ export default function Page() {
   const [linkVideo, setLinkVideo] = React.useState([]);
   const [candelariaActive, setCandelariaActive] = React.useState(false);
 
-
   // Variable de estado para controlar si las consultas han finalizado
   const [queriesCompleted, setQueriesCompleted] = React.useState(false);
   React.useEffect(() => {
@@ -167,7 +166,6 @@ export default function Page() {
         minHeight: Dimensions.get("window").height,
       }}
     >
-    
       <View style={{ marginVertical: 15, paddingHorizontal: 20 }}>
         <Text
           style={{
@@ -378,7 +376,10 @@ export default function Page() {
           startInLoadingState
           scalesPageToFit
           javaScriptEnabled
-          style={{ height:Dimensions.get('screen').width / 16 * 9, width:Dimensions.get('screen').width}}
+          style={{
+            height: (Dimensions.get("screen").width / 16) * 9,
+            width: Dimensions.get("screen").width,
+          }}
         />
       )}
     </ScrollView>
