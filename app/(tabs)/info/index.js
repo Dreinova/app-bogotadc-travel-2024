@@ -28,6 +28,7 @@ import {
   selectActualLanguage,
   selectWordsLang,
 } from "../../../src/store/selectors";
+import RenderHTML, { defaultSystemFonts } from "react-native-render-html";
 
 const info = (props) => {
   const [faqs, setFaqs] = React.useState([]);
@@ -50,6 +51,15 @@ const info = (props) => {
     nid: "",
     field_mini_img: "",
   });
+
+  const customOrder = ["1", "250", "2", "3", "251"];
+
+  // Función de comparación para ordenar
+  function cmp(a, b) {
+    const posA = customOrder.indexOf(a.tid);
+    const posB = customOrder.indexOf(b.tid);
+    return posA - posB;
+  }
 
   React.useEffect(() => {
     Promise.all([
@@ -99,6 +109,17 @@ const info = (props) => {
   if (!queriesCompleted) {
     return <PreloaderComponent />;
   }
+
+  const tagsStyles = {
+    p: {
+      textAlign: "justify",
+      color: "#333",
+      fontFamily: "MuseoSans_500",
+      fontSize: 16,
+    },
+  };
+  const systemFonts = [...defaultSystemFonts, "MuseoSans_700", "MuseoSans_900"];
+
   return (
     <ScrollView
       style={{
@@ -166,18 +187,15 @@ const info = (props) => {
               </Text>
             </ImageBackground>
             <ScrollView contentContainerStyle={{ padding: 20 }}>
-              {infoSelected.body && (
-                <Text
-                  style={{
-                    color: "#333",
-                    fontFamily: "MuseoSans_500",
-                    fontSize: 16,
-                    marginBottom: 30,
-                  }}
-                >
-                  {infoSelected.body}
-                </Text>
-              )}
+              <RenderHTML
+                contentWidth={windowWidth}
+                source={{
+                  html: infoSelected.body,
+                }}
+                systemFonts={systemFonts}
+                tagsStyles={tagsStyles}
+              />
+
               {infoSelected.field_address && (
                 <Text
                   style={{
@@ -233,11 +251,11 @@ const info = (props) => {
             textAlign: "center",
           }}
         >
-          {wordsLanguage[actualLanguage][44]}
+          {wordsLanguage[actualLanguage][7]}
         </Text>
       </View>
       <View style={{ paddingHorizontal: 20 }}>
-        {infoUtil.map((item) => (
+        {infoUtil.sort(cmp).map((item) => (
           <View key={item.nid} style={{ marginBottom: 30 }}>
             <Text
               style={{
@@ -254,8 +272,9 @@ const info = (props) => {
               horizontal
               data={item.elements}
               ItemSeparatorComponent={() => (
-                <View style={{ marginHorizontal: 8 }} />
+                <View style={{ marginHorizontal: 3 }} />
               )}
+              fadingEdgeLength={25}
               keyExtractor={(element) => element.nid} // Asumiendo que cada elemento tiene una propiedad 'id'
               renderItem={({ item: element }) => (
                 <CardInfo
@@ -269,122 +288,6 @@ const info = (props) => {
             />
           </View>
         ))}
-        <Text
-          style={{
-            color: "#333",
-            fontFamily: "MuseoSans_500",
-            fontSize: 30,
-            marginBottom: 15,
-            textAlign: "center",
-          }}
-        >
-          Recursos lengua de señas
-        </Text>
-        <FlatList
-          style={{
-            height: windowWidth / 2,
-            marginBottom: 30,
-          }}
-          contentContainerStyle={{
-            paddingHorizontal: 20,
-          }}
-          horizontal
-          data={signlang}
-          ItemSeparatorComponent={() => (
-            <View style={{ marginHorizontal: 8 }} />
-          )}
-          fadingEdgeLength={10}
-          keyExtractor={(element) => element.nid} // Asumiendo que cada elemento tiene una propiedad 'id'
-          renderItem={({ item }) => {
-            return (
-              <Pressable
-                onPress={() => {
-                  setVideoSource(
-                    `https://bogotadc.travel${item.field_langfile}`
-                  );
-                  setModalVisible(true);
-                }}
-              >
-                <ImageBackground
-                  style={{
-                    width: windowWidth - 120,
-                    height: windowWidth / 2 - 30,
-                    overflow: "hidden",
-                    alignItems: "center",
-                    justifyContent: "flex-end",
-                    padding: 5,
-                  }}
-                  source={{
-                    uri: `https://bogotadc.travel${item.field_imagen}`,
-                  }}
-                >
-                  <Text
-                    style={{
-                      color: "#FFF",
-                      fontFamily: "MuseoSans_500",
-                      fontSize: 13,
-                      textAlign: "center",
-                      textShadowColor: "rgba(0,0,0,.5)",
-                      textShadowOffset: { width: 2, height: 2 },
-                      textShadowRadius: 5,
-                    }}
-                  >
-                    {item.title}
-                  </Text>
-                </ImageBackground>
-              </Pressable>
-            );
-          }}
-        />
-        <Text
-          style={{
-            color: "#333",
-            fontFamily: "MuseoSans_500",
-            fontSize: 30,
-            marginBottom: 15,
-            textAlign: "center",
-          }}
-        >
-          Preguntas Frecuentes
-        </Text>
-        {faqs.map((item) => {
-          const colorTitle = (type) => {
-            switch (type) {
-              case "4":
-                return "#354999";
-              case "5":
-                return "#354999";
-              case "6":
-                return "#354999";
-            }
-          };
-
-          return (
-            <View>
-              <Text
-                style={{
-                  fontSize: 30,
-                  color: colorTitle(item.tid),
-                  textAlign: "center",
-                  paddingVertical: 15,
-                  fontFamily: "MuseoSans_500",
-                }}
-              >
-                {item.title}
-              </Text>
-              {item.elements.map((element) => (
-                <Accordion
-                  colorTitle={colorTitle(item.tid)}
-                  small
-                  title={element.title}
-                  key={item.tid}
-                >
-                  <Text>{element.body_1}</Text>
-                </Accordion>
-              ))}
-            </View>
-          );
-        })}
       </View>
       <VideoPlayer
         videoSource={videoSource}

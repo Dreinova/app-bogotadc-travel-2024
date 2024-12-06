@@ -21,7 +21,7 @@ const LoadingScreen = () => {
   return (
     <ImageBackground
       source={{
-        uri: `https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png?v=${time}`,
+        uri: `https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`,
       }}
       style={styles.background}
     ></ImageBackground>

@@ -18,8 +18,15 @@ const setMidnight = (dateString) => {
   date.setHours(0, 0, 0, 0);
   return date;
 };
-const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
-
+const CardEvento = ({
+  image,
+  title,
+  onPress,
+  start,
+  end,
+  isHorizontal,
+  isBlog,
+}) => {
   const wordsLanguage = useSelector(selectWordsLang);
   const actualLanguage = useSelector(selectActualLanguage);
   const [imagesLoaded, setImagesLoaded] = useState(false);
@@ -30,13 +37,15 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
 
   const dateEnd = useMemo(() => {
     let endDate;
-    if (end.length === 10) {
-      endDate = setMidnight(end);
-      endDate.setDate(endDate.getDate() + 1);
-    } else {
-      endDate = setMidnight(end);
+    if (end) {
+      if (end.length === 10) {
+        endDate = setMidnight(end);
+        endDate.setDate(endDate.getDate() + 1);
+      } else {
+        endDate = setMidnight(end);
+      }
+      return endDate;
     }
-    return endDate;
   }, [end]);
 
   const options = {
@@ -44,14 +53,17 @@ const CardEvento = ({ image, title, onPress, start, end, isHorizontal }) => {
     day: "numeric",
     year: "numeric",
   };
-  let dateFormattedStart =dateStart.toLocaleDateString(
+  let dateFormattedStart = dateStart.toLocaleDateString(
     actualLanguage == "es" ? "es-ES" : "en-US",
     options
   );
-let dateFormattedEnd = dateEnd.toLocaleDateString(
-    actualLanguage == "es" ? "es-ES" : "en-US",
-    options
-  );
+  let dateFormattedEnd = "";
+  if (end) {
+    dateFormattedEnd = dateEnd.toLocaleDateString(
+      actualLanguage == "es" ? "es-ES" : "en-US",
+      options
+    );
+  }
 
   const alText = actualLanguage === "es" ? "al" : "to";
   const hastaElText = actualLanguage === "es" ? "Hasta el" : "Until";
@@ -74,8 +86,16 @@ let dateFormattedEnd = dateEnd.toLocaleDateString(
       dateText = `${dateFormattedStart} ${alText} ${dateFormattedEnd}`;
     }
     setDateTextAll(dateText);
-  }, [end, dateStart, dateEnd, today, dateFormattedStart, dateFormattedEnd, alText, hastaElText]);
-
+  }, [
+    end,
+    dateStart,
+    dateEnd,
+    today,
+    dateFormattedStart,
+    dateFormattedEnd,
+    alText,
+    hastaElText,
+  ]);
 
   const handleImageLoad = () => {
     setImagesLoaded(true);
@@ -138,7 +158,6 @@ let dateFormattedEnd = dateEnd.toLocaleDateString(
               <View
                 style={{ flexDirection: "row", alignItems: "center", gap: 8 }}
               >
-             
                 <Text
                   style={{
                     color: Colors.white,
@@ -146,7 +165,7 @@ let dateFormattedEnd = dateEnd.toLocaleDateString(
                     fontSize: 16,
                   }}
                 >
-                  {dateTextAll}
+                  {isBlog ? start : dateTextAll}
                 </Text>
               </View>
             </View>

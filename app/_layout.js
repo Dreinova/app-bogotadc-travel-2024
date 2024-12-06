@@ -1,18 +1,14 @@
 import * as Location from "expo-location";
-import * as SplashScreen from "expo-splash-screen";
 import * as Updates from "expo-updates";
 import FontAwesome from "@expo/vector-icons/FontAwesome";
 import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
-import { StatusBar } from "expo-status-bar";
 import { ImageBackground, Platform, SafeAreaView, Text } from "react-native";
 import { useFonts } from "expo-font";
 import { Stack } from "expo-router";
 import { Provider, useDispatch } from "react-redux";
 import { store } from "../src/store";
 import { setLocation } from "../src/store/actions";
-
-SplashScreen.preventAutoHideAsync();
 
 export default function RootLayout() {
   async function onFetchUpdateAsync() {
@@ -38,26 +34,13 @@ export default function RootLayout() {
     ...FontAwesome.font,
   });
 
-  const onLayoutRootView = React.useCallback(async () => {
-    if (fontsLoaded) {
-      await SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
   React.useEffect(() => {
     onFetchUpdateAsync();
   }, []);
 
-  React.useEffect(() => {
-    if (fontsLoaded) {
-      SplashScreen.hideAsync();
-    }
-  }, [fontsLoaded]);
-
   if (!fontsLoaded) {
     return (
       <ImageBackground
-        onLayout={onLayoutRootView}
         source={{
           uri: `https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png`,
         }}
@@ -89,7 +72,6 @@ function RootLayoutNav() {
         setErrorMsg("Permission to access location was denied");
         return;
       }
-
       let location = await Location.getCurrentPositionAsync({});
       dispatch(setLocation(location));
     })();
@@ -101,15 +83,6 @@ function RootLayoutNav() {
           screenOptions={{ headerShown: false }}
           initialRouteName="(tabs)"
         ></Stack>
-
-        {Platform.OS === "ios" && (
-          <StatusBar
-            barStyle="dark-content"
-            backgroundColor="transparent"
-            translucent
-          />
-        )}
-        {Platform.OS === "android" && <StatusBar hidden />}
       </SafeAreaView>
     </SafeAreaProvider>
   );

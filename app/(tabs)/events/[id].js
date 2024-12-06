@@ -83,7 +83,10 @@ const DateComponent = ({ evento }) => {
       />
       <Text
         style={{
-          color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
+          color: "#777",
+          fontFamily: "MuseoSans_500",
+          fontSize: 16,
+          lineHeight: 20,
         }}
       >
         {dateText}
@@ -118,7 +121,10 @@ const SingleEvent = () => {
 
   const tagsStyles = {
     p: {
-      color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
+      color: "#777",
+      fontFamily: "MuseoSans_500",
+      fontSize: 16,
+      lineHeight: 20,
     },
   };
 
@@ -175,7 +181,10 @@ const SingleEvent = () => {
           />
           <Text
             style={{
-              color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
+              color: "#777",
+              fontFamily: "MuseoSans_500",
+              fontSize: 16,
+              lineHeight: 20,
             }}
           >
             {events.field_place}

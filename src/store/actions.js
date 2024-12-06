@@ -98,7 +98,6 @@ export const fetchAllEvents =
       if (formattedStartDate !== "all" || formattedEndDate !== "all") {
         endpoint = `/eventslist/all/${zone}/${cat}/${agenda}`;
         eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage, {
-          langcode: actualLanguage,
           field_date_value: formattedStartDate,
           field_end_date_value: formattedEndDate,
         });
@@ -122,7 +121,9 @@ export const fetchAllEvents =
         });
       } else {
         endpoint = `/eventslist/all/${zone}/${cat}/${agenda}`;
-        eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage);
+        eventsResponse = await fetchBogotaDrplV2(endpoint, actualLanguage, {
+          langcode_1: actualLanguage,
+        });
         filteredEvents = eventsResponse;
       }
 

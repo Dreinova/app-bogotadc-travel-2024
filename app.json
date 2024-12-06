@@ -2,13 +2,13 @@
   "expo": {
     "name": "Visit Bogotá",
     "slug": "bogota_app",
-    "version": "3.3.32",
+    "version": "3.3.35",
     "orientation": "portrait",
     "scheme": "com.idt.bogota-app",
     "userInterfaceStyle": "automatic",
     "icon": "./assets/icon.png",
     "splash": {
-      "image": "https://bogotadc.travel/drpl/sites/default/files/2024-08/splash.png",
+      "image": "./assets/splash.png",
       "resizeMode": "contain",
       "backgroundColor": "#35498e"
     },
@@ -16,11 +16,11 @@
     "ios": {
       "supportsTablet": true,
       "bundleIdentifier": "com.servinf.idtturismo",
-      "buildNumber": "1.0.2"
+      "buildNumber": "1.0.1"
     },
     "android": {
       "package": "com.servinf.test.bogotadctravel",
-      "versionCode": 114,
+      "versionCode": 118,
       "permissions": [
         "android.permission.ACCESS_COARSE_LOCATION",
         "android.permission.ACCESS_FINE_LOCATION",
