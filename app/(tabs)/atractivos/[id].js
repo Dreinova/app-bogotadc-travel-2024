@@ -8,7 +8,9 @@ import {
   Pressable,
   Linking,
   ActivityIndicator,
+  Button,
 } from "react-native";
+import AntDesign from "@expo/vector-icons/AntDesign";
 import { Ionicons } from "@expo/vector-icons";
 import Swiper from "react-native-swiper";
 import * as WebBrowser from "expo-web-browser";
@@ -32,6 +34,7 @@ import {
 } from "../../../src/store/selectors";
 import { useSelector } from "react-redux";
 import IconSvg from "../../../src/components/IconSvg";
+import { Audio } from "expo-av";
 
 const SingleAtractivo = () => {
   const actualLanguage = useSelector(selectActualLanguage);
@@ -39,6 +42,8 @@ const SingleAtractivo = () => {
   const { id, filterID } = useLocalSearchParams();
 
   const [atractivo, setAtractivo] = React.useState(null);
+  const [sound, setSound] = React.useState(null);
+  const [isPlaying, setIsPlaying] = React.useState(false);
 
   const getSingleAtractivo = async () => {
     const data = await fetchBogotaDrplV2(
@@ -55,6 +60,38 @@ const SingleAtractivo = () => {
   if (!atractivo) {
     return <PreloaderComponent />;
   }
+  const handleAudioToggle = async () => {
+    if (!sound) {
+      // Cargar y reproducir el audio
+      try {
+        const { sound: newSound } = await Audio.Sound.createAsync({
+          uri: `https://files.visitbogota.co/${atractivo.field_audio_resena}`,
+        });
+        setSound(newSound);
+        await newSound.playAsync();
+        setIsPlaying(true);
+
+        // Configurar callback para liberar recursos cuando termine el audio
+        newSound.setOnPlaybackStatusUpdate((status) => {
+          if (status.didJustFinish) {
+            setIsPlaying(false);
+            newSound.unloadAsync();
+            setSound(null);
+          }
+        });
+      } catch (error) {
+        console.error("Error al cargar/reproducir el audio:", error);
+      }
+    } else if (isPlaying) {
+      // Pausar el audio
+      await sound.pauseAsync();
+      setIsPlaying(false);
+    } else {
+      // Reanudar el audio
+      await sound.playAsync();
+      setIsPlaying(true);
+    }
+  };
 
   const renderImages = () => {
     let alttexts = atractivo.field_galery_1.split(",");
@@ -115,6 +152,19 @@ const SingleAtractivo = () => {
           {renderImages()}
         </Swiper>
       )}
+      <View style={styles.container}>
+        <Pressable
+          onPress={handleAudioToggle}
+          style={{ flexDirection: "row", gap: 15, alignItems: "center" }}
+        >
+          {isPlaying ? (
+            <AntDesign name="pausecircleo" size={24} color="#354999" />
+          ) : (
+            <AntDesign name="playcircleo" size={24} color="#354999" />
+          )}
+          <Text style={styles.text}>Escuchar reseña en audio</Text>
+        </Pressable>
+      </View>
       <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
         <View style={{ paddingBottom: 15 }}>
           {atractivo.field_address && (
