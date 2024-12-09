@@ -207,8 +207,8 @@ export default function AtractivosList() {
                 title={item.title}
                 image={
                   item.field_cover_image != ""
-                    ? `https://bogotadc.travel${item.field_cover_image}`
-                    : "https://bogotadc.travel/img/noimg.png"
+                    ? `https://files.visitbogota.co${item.field_cover_image}`
+                    : "https://files.visitbogota.co/img/noimg.png"
                 }
               />
             )}

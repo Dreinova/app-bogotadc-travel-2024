@@ -163,7 +163,7 @@ const info = (props) => {
                 position: "relative",
               }}
               source={{
-                uri: `https://bogotadc.travel${infoSelected.field_image}`,
+                uri: `https://files.visitbogota.co${infoSelected.field_image}`,
               }}
             >
               <Pressable
@@ -211,7 +211,7 @@ const info = (props) => {
                 <Pressable
                   onPress={() =>
                     WebBrowser.openBrowserAsync(
-                      `https://bogotadc.travel${infoSelected.field_download_file}`
+                      `https://files.visitbogota.co${infoSelected.field_download_file}`
                     )
                   }
                 >

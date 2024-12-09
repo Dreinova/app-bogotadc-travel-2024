@@ -61,7 +61,6 @@ export default function Page() {
               marginBottom: 20,
               alignItems: "center",
               backgroundColor: "#F1F1F1",
-              
             }}
           >
             <View
@@ -136,7 +135,6 @@ export default function Page() {
             numColumns={2}
             style={{ marginBottom: 30 }}
             contentContainerStyle={{
-              
               overflow: "hidden",
             }}
             ItemSeparatorComponent={() => (
@@ -194,7 +192,7 @@ export default function Page() {
                         return "";
                     }
                   })()}
-                  image={`https://bogotadc.travel${
+                  image={`https://files.visitbogota.co${
                     item.field_imagen_listado_events ||
                     item.field_img_portal ||
                     item.field_cover_image ||

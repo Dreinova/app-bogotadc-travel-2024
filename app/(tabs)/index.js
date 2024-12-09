@@ -125,7 +125,9 @@ export default function Page() {
         >
           <ImageBackground
             key={index}
-            source={{ uri: `https://bogotadc.travel${item.field_thumbnail}` }}
+            source={{
+              uri: `https://files.visitbogota.co${item.field_thumbnail}`,
+            }}
             style={styles.imageBackground}
             loadingIndicatorSource={<ActivityIndicator />}
           >
@@ -228,8 +230,8 @@ export default function Page() {
                     title={item.name}
                     image={
                       item.field_cover_image != ""
-                        ? `https://bogotadc.travel${item.field_cover_image}`
-                        : "https://bogotadc.travel/img/noimg.png"
+                        ? `https://files.visitbogota.co${item.field_cover_image}`
+                        : "https://files.visitbogota.co/img/noimg.png"
                     }
                   />
                 );
@@ -245,7 +247,7 @@ export default function Page() {
                     image={
                       item.field_cover_image != ""
                         ? `${item.field_cover_image}`
-                        : "https://bogotadc.travel/img/noimg.png"
+                        : "https://files.visitbogota.co/img/noimg.png"
                     }
                   />
                 );
@@ -315,7 +317,7 @@ export default function Page() {
             return (
               <CardEvento
                 end={item.field_end_date}
-                image={`https://bogotadc.travel${item.field_cover_image}`}
+                image={`https://files.visitbogota.co${item.field_cover_image}`}
                 onPress={() => router.push(`(tabs)/events/${item.nid}`)}
                 start={item.field_date}
                 title={item.title}
@@ -386,7 +388,7 @@ export default function Page() {
               <CardEvento
                 isBlog={true}
                 end={item.field_end_date}
-                image={`https://bogotadc.travel${item.field_cover_image}`}
+                image={`https://files.visitbogota.co${item.field_cover_image}`}
                 onPress={() => router.push(`(tabs)/blog/${item.nid}`)}
                 start={item.field_date}
                 title={item.title}

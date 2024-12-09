@@ -78,7 +78,7 @@ const ModalReserva = (
       };
 
       const response = await fetch(
-        "https://bogotadc.travel/plan-bogota/s/restPost/",
+        "https://files.visitbogota.co/plan-bogota/s/restPost/",
         requestOptions
       );
 
@@ -606,11 +606,11 @@ const SinglePlan = () => {
       return (
         <ImageBackground
           key={index}
-          source={{ uri: `https://bogotadc.travel${item.trim()}` }}
+          source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
           style={styles.imageBackground}
         >
           <Image
-            source={{ uri: `https://bogotadc.travel${item.trim()}` }}
+            source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
             style={styles.image}
           />
         </ImageBackground>
@@ -643,7 +643,7 @@ const SinglePlan = () => {
           height: windowWidth - 120,
         }}
         source={{
-          uri: `https://bogotadc.travel${
+          uri: `https://files.visitbogota.co${
             plan.field_img ? plan.field_img : "/img/noimg.png"
           }`,
         }}

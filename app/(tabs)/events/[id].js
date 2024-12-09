@@ -136,7 +136,7 @@ const SingleEvent = () => {
           height: windowWidth - 120,
         }}
         source={{
-          uri: `https://bogotadc.travel${
+          uri: `https://files.visitbogota.co${
             events.field_cover_image
               ? events.field_cover_image
               : "/img/noimg.png"

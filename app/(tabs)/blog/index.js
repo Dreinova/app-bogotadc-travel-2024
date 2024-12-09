@@ -72,7 +72,7 @@ const List = () => {
             onPress={() => router.push(`(tabs)/blog/${item.nid}`)}
             title={item.title}
             intro={item.field_intro_blog}
-            image={`https://bogotadc.travel${
+            image={`https://files.visitbogota.co${
               item.field_image ? item.field_image : "/img/noimg.png"
             }`}
           />

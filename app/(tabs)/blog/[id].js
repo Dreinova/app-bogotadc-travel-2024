@@ -85,17 +85,17 @@ const SingleBlog = () => {
       .replace(/&#039;/g, "'")
       .replace(/&quot;/g, '"')
       .replace(/&apos;/g, "'")
-      .replace(/&amp;/g, '&')
-      .replace(/&lt;/g, '<')
-      .replace(/&gt;/g, '>')
-      .replace(/&nbsp;/g, ' ')
-      .replace(/&cent;/g, '¢')
-      .replace(/&pound;/g, '£')
-      .replace(/&yen;/g, '¥')
-      .replace(/&euro;/g, '€')
-      .replace(/&copy;/g, '©')
-      .replace(/&reg;/g, '®')
-      .replace(/&trade;/g, '™');
+      .replace(/&amp;/g, "&")
+      .replace(/&lt;/g, "<")
+      .replace(/&gt;/g, ">")
+      .replace(/&nbsp;/g, " ")
+      .replace(/&cent;/g, "¢")
+      .replace(/&pound;/g, "£")
+      .replace(/&yen;/g, "¥")
+      .replace(/&euro;/g, "€")
+      .replace(/&copy;/g, "©")
+      .replace(/&reg;/g, "®")
+      .replace(/&trade;/g, "™");
   }
   const source = {
     html: adjustImageUrls(transformedHtml),
@@ -134,7 +134,7 @@ const SingleBlog = () => {
           height: windowWidth - 120,
         }}
         source={{
-          uri: `https://bogotadc.travel${
+          uri: `https://files.visitbogota.co${
             blog.field_cover_image ? blog.field_cover_image : "/img/noimg.png"
           }`,
         }}

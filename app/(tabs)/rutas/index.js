@@ -149,7 +149,7 @@ const RutassList = () => {
               onPress={() => router.push(`(tabs)/rutas/${item.nid}`)}
               title={item.title}
               desc={item.field_descripcion_corta}
-              image={`https://bogotadc.travel${
+              image={`https://files.visitbogota.co${
                 item.field_thumbnail ? item.field_thumbnail : "/img/noimg.png"
               }`}
             />

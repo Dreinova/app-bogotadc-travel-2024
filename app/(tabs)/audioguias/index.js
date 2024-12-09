@@ -80,7 +80,7 @@ const list = () => {
         renderItem={({ item }) => (
           <CardAudioguide
             title={item.title}
-            image={`https://bogotadc.travel${item.field_mainimg}`}
+            image={`https://files.visitbogota.co${item.field_mainimg}`}
             onPress={() => router.push(`(tabs)/audioguias/${item.nid}`)}
           />
         )}

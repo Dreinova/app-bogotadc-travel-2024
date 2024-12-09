@@ -550,7 +550,7 @@ const EventsList = () => {
             place={item.field_place}
             start={item.field_date}
             end={item.field_end_date}
-            image={`https://bogotadc.travel${
+            image={`https://files.visitbogota.co${
               item.field_imagen_listado_events
                 ? item.field_imagen_listado_events
                 : "/img/noimg.png"

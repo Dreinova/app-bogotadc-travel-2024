@@ -16,7 +16,7 @@ const CardInfo = (props) => {
           padding: 5,
         }}
         source={{
-          uri: `https://bogotadc.travel${props.item.field_image}`,
+          uri: `https://files.visitbogota.co${props.item.field_image}`,
         }}
       >
         <Text

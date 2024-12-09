@@ -53,14 +53,22 @@ const SingleRutas = () => {
   const tagsStyles = {
     p: {
       textAlign: "left",
-      color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,margin:0, marginBottom:10
+      color: "#777",
+      fontFamily: "MuseoSans_500",
+      fontSize: 16,
+      lineHeight: 20,
+      margin: 0,
+      marginBottom: 10,
     },
     a: {
       color: "#6474AD",
     },
     ul: { paddingLeft: 25, margin: 0 },
     li: {
-      color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
+      color: "#777",
+      fontFamily: "MuseoSans_500",
+      fontSize: 16,
+      lineHeight: 20,
     },
   };
 
@@ -72,7 +80,7 @@ const SingleRutas = () => {
           height: windowWidth - 120,
         }}
         source={{
-          uri: `https://bogotadc.travel${
+          uri: `https://files.visitbogota.co${
             events.field_thumbnail ? events.field_thumbnail : "/img/noimg.png"
           }`,
         }}
@@ -102,7 +110,7 @@ const SingleRutas = () => {
             style={{
               flexDirection: "row",
               justifyContent: "space-between",
-              alignItems:'center'
+              alignItems: "center",
             }}
           >
             <Text
@@ -166,7 +174,10 @@ const SingleRutas = () => {
           </View>
           <Text
             style={{
-              color: "#777", fontFamily: "MuseoSans_500", fontSize: 16, lineHeight: 20,
+              color: "#777",
+              fontFamily: "MuseoSans_500",
+              fontSize: 16,
+              lineHeight: 20,
               marginBottom: 10,
               width: 250,
             }}

@@ -589,7 +589,7 @@ const EventsList = () => {
                     overflow: "hidden",
                   }}
                   source={{
-                    uri: `https://bogotadc.travel${
+                    uri: `https://files.visitbogota.co${
                       item.field_img ? item.field_img : "/img/noimg.png"
                     }`,
                   }}

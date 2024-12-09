@@ -1,7 +1,7 @@
-const BASE_URL = `https://bogotadc.travel/ce`;
+const BASE_URL = `https://files.visitbogota.co/ce`;
 const BASE_URL_VISITBOG = `https://visitbogota.co`;
-const BASE_URL_DRPL = `https://bogotadc.travel/drpl/es/api/v1/es`;
-const BASE_URL_DRPLV2 = `https://bogotadc.travel/drpl/es/api/v2`;
+const BASE_URL_DRPL = `https://files.visitbogota.co/drpl/es/api/v1/es`;
+const BASE_URL_DRPLV2 = `https://files.visitbogota.co/drpl/es/api/v2`;
 
 export const fetchBogotaGetFolder = async (endpoint) => {
   try {
@@ -124,7 +124,7 @@ export const formattedTime = (timeInMilliseconds) => {
 };
 
 export const postData = async (url = "", data = {}) => {
-  const response = await fetch(`https://bogotadc.travel/ce/${url}`, {
+  const response = await fetch(`https://files.visitbogota.co/ce/${url}`, {
     method: "POST",
     mode: "cors",
     cache: "no-cache",

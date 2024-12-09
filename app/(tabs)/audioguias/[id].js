@@ -59,7 +59,7 @@ const SingleAudio = () => {
   const audioArray = audioTitles.map((title, index) => ({
     title: title.split(" / ")[0],
     subtitle: title.split(" / ")[1],
-    audio: `https://bogotadc.travel${audioPaths[index]}`,
+    audio: `https://files.visitbogota.co${audioPaths[index]}`,
   }));
 
   return (
@@ -70,7 +70,7 @@ const SingleAudio = () => {
           flex: 1,
         }}
         source={{
-          uri: `https://bogotadc.travel${
+          uri: `https://files.visitbogota.co${
             audioguide.field_mainimg
               ? audioguide.field_mainimg
               : "/img/noimg.png"
@@ -89,7 +89,7 @@ const SingleAudio = () => {
           <Text style={styles.text}>{audioguide.title}</Text>
           <AudioPlayer
             audios={audioArray}
-            image={`https://bogotadc.travel${
+            image={`https://files.visitbogota.co${
               audioguide.field_mainimg
                 ? audioguide.field_mainimg
                 : "/img/noimg.png"

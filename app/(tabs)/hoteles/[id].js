@@ -53,12 +53,12 @@ const SingleHotel = () => {
       return (
         <ImageBackground
           key={index}
-          source={{ uri: `https://bogotadc.travel${item.trim()}` }}
+          source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
           style={styles.imageBackground}
           loadingIndicatorSource={<ActivityIndicator />}
         >
           <Image
-            source={{ uri: `https://bogotadc.travel${item.trim()}` }}
+            source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
             style={styles.image}
           />
         </ImageBackground>
@@ -74,7 +74,7 @@ const SingleHotel = () => {
           height: windowWidth - 120,
         }}
         source={{
-          uri: `https://bogotadc.travel${
+          uri: `https://files.visitbogota.co${
             hotel.field_img ? hotel.field_img : "/img/noimg.png"
           }`,
         }}

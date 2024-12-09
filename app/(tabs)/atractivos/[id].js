@@ -99,12 +99,12 @@ const SingleAtractivo = () => {
       return (
         <ImageBackground
           key={index}
-          source={{ uri: `https://bogotadc.travel${item.trim()}` }}
+          source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
           style={styles.imageBackground}
           loadingIndicatorSource={<ActivityIndicator />}
         >
           <Image
-            source={{ uri: `https://bogotadc.travel${item.trim()}` }}
+            source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
             style={styles.image}
           />
           <View
