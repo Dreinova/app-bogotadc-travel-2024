@@ -152,19 +152,21 @@ const SingleAtractivo = () => {
           {renderImages()}
         </Swiper>
       )}
-      <View style={styles.container}>
-        <Pressable
-          onPress={handleAudioToggle}
-          style={{ flexDirection: "row", gap: 15, alignItems: "center" }}
-        >
-          {isPlaying ? (
-            <AntDesign name="pausecircleo" size={24} color="#354999" />
-          ) : (
-            <AntDesign name="playcircleo" size={24} color="#354999" />
-          )}
-          <Text style={styles.text}>Escuchar reseña en audio</Text>
-        </Pressable>
-      </View>
+      {atractivo.field_audio_resena && (
+        <View style={styles.container}>
+          <Pressable
+            onPress={handleAudioToggle}
+            style={{ flexDirection: "row", gap: 15, alignItems: "center" }}
+          >
+            {isPlaying ? (
+              <AntDesign name="pausecircleo" size={24} color="#354999" />
+            ) : (
+              <AntDesign name="playcircleo" size={24} color="#354999" />
+            )}
+            <Text style={styles.text}>Escuchar reseña en audio</Text>
+          </Pressable>
+        </View>
+      )}
       <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
         <View style={{ paddingBottom: 15 }}>
           {atractivo.field_address && (
