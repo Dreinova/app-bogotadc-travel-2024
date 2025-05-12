@@ -347,7 +347,6 @@ const EventsList = () => {
             }}
           >
             <ImageBackground
-              style={{}}
               source={{
                 uri: `https://files.visitbogota.co${
                   item.field_img ? item.field_img : "/img/noimg.png"

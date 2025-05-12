@@ -228,6 +228,7 @@ const SingleEvent = () => {
           </Text>
         </View>
         <ComoLlegar
+          location={events.field_location.trim()}
           onPress={() =>
             WebBrowser.openBrowserAsync(
               events.field_mapslink

@@ -4,29 +4,43 @@ import { FontAwesome } from "@expo/vector-icons";
 import { useSelector } from "react-redux";
 import { selectActualLanguage, selectWordsLang } from "../store/selectors";
 import { windowWidth } from "../constants/ScreenWidth";
+import WebView from "react-native-webview";
 
-const ComoLlegar = ({ onPress }) => {
-  const actualLanguage = useSelector(selectActualLanguage);
-  const wordsLanguage = useSelector(selectWordsLang);
-const aspectRatioHeight = (windowWidth - 40) * (9 / 16);
+const ComoLlegar = ({ onPress, location }) => {
   return (
     <Pressable
-      style={{ alignSelf: "center", marginBottom: 30 }}
+      style={{ alignSelf: "center", marginBottom: 30, flex: 1, width: "90%" }}
       onPress={onPress}
     >
-      <ImageBackground
+      <WebView
+        scalesPageToFit={true}
+        bounces={false}
+        javaScriptEnabled
+        style={{ height: 185, width: "100%" }}
         source={{
-          uri: "https://visitbogota.co/img/map_1.jpg",
+          html: `
+                  <!DOCTYPE html>
+                  <html>
+                    <head>
+                    </head>
+                    <body>
+                      <div id="baseDiv">
+                       <iframe
+                        width="100%"
+                        height="500"
+                        style="border:0"
+                        loading="lazy"
+                        allowfullscreen
+                        referrerpolicy="no-referrer-when-downgrade"
+                        src="https://www.google.com/maps?q=${location}&z=18&output=embed">
+                        </iframe>
+                      </div>
+                    </body>
+                  </html>
+            `,
         }}
-        style={{
-          width: windowWidth - 40,
-      height: aspectRatioHeight,
-      overflow: 'hidden',
-      alignItems: 'center',
-      justifyContent: 'center',
-        }}
-      >
-      </ImageBackground>
+        automaticallyAdjustContentInsets={false}
+      />
     </Pressable>
   );
 };

@@ -21,7 +21,7 @@ const LoadingScreen = () => {
   return (
     <ImageBackground
       source={{
-        uri: `https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png`,
+        uri: `https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png?dd`,
       }}
       style={styles.background}
     ></ImageBackground>
@@ -80,7 +80,9 @@ const Page = () => {
 
   return (
     <ImageBackground
-      source={{ uri: "https://visitbogota.co/assets_app/init.png" }}
+      source={{
+        uri: "https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png?dd",
+      }}
       style={{ flex: 1 }}
     >
       <View

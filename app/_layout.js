@@ -42,7 +42,7 @@ export default function RootLayout() {
     return (
       <ImageBackground
         source={{
-          uri: `https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png`,
+          uri: `https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png?dd`,
         }}
         style={{
           flex: 1,

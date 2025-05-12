@@ -309,24 +309,6 @@ const Header = ({ navigation, route, options }) => {
                   />
                 </View>
               </TouchableOpacity>
-              {/* MODELOS 3D PRUEBAS */}
-              {/* <TouchableOpacity
-                style={styles.menuItem}
-                onPress={() => {
-                  router.push("modelos");
-                  closeModal();
-                }}
-              >
-                <Text style={styles.menuText}>Modelos 3D</Text>
-                <View style={{ flexDirection: "row", gap: 8 }}>
-                  <MaterialIcons name="3d-rotation" size={18} color="#3C3C43" />
-                  <IconSvg
-                    width="9"
-                    height="16"
-                    icon={`<svg width="9" height="16" viewBox="0 0 9 16" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M9 8C9 7.79248 8.91699 7.60156 8.75928 7.45215L2.18506 1.01074C2.03564 0.869629 1.85303 0.794922 1.63721 0.794922C1.21387 0.794922 0.881836 1.11865 0.881836 1.55029C0.881836 1.75781 0.964844 1.94873 1.09766 2.08984L7.14062 8L1.09766 13.9102C0.964844 14.0513 0.881836 14.2339 0.881836 14.4497C0.881836 14.8813 1.21387 15.2051 1.63721 15.2051C1.85303 15.2051 2.03564 15.1304 2.18506 14.981L8.75928 8.54785C8.91699 8.39014 9 8.20752 9 8Z" fill="#3C3C43" fill-opacity="0.3"/></svg>`}
-                  />
-                </View>
-              </TouchableOpacity> */}
             </View>
           </ScrollView>
         )}
@@ -663,6 +645,8 @@ const Header = ({ navigation, route, options }) => {
     id = null,
     filterID = null,
   } = route.params || {};
+  console.log(atractivoId);
+
   const [candelariaActive, setCandelariaActive] = React.useState(false);
   const [candelariaButtonActive, setCandelariaButtonActive] =
     React.useState(false);
@@ -752,7 +736,7 @@ const Header = ({ navigation, route, options }) => {
               icon={`<svg width="10" height="18" viewBox="0 0 10 18" fill="none" xmlns="http://www.w3.org/2000/svg"><path d="M8.53499 0.515015L0.0499878 9.00001L8.53499 17.485L9.94999 16.071L2.87799 9.00001L9.94999 1.92901L8.53499 0.515015Z" fill="#354999"/></svg>`}
             />
           </Link>
-        ) : pathname === "/restaurantes" ? (
+        ) : pathname === "/restaurantes" || pathname === "/modelos" ? (
           <Link
             href={{
               pathname: `/atractivos/${atractivoId}`,

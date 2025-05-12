@@ -283,6 +283,7 @@ const SingleRestaurant = () => {
       </View>
       {restaurant.field_location && (
         <ComoLlegar
+          location={restaurant.field_location.trim()}
           onPress={() =>
             WebBrowser.openBrowserAsync(
               `https://www.google.com/maps/search/?api=1&query=${restaurant.field_location.trim()}`
