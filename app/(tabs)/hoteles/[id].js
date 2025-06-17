@@ -7,14 +7,11 @@ import {
   ScrollView,
   Pressable,
   Linking,
-  ActivityIndicator,
 } from "react-native";
-import Swiper from "react-native-swiper";
 import * as WebBrowser from "expo-web-browser";
 import React from "react";
 import { Colors } from "../../../src/constants";
 import { FontAwesome } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
 import { MaterialCommunityIcons } from "@expo/vector-icons";
 import {
   ComoLlegar,
@@ -47,25 +44,10 @@ const SingleHotel = () => {
   if (!hotel) {
     return <PreloaderComponent />;
   }
-
-  const renderImages = () => {
-    return hotel.field_galery.split(",").map((item, index) => {
-      return (
-        <ImageBackground
-          key={index}
-          source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
-          style={styles.imageBackground}
-          loadingIndicatorSource={<ActivityIndicator />}
-        >
-          <Image
-            source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
-            style={styles.image}
-          />
-        </ImageBackground>
-      );
-    });
-  };
-
+  const imagesData = hotel.field_galery?.split(",")?.map((img, index) => ({
+    uri: `https://files.visitbogota.co${img.trim()}`,
+    alt: atractivo.field_galery_1?.split(",")[index] || "",
+  }));
   return (
     <ScrollView>
       <ImageBackground
@@ -175,13 +157,36 @@ const SingleHotel = () => {
         />
       )}
       {hotel.field_galery && (
-        <Swiper
-          style={{ height: (windowWidth / 16) * 9 }}
-          dotColor="rgba(255,255,255,.8)"
-          activeDotStyle={{ backgroundColor: Colors.orange }}
-        >
-          {renderImages()}
-        </Swiper>
+        <Carousel
+          loop={true}
+          width={430}
+          height={(windowWidth / 16) * 9}
+          snapEnabled={true}
+          pagingEnabled={true}
+          data={imagesData}
+          style={{ width: "100%" }}
+          renderItem={({ item }) => (
+            <ImageBackground
+              source={{ uri: item.uri }}
+              style={styles.imageBackground}
+            >
+              <Image source={{ uri: item.uri }} style={styles.image} />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  backgroundColor: "rgba(0,0,0,.5)",
+                  padding: 10,
+                }}
+              >
+                {/* <Text style={{ color: "#FFF", fontFamily: "MuseoSans_700" }}>
+          {item.alt}
+        </Text> */}
+              </View>
+            </ImageBackground>
+          )}
+        />
       )}
     </ScrollView>
   );

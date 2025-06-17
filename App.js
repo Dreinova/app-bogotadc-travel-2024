@@ -5,6 +5,7 @@ import React from "react";
 import { SafeAreaProvider } from "react-native-safe-area-context";
 import { ImageBackground, StyleSheet, Text, View } from "react-native";
 import { useFonts } from "expo-font";
+import { Provider } from "react-redux";
 
 SplashScreen.preventAutoHideAsync();
 
@@ -55,7 +56,9 @@ export default function App() {
 
   return (
     <SafeAreaProvider>
-      <View style={styles.container} onLayout={onLayoutRootView}></View>
+      <Provider store={store}>
+        <View style={styles.container} onLayout={onLayoutRootView}></View>
+      </Provider>
     </SafeAreaProvider>
   );
 }

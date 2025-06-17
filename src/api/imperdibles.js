@@ -1,4 +1,4 @@
-const BASE_URL = `https://files.visitbogota.co/ce`;
+const BASE_URL = `https://visitbogota.co/ce`;
 const BASE_URL_VISITBOG = `https://visitbogota.co`;
 const BASE_URL_DRPL = `https://files.visitbogota.co/drpl/es/api/v1/es`;
 const BASE_URL_DRPLV2 = `https://files.visitbogota.co/drpl/es/api/v2`;
@@ -8,7 +8,7 @@ export const fetchBogotaGetFolder = async (endpoint) => {
     const res = await fetch(`${BASE_URL_VISITBOG}${endpoint}`);
     return await res.json();
   } catch (e) {
-    console.log("Error fetching", e.message);
+    console.log("Error fetchBogotaGetFolder", e.message);
     return [];
   }
 };
@@ -17,7 +17,7 @@ export const fetchBogota = async (endpoint) => {
     const res = await fetch(`${BASE_URL}${endpoint}`);
     return await res.json();
   } catch (e) {
-    console.log("Error fetching", e.message);
+    console.log("Error fetchBogota", e.message);
     return [];
   }
 };
@@ -26,7 +26,7 @@ export const fetchBogotaDrpl = async (endpoint) => {
     const res = await fetch(`${BASE_URL_DRPL}${endpoint}`);
     return await res.json();
   } catch (e) {
-    console.log("Error fetching", e.message);
+    console.log("Error fetchBogotaDrpl", e.message);
     return [];
   }
 };
@@ -54,7 +54,7 @@ export const fetchBogotaDrplV2 = async (
 
     return await res.json();
   } catch (e) {
-    console.log("Error fetching", e.message);
+    console.log("Error fetchBogotaDrplV2", e.message);
     return [];
   }
 };

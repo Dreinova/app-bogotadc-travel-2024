@@ -26,7 +26,6 @@ import { useSelector } from "react-redux";
 import CardEvento from "../../src/components/CardEventos";
 import IconSvg from "../../src/components/IconSvg";
 import CardAtractivoBig from "../../src/components/CardAtractivoBig";
-import Swiper from "react-native-swiper";
 import RenderHTML, { defaultSystemFonts } from "react-native-render-html";
 import WebView from "react-native-webview";
 
@@ -450,13 +449,28 @@ export default function Page() {
         </View>
 
         <View style={{ marginVertical: 15 }}>
-          <Swiper
-            style={{ height: windowWidth }}
-            dotColor="rgba(255,255,255,.8)"
-            activeDotStyle={{ backgroundColor: Colors.orange }}
-          >
-            {renderImages(rutas)}
-          </Swiper>
+          {/* <Carousel
+            loop={true}
+            width={windowWidth}
+            height={windowWidth}
+            snapEnabled={true}
+            pagingEnabled={true}
+            autoPlayInterval={2000}
+            data={rutas}
+            style={{ width: "100%" }}
+            onScrollStart={() => {
+              console.log("Scroll start");
+            }}
+            onScrollEnd={() => {
+              console.log("Scroll end");
+            }}
+            onConfigurePanGesture={(g) => {
+              "worklet";
+              g.enabled(false);
+            }}
+            onSnapToItem={(index) => console.log("current index:", index)}
+            renderItem={renderImages(rutas)}
+          /> */}
         </View>
       </View>
       {linkVideo && (

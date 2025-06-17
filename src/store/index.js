@@ -8,6 +8,7 @@ import planesReducer from "./PlanesSlice";
 import LocationReducer from "./LocationSlice";
 import UserReducer from "./UserReducer";
 import RutasReducer from "./RutasSlice";
+const isDev = process.env.NODE_ENV === "development";
 
 export const store = configureStore({
   reducer: {
@@ -19,6 +20,10 @@ export const store = configureStore({
     planes: planesReducer,
     location: LocationReducer,
     user: UserReducer,
-    rutas: RutasReducer
+    rutas: RutasReducer,
   },
+  middleware: (getDefaultMiddleware) =>
+    getDefaultMiddleware({
+      immutableCheck: isDev ? false : true,
+    }),
 });

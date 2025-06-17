@@ -11,26 +11,17 @@ import {
   Modal,
   TextInput,
 } from "react-native";
-import Swiper from "react-native-swiper";
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect } from "react";
 import { Colors } from "../../../src/constants";
-import { FontAwesome } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  CustomCheckbox,
-  PreloaderComponent,
-  ReadMoreText,
-} from "../../../src/components";
+import { CustomCheckbox, PreloaderComponent } from "../../../src/components";
 import {
   fetchBogotaDrpl,
   fetchBogotaDrplV2,
   number_format,
 } from "../../../src/api/imperdibles";
 import { useLocalSearchParams } from "expo-router";
-import { windowHeight, windowWidth } from "../../../src/constants/ScreenWidth";
-import { TouchableOpacity } from "react-native";
+import { windowWidth } from "../../../src/constants/ScreenWidth";
 import { LinearGradient } from "expo-linear-gradient";
 import { useSelector } from "react-redux";
 import {
@@ -40,6 +31,7 @@ import {
 import { Ionicons } from "@expo/vector-icons";
 import RenderHTML from "react-native-render-html";
 import IconSvg from "../../../src/components/IconSvg";
+import Carousel from "react-native-reanimated-carousel";
 
 const ModalReserva = (
   plan,
@@ -617,6 +609,9 @@ const SinglePlan = () => {
       );
     });
   };
+  const imagesData = galeria.map((img, index) => ({
+    uri: `https://files.visitbogota.co${img.trim()}`,
+  }));
   return (
     <ScrollView>
       {ModalReserva(
@@ -791,13 +786,32 @@ const SinglePlan = () => {
         </Pressable>
       </View>
 
-      <Swiper
-        style={{ height: (windowWidth / 16) * 9 }}
-        dotColor="rgba(255,255,255,.8)"
-        activeDotStyle={{ backgroundColor: Colors.orange }}
-      >
-        {renderImages()}
-      </Swiper>
+      <Carousel
+        loop={true}
+        width={430}
+        height={(windowWidth / 16) * 9}
+        snapEnabled={true}
+        pagingEnabled={true}
+        data={imagesData}
+        style={{ width: "100%" }}
+        renderItem={({ item }) => (
+          <ImageBackground
+            source={{ uri: item.uri }}
+            style={styles.imageBackground}
+          >
+            <Image source={{ uri: item.uri }} style={styles.image} />
+            <View
+              style={{
+                position: "absolute",
+                bottom: 0,
+                left: 0,
+                backgroundColor: "rgba(0,0,0,.5)",
+                padding: 10,
+              }}
+            ></View>
+          </ImageBackground>
+        )}
+      />
     </ScrollView>
   );
 };

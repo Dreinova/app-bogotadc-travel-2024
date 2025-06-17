@@ -361,10 +361,10 @@ export const fetchAllFilters =
   };
 export const fetchAllWords = () => async (dispatch) => {
   const langs = ["es", "en", "fr", "pt-br"];
-  const reemplazarCaracteresEspeciales = (arr) => {
-    const resultado = arr.map((palabra) => palabra.replace(/&#039;/g, "'"));
-    return resultado;
-  };
+
+  const reemplazarCaracteresEspeciales = (arr) =>
+    arr.map((palabra) => palabra.replace(/&#039;/g, "'"));
+
   try {
     const wordsByLang = await Promise.all(
       langs.map(async (lang) => {
@@ -372,6 +372,15 @@ export const fetchAllWords = () => async (dispatch) => {
           `/palabras_interfaz/3273`,
           lang
         );
+
+        if (
+          !response ||
+          !Array.isArray(response) ||
+          !response[0]?.field_palabras
+        ) {
+          throw new Error(`❌ Respuesta no válida para ${lang}`);
+        }
+
         const palabrasArray = response[0].field_palabras.split("|");
         const palabrasDecodificadas =
           reemplazarCaracteresEspeciales(palabrasArray);
@@ -385,7 +394,8 @@ export const fetchAllWords = () => async (dispatch) => {
 
     dispatch(setAllWords(resultObject));
   } catch (error) {
-    console.error("Error fetching filters data:", error);
+    console.error("🔥 Error en fetchAllWords:", error);
+    throw error; // <- Lanzamos el error para que LoadingScreen lo capture
   }
 };
 
@@ -500,4 +510,7 @@ export const setUser = (user) => ({
 });
 export const logOutUser = () => ({
   type: "LOGOUT_USER",
+});
+export const setAppInitialized = () => ({
+  type: "SET_INITIALIZED",
 });

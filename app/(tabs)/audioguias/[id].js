@@ -1,31 +1,11 @@
-import {
-  View,
-  Text,
-  Image,
-  ImageBackground,
-  StyleSheet,
-  ScrollView,
-  Pressable,
-  Linking,
-  ActivityIndicator,
-} from "react-native";
-import Swiper from "react-native-swiper";
-import * as WebBrowser from "expo-web-browser";
+import { View, Text, ImageBackground, StyleSheet } from "react-native";
 import React, { useEffect } from "react";
 import { Colors } from "../../../src/constants";
-import { FontAwesome } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
 import { PreloaderComponent } from "../../../src/components";
 import { fetchBogotaDrplV2 } from "../../../src/api/imperdibles";
 import { useLocalSearchParams } from "expo-router";
-import { windowHeight, windowWidth } from "../../../src/constants/ScreenWidth";
-import { TouchableOpacity } from "react-native";
 import AudioPlayer from "../../../src/components/AudioPlayer";
-import {
-  selectActualLanguage,
-  selectWordsLang,
-} from "../../../src/store/selectors";
+import { selectActualLanguage } from "../../../src/store/selectors";
 import { useSelector } from "react-redux";
 import { GestureHandlerRootView } from "react-native-gesture-handler";
 

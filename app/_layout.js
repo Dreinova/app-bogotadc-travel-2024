@@ -41,9 +41,7 @@ export default function RootLayout() {
   if (!fontsLoaded) {
     return (
       <ImageBackground
-        source={{
-          uri: `https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png?dd`,
-        }}
+       source={require('../assets/splash.png')}
         style={{
           flex: 1,
           alignItems: "center",
@@ -79,10 +77,7 @@ function RootLayoutNav() {
   return (
     <SafeAreaProvider>
       <SafeAreaView style={{ flex: 1 }}>
-        <Stack
-          screenOptions={{ headerShown: false }}
-          initialRouteName="(tabs)"
-        ></Stack>
+        <Stack screenOptions={{ headerShown: false }}></Stack>
       </SafeAreaView>
     </SafeAreaProvider>
   );

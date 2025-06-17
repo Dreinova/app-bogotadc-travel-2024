@@ -9,25 +9,17 @@ import {
   Linking,
   ActivityIndicator,
 } from "react-native";
-import Swiper from "react-native-swiper";
 import * as WebBrowser from "expo-web-browser";
 import React, { useEffect } from "react";
 import { Colors } from "../../../src/constants";
-import { FontAwesome } from "@expo/vector-icons";
-import { Fontisto } from "@expo/vector-icons";
-import { MaterialCommunityIcons } from "@expo/vector-icons";
-import {
-  ComoLlegar,
-  PreloaderComponent,
-  ReadMoreText,
-} from "../../../src/components";
+import { ComoLlegar, PreloaderComponent } from "../../../src/components";
 import { fetchBogotaDrplV2 } from "../../../src/api/imperdibles";
 import { Link, useLocalSearchParams } from "expo-router";
-import { windowHeight, windowWidth } from "../../../src/constants/ScreenWidth";
-import { TouchableOpacity } from "react-native";
+import { windowWidth } from "../../../src/constants/ScreenWidth";
 import { selectActualLanguage } from "../../../src/store/selectors";
 import { useSelector } from "react-redux";
 import IconSvg from "../../../src/components/IconSvg";
+import Carousel from "react-native-reanimated-carousel";
 
 const SingleRestaurant = () => {
   const { id, filterID } = useLocalSearchParams();
@@ -49,23 +41,9 @@ const SingleRestaurant = () => {
     return <PreloaderComponent />;
   }
 
-  const renderImages = () => {
-    return restaurant.field_galery.split(",").map((item, index) => {
-      return (
-        <ImageBackground
-          key={index}
-          source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
-          style={styles.imageBackground}
-          loadingIndicatorSource={<ActivityIndicator />}
-        >
-          <Image
-            source={{ uri: `https://files.visitbogota.co${item.trim()}` }}
-            style={styles.image}
-          />
-        </ImageBackground>
-      );
-    });
-  };
+  const imagesData = restaurant.field_galery.split(",").map((img, index) => ({
+    uri: `https://files.visitbogota.co${img.trim()}`,
+  }));
 
   return (
     <ScrollView>
@@ -95,13 +73,32 @@ const SingleRestaurant = () => {
       </View>
 
       {restaurant.field_galery && (
-        <Swiper
-          style={{ height: (windowWidth / 16) * 9 }}
-          dotColor="rgba(255,255,255,.8)"
-          activeDotStyle={{ backgroundColor: Colors.orange }}
-        >
-          {renderImages()}
-        </Swiper>
+        <Carousel
+          loop={true}
+          width={430}
+          height={(windowWidth / 16) * 9}
+          snapEnabled={true}
+          pagingEnabled={true}
+          data={imagesData}
+          style={{ width: "100%" }}
+          renderItem={({ item }) => (
+            <ImageBackground
+              source={{ uri: item.uri }}
+              style={styles.imageBackground}
+            >
+              <Image source={{ uri: item.uri }} style={styles.image} />
+              <View
+                style={{
+                  position: "absolute",
+                  bottom: 0,
+                  left: 0,
+                  backgroundColor: "rgba(0,0,0,.5)",
+                  padding: 10,
+                }}
+              ></View>
+            </ImageBackground>
+          )}
+        />
       )}
       <View style={{ paddingHorizontal: 20, paddingVertical: 15 }}>
         {restaurant.field_desc && (

@@ -2,6 +2,7 @@
 const initialState = {
   language: "es",
   words: [],
+  isInitialized: false,
 };
 
 const languageReducer = (state = initialState, action) => {
@@ -16,6 +17,8 @@ const languageReducer = (state = initialState, action) => {
         ...state,
         words: action.payload,
       };
+    case "SET_INITIALIZED":
+      return { ...state, isInitialized: true };
     default:
       return state;
   }

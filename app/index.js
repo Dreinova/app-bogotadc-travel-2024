@@ -20,9 +20,7 @@ const LoadingScreen = () => {
   const [time, setTime] = useState(new Date().getTime());
   return (
     <ImageBackground
-      source={{
-        uri: `https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png?dd`,
-      }}
+   source={require('../assets/splash.png')}
       style={styles.background}
     ></ImageBackground>
   );
@@ -44,6 +42,8 @@ const Page = () => {
 
   useEffect(() => {
     const checkLanguage = async () => {
+      console.log("checkLanguage");
+
       try {
         const storedLanguage = await AsyncStorage.getItem("userLanguage");
         await dispatch(fetchAllWords());
@@ -80,9 +80,7 @@ const Page = () => {
 
   return (
     <ImageBackground
-      source={{
-        uri: "https://files.visitbogota.co/drpl/sites/default/files/2024-08/splash.png?dd",
-      }}
+      source={require('../assets/splash.png')}
       style={{ flex: 1 }}
     >
       <View

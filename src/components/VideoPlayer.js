@@ -7,7 +7,7 @@ import {
   Pressable,
   Text,
 } from "react-native";
-import { Video } from "expo-av";
+import { Video } from "expo-video";
 import { windowWidth } from "../constants/ScreenWidth";
 import { FontAwesome, Ionicons } from "@expo/vector-icons";
 
@@ -16,10 +16,9 @@ const VideoPlayer = ({ videoSource, isVisible, onClose }) => {
   const [isPlaying, setIsPlaying] = useState(true);
 
   useEffect(() => {
-    // Pausa el video al cerrar el modal
     return () => {
-      if (videoRef) {
-        videoRef.current.pauseAsync();
+      if (videoRef.current) {
+        videoRef.current.pauseAsync?.(); // Añade protección por si no está disponible
       }
     };
   }, []);

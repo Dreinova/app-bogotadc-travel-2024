@@ -1,7 +1,6 @@
 import React, { useState, useEffect, useCallback } from "react";
 import { View, Text, TouchableOpacity, Image, Pressable } from "react-native";
 import Slider from "@react-native-community/slider";
-import { Audio } from "expo-av";
 import { FontAwesome } from "@expo/vector-icons";
 import { FlatList } from "react-native-gesture-handler";
 import { formattedTime } from "../api/imperdibles";
@@ -29,19 +28,19 @@ const AudioPlayer = ({ image, audios }) => {
   };
 
   const playCurrentSong = async (initialPosition = 0) => {
-    await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
+    // await Audio.setAudioModeAsync({ playsInSilentModeIOS: true });
     if (sound) {
       await sound.unloadAsync();
     }
 
-    const { sound: newSound } = await Audio.Sound.createAsync(
-      { uri: audios[0].audio },
-      {
-        shouldPlay: isPlaying,
-        positionMillis: initialPosition, // Set the initial position here
-      },
-      onPlaybackStatusUpdate
-    );
+    // const { sound: newSound } = await Audio.Sound.createAsync(
+    //   { uri: audios[0].audio },
+    //   {
+    //     shouldPlay: isPlaying,
+    //     positionMillis: initialPosition, // Set the initial position here
+    //   },
+    //   onPlaybackStatusUpdate
+    // );
     setSound(newSound);
   };
 
@@ -76,14 +75,14 @@ const AudioPlayer = ({ image, audios }) => {
       await sound.unloadAsync();
     }
 
-    const { sound: newSound } = await Audio.Sound.createAsync(
-      { uri: audioUri },
-      {
-        shouldPlay: isPlaying,
-        positionMillis: 0, // Comienza desde el principio
-      },
-      onPlaybackStatusUpdate
-    );
+    // const { sound: newSound } = await Audio.Sound.createAsync(
+    //   { uri: audioUri },
+    //   {
+    //     shouldPlay: isPlaying,
+    //     positionMillis: 0, // Comienza desde el principio
+    //   },
+    //   onPlaybackStatusUpdate
+    // );
     setSound(newSound);
   };
 
