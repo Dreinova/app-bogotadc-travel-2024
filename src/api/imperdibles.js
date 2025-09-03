@@ -1,7 +1,7 @@
 const BASE_URL = `https://visitbogota.co/ce`;
 const BASE_URL_VISITBOG = `https://visitbogota.co`;
 const BASE_URL_DRPL = `https://files.visitbogota.co/drpl/es/api/v1/es`;
-const BASE_URL_DRPLV2 = `https://files.visitbogota.co/drpl/es/api/v2`;
+const BASE_URL_DRPLV2 = `https://api.visitbogota.co/drpl/es/api/v2`;
 
 export const fetchBogotaGetFolder = async (endpoint) => {
   try {
@@ -54,7 +54,7 @@ export const fetchBogotaDrplV2 = async (
 
     return await res.json();
   } catch (e) {
-    console.log("Error fetchBogotaDrplV2", e.message);
+    console.log("Error fetchBogotaDrplV2", e.message, `${BASE_URL_DRPLV2}${endpoint}`);
     return [];
   }
 };

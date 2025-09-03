@@ -54,7 +54,7 @@ export default function TabTwoScreen() {
     };
 
     Promise.all([
-      fetchBogotaDrplV2("/tax/categorias_atractivos_2024", actualLanguage),
+      fetchBogotaDrplV2("/tax/categorias_atractivos_2024/all", actualLanguage),
     ])
       .then(([categorias_atractivos_2024]) => {
         dispatch(fetchData());

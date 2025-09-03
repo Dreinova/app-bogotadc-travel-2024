@@ -46,7 +46,7 @@ export default function Page() {
   React.useEffect(() => {
     Promise.all([
       fetchBogotaDrplV2("/eventos-destacados-app", actualLanguage),
-      fetchBogotaDrplV2("/tax/categorias_atractivos_2024", actualLanguage),
+      fetchBogotaDrplV2("/tax/categorias_atractivos_2024/all", actualLanguage),
       fetchBogotaDrplV2("/rt/all", actualLanguage),
       fetchBogotaDrplV2("/appinfo", actualLanguage),
       fetchBogotaDrplV2("/blog/all/all", actualLanguage),
@@ -64,6 +64,7 @@ export default function Page() {
           }))
         );
         setRutas(rutas);
+
         function setMidnight(dateString) {
           const date = new Date(dateString);
           date.setHours(0, 0, 0, 0);
@@ -99,6 +100,15 @@ export default function Page() {
 
   const tagsStyles = {
     p: {
+      textAlign: "left",
+      color: "#FFF",
+      fontFamily: "MuseoSans_500",
+      textShadowColor: "rgba(0, 0, 0, .7)",
+      textShadowOffset: { width: 1, height: 1 },
+      textShadowRadius: 10,
+      fontSize: 16,
+    },
+    li: {
       textAlign: "left",
       color: "#FFF",
       fontFamily: "MuseoSans_500",
@@ -396,7 +406,7 @@ export default function Page() {
           }}
         />
       </View>
-      <View style={{ marginTop: 15 }}>
+      <View style={{ marginTop: 15, paddingHorizontal: 20 }}>
         <View
           style={{
             marginBottom: 15,
@@ -449,6 +459,65 @@ export default function Page() {
         </View>
 
         <View style={{ marginVertical: 15 }}>
+          <FlatList
+            fadingEdgeLength={15}
+            ItemSeparatorComponent={() => (
+              <View style={{ paddingHorizontal: 2 }} />
+            )}
+            horizontal
+            data={rutas}
+            keyExtractor={(item) => item.nid}
+            renderItem={({ item, index }) => {
+              return (
+                <Pressable
+                style={{width: 300,}}
+                  onPress={() => {
+                    router.push({
+                      pathname: `(tabs)/rutas/${item.nid}`,
+                    });
+                  }}
+                >
+                  <ImageBackground
+                    key={index}
+                    source={{
+                      uri: `https://files.visitbogota.co${item.field_thumbnail}`,
+                    }}
+                    style={styles.imageBackground}
+                    loadingIndicatorSource={<ActivityIndicator />}
+                  >
+                    <View
+                      style={{
+                        backgroundColor: "rgba(0,0,0,.3)",
+                        flex: 1,
+                        justifyContent: "flex-end",
+                        paddingHorizontal: 20,
+                        paddingVertical: 50,
+                      }}
+                    >
+                      <Text
+                        style={{
+                          color: Colors.white,
+                          fontFamily: "MuseoSans_500",
+                          fontSize: 28,
+                        }}
+                      >
+                        {item.title}
+                      </Text>
+      
+                      <RenderHTML
+                        contentWidth={windowWidth}
+                        source={{
+                          html: item.field_descripcion_corta,
+                        }}
+                        systemFonts={systemFonts}
+                        tagsStyles={tagsStyles}
+                      />
+                    </View>
+                  </ImageBackground>
+                </Pressable>
+              );
+            }}
+          />
           {/* <Carousel
             loop={true}
             width={windowWidth}

@@ -57,7 +57,7 @@ export default function AtractivosList() {
     };
 
     Promise.all([
-      fetchBogotaDrplV2("/tax/categorias_atractivos_2024", actualLanguage),
+      fetchBogotaDrplV2("/tax/categorias_atractivos_2024/all", actualLanguage),
     ])
       .then(async ([categorias_atractivos_2024]) => {
         dispatch(fetchData());
